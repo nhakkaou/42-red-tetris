@@ -1,23 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./app.css"
+import song from "./img/tetriminos.mp3"
+import Tetris from "./Components/Tetris"
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <audio loop={true}
+                    autoPlay={false}>
+      <source src={song} type="audio/ogg"/>
+    Your browser does not support the audio element.
+    </audio>
+    <h1>T e t r i s</h1>
+    <Tetris/>
     </div>
   );
 }
