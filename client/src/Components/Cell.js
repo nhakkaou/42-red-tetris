@@ -4,7 +4,7 @@ import {Stylecell} from "./style-Component/styleCell"
 
 
 const Cell = ({type}) => (
-    <Stylecell type={type} color={tetriminos['Z'].color}></Stylecell>
+    <Stylecell type={type} color={tetriminos['0'].color}></Stylecell>
 )
 
 export default Cell;

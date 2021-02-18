@@ -5,6 +5,7 @@ import Start from "./start"
 import Cell from "./Cell"
 import  Display from "./display"
 import { Createstage } from "../gameHelper"
+import Help from "./help"
 const tetris = () => {
     return (
         <StyletetrisWrapper>
@@ -14,7 +15,7 @@ const tetris = () => {
                 <div>
                     <Display text="Score"/>
                     <Display text="Level"/>
-                    <Display text="hta nzid fih chi haja"/>
+                    <Help/>
                 </div>
                 <Start/>
             </aside>

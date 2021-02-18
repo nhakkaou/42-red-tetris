@@ -1,7 +1,7 @@
 import React from "react"
-
-const Display = ({gameover, txt}) => (
-<div>{txt}</div>
+import {Styledisplay} from "./style-Component/style-Display"
+const Display = ({gameover, text}) => (
+<Styledisplay gameOver={gameover}>{text}</Styledisplay>
 )
 
 export default Display;
