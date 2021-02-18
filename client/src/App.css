@@ -1,18 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanalei&display=swap');
 body{
     background-image: url("./img/bk.jpg");
-    width: 100vh;
-    height: 100vh;
+    /* width: 100vh;
+    height: 100vh; */
     background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
+    /* background-repeat: no-repeat; */
+    /* color: white; */
 }
 audio {
     display: none;
 }
-.App{
-    text-align: center;
-}
+
 h1{
     color: #492574;
     font-family: 'Hanalei', cursive;
