@@ -1,6 +1,6 @@
 import React from "react"
 import Cell from "./Cell"
-import { StyleStage} from "./style-Component/style-stage"
+import { StyleStage} from "./styledComponents/StyledStage"
 
 const Stage = ({stage}) => (
     <StyleStage width={stage[0].length} height={stage.length}>

@@ -1,5 +1,5 @@
 import React from "react"
-import {Stylehelp} from "./style-Component/style-help"
+import {Stylehelp} from "./styledComponents/StyledHelp"
 
 
 const Help = () => (
