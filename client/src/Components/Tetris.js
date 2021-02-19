@@ -1,12 +1,13 @@
 import React from "react"
 import { StyletetrisWrapper, StyleTetris } from "./styledComponents/StyledTetris"
 import Stage from "./Stage"
-import Start from "./Start"
+import StartBtn from "./StartBtn"
 import Cell from "./Cell"
 import  Display from "./Display"
 import { Createstage } from "../gameHelper"
 import Help from "./Help"
-const tetris = () => {
+
+const Tetris = () => {
     return (
         <StyletetrisWrapper>
             <StyleTetris>
@@ -17,11 +18,11 @@ const tetris = () => {
                     <Display text="Level"/>
                     <Help/>
                 </div>
-                <Start/>
+                <StartBtn/>
             </aside>
             </StyleTetris>
             </StyletetrisWrapper>
             
     ) 
 }
-export default tetris;
+export default Tetris;

@@ -1,6 +1,6 @@
-import React from "react"
 import styled from "styled-components"
-const Buttona = styled.button`
+
+export const StyledStartBtn = styled.button`
     text-align: center;
     background-color: #7C23B6;
     color: white;
@@ -20,8 +20,3 @@ const Buttona = styled.button`
         color: #1d0424;
     } 
 `
-const Start = ({callback}) => (
-    <Buttona>Start the Game</Buttona>
-)
-
-export default Start;
