@@ -1,5 +1,5 @@
 import React from "react"
-import { StyletetrisWrapper, StyleTetris } from "./styledComponents/StyledTetris"
+import { StyletetrisWrapper, StyleTetris } from "./styling/StyledTetris"
 import Stage from "./Stage"
 import StartBtn from "./StartBtn"
 import Cell from "./Cell"

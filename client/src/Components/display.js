@@ -1,5 +1,5 @@
 import React from "react"
-import {Styledisplay} from "./styledComponents/StyledDisplay"
+import {Styledisplay} from "./styling/StyledDisplay"
 
 const Display = ({gameover, text}) => (
 <Styledisplay gameOver={gameover}>{text}</Styledisplay>
