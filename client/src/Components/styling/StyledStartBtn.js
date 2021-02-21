@@ -15,6 +15,7 @@ export const StyledStartBtn = styled.button`
     padding: 5px;
     letter-spacing: 2px;
     font-weight: bolder;
+    outline: none;
     :hover{
         background-color: #c79dcb;
         color: #1d0424;

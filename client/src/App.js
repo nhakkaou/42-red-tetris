@@ -9,7 +9,7 @@ function App() {
       <source src={song} type="audio/ogg"/>
     Your browser does not support the audio element.
     </audio>
-    <h1>T e t r i s</h1>
+    <h1>1 3 3 7 e t r i s</h1>
     <Tetris/>
     </div>
   );

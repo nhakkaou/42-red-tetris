@@ -1,12 +1,13 @@
 import styled from "styled-components"
 
-export const StyletetrisWrapper = styled.div`
+export const StyledtetrisWrapper = styled.div`
     width: 100vw;
     height: 100vh;
     background-size: cover;
     overflow: hidden;
+    outline: none;
 `
-export const StyleTetris = styled.div`
+export const StyledTetris = styled.div`
     display: flex;
     align-items: flex-start;
     padding: 40px;
