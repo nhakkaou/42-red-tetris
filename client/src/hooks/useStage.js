@@ -1,8 +1,33 @@
-import {useState} from 'react'
-import {Createstage} from '../gameHelper'
+import { useState, useEffect } from "react";
+import { Createstage } from "../gameHelper";
 
-export const useStage = () => {
-    const [stage, setStage] = useState(Createstage());
+export const useStage = (player, resetPlayer) => {
+  const [stage, setStage] = useState(Createstage());
 
-    return [stage, setStage];
-}
+  useEffect(() => {
+    const updateStage = prevStage => {
+      //Flush the stage
+      const newStage = prevStage.map(row => 
+        row.map(cell => (cell[1] === "clear" ? [0, "clear"] : cell)),
+      );
+
+      //draw tetromino
+      player.tetromino.forEach((row, y) => {
+        row.forEach((value, x) => {
+          if (value !== 0) {
+            newStage[y + player.pos.y][x + player.pos.x] = [
+              value,
+              `${player.collided ? "merged" : "clear"}`,
+            ];
+          }
+        });
+      });
+
+      return newStage;
+    };
+    
+    setStage(prev => updateStage(prev));
+  }, [player]);
+
+  return [stage, setStage];
+};
