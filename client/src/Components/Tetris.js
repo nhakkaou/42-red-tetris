@@ -3,7 +3,7 @@ import Stage from "./Stage"
 import StartBtn from "./StartBtn"
 import Display from "./Display"
 import Help from "./Help"
-import {Createstage} from '../gameHelper'
+import {checkcollision, Createstage} from '../gameHelper'
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris"
 import { useStage } from '../hooks/useStage'
 import { usePlayer } from '../hooks/usePlayer'
@@ -19,16 +19,27 @@ const Tetris = () => {
     console.log('re-render');
 
     const movePlayer = dir => {
-        updatePlayerPos({ x: dir, y: 0, collided:false })
+        if(!checkcollision(player, stage, {x: dir, y: 0}))
+            updatePlayerPos({ x: dir, y: 0 })
     }
 
     const startGame = () => {
         setStage(Createstage());
         resetPlayer();
+        setGameOver(false)
     }
 
     const drop = () => {
-        updatePlayerPos({ x: 0, y: 1, collided:false })
+        if(!checkcollision(player, stage, {x: 0, y: 1}))
+            updatePlayerPos({ x: 0, y: 1, collided: false })
+        else
+        {
+            if (player.pos.y < 1){
+                setGameOver(true);
+                setDropTime(null);
+            }
+            updatePlayerPos({ x: 0, y: 0, collided: true })
+        }
     }
 
     const dropPlayer = () => {
