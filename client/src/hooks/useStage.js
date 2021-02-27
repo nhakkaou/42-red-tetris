@@ -26,7 +26,6 @@ export const useStage = (player, resetPlayer) => {
       );
       
       //draw tetromino
-      console.log(player)
       player.tetromino.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value !== 0) {
