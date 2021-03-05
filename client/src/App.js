@@ -1,5 +1,5 @@
 import React from "react";
-import { io } from "socket.io-client";
+import io  from "socket.io-client";
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,15 +10,16 @@ import Signin from "./signin"
 import Home from "./home"
 
 function App() {
-  var connectionOptions =  {
-    "force new connection" : true,
-    "reconnectionAttempts": "Infinity",
-    "timeout" : 10000,
- };
-  const socket = io("http://localhost:4242", {withCredentials: true});
+  console.log("TEST")
+  let socket = io('http://localhost:4242/');
+  console.log(socket)
   socket.on("connection", (socket) => {
-    console.log(socket.handshake.headers); // an object containing "my-custom-header": "1234"
-  });
+    console.log(socket.message)
+  })
+  socket.on("disconnect", (socket) => {
+    console.log("Disconnect")
+  })
+
   return (
     <Router>
     <div>
