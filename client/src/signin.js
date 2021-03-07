@@ -1,11 +1,46 @@
-import "./App.css"
-// import styled from "styled-components"
-import src from './fonts/Pixel-LCD-7.woff'
+import "./App.css";
+import styled from "styled-components";
+import src from "./fonts/Pixel-LCD-7.woff";
+const Styled = styled.input`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 20px;
+  border: 4px solid #333;
+  min-height: 30px;
+  width: 50%;
+  color: #ffffff;
+  background: #000;
+  font-size: 1.8 rem;
+`;
+const Button = styled.input`
+  box-sizing: border-box;
+  display: flex;
+
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 20px;
+  border: 4px solid #333;
+  min-height: 30px;
+  width: 20%;
+  color: #ffffff;
+  background: #000;
+  font-size: 16px;
+  text-align: center;
+  cursor: wait;
+  :hover {
+    background: #333;
+  }
+`;
 function App() {
   return (
     <div className="App">
-    <h1>1 3 3 7 e t r i s</h1>
-    <label>JKGKGHJGJGJGJHGJG</label>
+      <h1>1 3 3 7 e t r i s</h1>
+      <Styled placeholder="Username" />
+      <Styled placeholder="Room Id" />
+      <Button type="submit" value="Submit" />
     </div>
   );
 }
