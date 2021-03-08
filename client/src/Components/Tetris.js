@@ -8,9 +8,15 @@ import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
 import url from "../img/tetriminos.mp3";
-// const [playing, setPlaying] = useState(true);
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GameOver from "./GameOver";
+import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+const Label = styled.label`
+  cursor: pointer;
+`;
 const Tetris = () => {
+  const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
   useEffect(() => {
     audio.addEventListener("ended", () => audio.play());
@@ -94,10 +100,30 @@ const Tetris = () => {
       <StyledTetris>
         <Stage stage={stage} />
         <aside>
+          <Label>
+            {playing ? (
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(false);
+                  audio.pause();
+                }}
+                icon={faVolumeUp}
+              />
+            ) : (
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
+          </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
-            <Display gameOver={gameOver} text="Game Over" />
+            <GameOver />
           ) : (
+            // <Display gameOver={gameOver} text="Game Over" />
             <div>
               <Display text={`Level: ${level}`} />
               <Help />
