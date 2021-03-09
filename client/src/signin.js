@@ -1,6 +1,6 @@
 import "./App.css";
 import styled from "styled-components";
-import src from "./fonts/Pixel-LCD-7.woff";
+import { useState } from "react";
 const Styled = styled.input`
   box-sizing: border-box;
   display: flex;
@@ -28,20 +28,28 @@ const Button = styled.input`
   color: #ffffff;
   background: #000;
   font-size: 16px;
-  cursor: wait;
+  cursor: pointer;
   :hover {
     background: #333;
   }
 `;
-function App() {
+
+const App = () => {
+  function adduser() {
+    // setFullWidth(e.target.value);
+    localStorage.setItem("Usr", fullWidth);
+  }
+  const [fullWidth, setFullWidth] = useState("true");
   return (
     <div className="App">
-      <h1>1 3 3 7 e t r i s</h1>
-      <Styled placeholder="Username" />
-      <Styled placeholder="Room Id" />
-      <Button type="submit" value="Submit" />
+      <Styled
+        placeholder="Username"
+        onChange={(e) => setFullWidth(e.target.value)}
+      />
+      {/* <Styled placeholder="Room Id" /> */}
+      <Button type="submit" onClick={() => adduser()} value="Submit" />
     </div>
   );
-}
+};
 
 export default App;

@@ -49,10 +49,6 @@ const Tetris = () => {
   };
 
   const drop = () => {
-    if (rows > level + 1 * 10) {
-      setLevel((prev) => prev + 1);
-      setDropTime(1000 / level + 1 + 200);
-    }
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
@@ -62,13 +58,17 @@ const Tetris = () => {
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
+    if (rows > level + 1 * 10) {
+      setLevel((prev) => prev + 1);
+      setDropTime(1000 / level + 1 + 200);
+    }
   };
 
   const keyUp = ({ keyCode }) => {
     if (!gameOver && keyCode === 40) {
       if (level == 0) setDropTime(1000);
       else setDropTime(1000 / level + 1 + 200);
-      console.log(1000 / level + 1 + 200);
+      // console.log(1000 / level + 1 + 200);
     }
   };
 
@@ -82,7 +82,9 @@ const Tetris = () => {
       if (keyCode === 37) movePlayer(-1);
       else if (keyCode === 39) movePlayer(1);
       else if (keyCode === 40) dropPlayer();
-      else if (keyCode === 38) playerRotate(stage, 1);
+      else if (keyCode === 38) {
+        if (player.tetromino[0][1] != "D") playerRotate(stage, 1);
+      }
     }
   };
 
