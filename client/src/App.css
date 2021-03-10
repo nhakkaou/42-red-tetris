@@ -28,8 +28,3 @@ h1 {
   text-align: center;
   padding-top: 100px;
 }
-
-label {
-  font-family: "MyFont";
-  src: local("MyFont"), url("./fonts/Pixel-LCD-7.woff") format("woff");
-}

@@ -12,11 +12,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import io from "socket.io-client";
 
 const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
+  const socket = io("http://localhost:4242/", {
+    query: {
+      usr: localStorage.getItem("Usr"),
+    },
+  });
+
+  socket.on("connection", (socket) => {
+    console.log("socket.message");
+  });
+  socket.on("disconnect", (socket) => {
+    console.log("Server Down");
+  });
   const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
   useEffect(() => {
@@ -26,6 +39,7 @@ const Tetris = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+  socket.emit("tetrimino", { trm: player.tetrimino });
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
@@ -69,7 +83,6 @@ const Tetris = () => {
     if (!gameOver && keyCode === 40) {
       if (level == 0) setDropTime(1000);
       else setDropTime(1000 / level + 1 + 200);
-      // console.log(1000 / level + 1 + 200);
     }
   };
 
@@ -80,7 +93,6 @@ const Tetris = () => {
 
   const move = ({ keyCode }) => {
     if (!gameOver) {
-      // socket.emit("movePlayer", { key: keyCode });
       if (keyCode === 37) movePlayer(-1);
       else if (keyCode === 39) movePlayer(1);
       else if (keyCode === 40) dropPlayer();

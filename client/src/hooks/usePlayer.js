@@ -6,7 +6,7 @@ export const usePlayer = () => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
-      y: -10,
+      y: 0,
     },
     tetromino: Tetrominos[0].shape,
     collided: false,
@@ -49,7 +49,7 @@ export const usePlayer = () => {
 
   const resetPlayer = useCallback(() => {
     setPlayer({
-      pos: { x: S_WIDTH / 2 - 2, y: 0 },
+      pos: { x: S_WIDTH / 2 - 1, y: 0 },
       tetromino: randomTetromino().shape,
       collided: false,
     });
