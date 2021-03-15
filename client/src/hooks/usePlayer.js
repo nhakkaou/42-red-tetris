@@ -47,12 +47,25 @@ export const usePlayer = () => {
     }));
   };
 
-  const resetPlayer = useCallback(() => {
-    setPlayer({
-      pos: { x: S_WIDTH / 2 - 1, y: 0 },
-      tetromino: randomTetromino().shape,
-      collided: false,
-    });
+  const resetPlayer = useCallback((stage) => {
+    let sym = 0;
+    if (!stage)
+      setPlayer({
+        pos: { x: S_WIDTH / 2 - 1, y: 0 },
+        tetromino: randomTetromino().shape,
+        collided: false,
+      });
+    else {
+      for (let i = 0; i < stage[0].length; i++) {
+        if (stage[0][i][1] == "merged") sym = 1;
+      }
+      if (sym == 0)
+        setPlayer({
+          pos: { x: S_WIDTH / 2 - 1, y: 0 },
+          tetromino: randomTetromino().shape,
+          collided: false,
+        });
+    }
   }, []);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];
