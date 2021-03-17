@@ -24,30 +24,41 @@ const Button = styled.input`
   border-radius: 20px;
   border: 4px solid #333;
   min-height: 30px;
-  width: 8%;
+  width: auto;
   color: #ffffff;
   background: #000;
   font-size: 16px;
   cursor: pointer;
   :hover {
     background: #333;
+    .test {
+      display: none;
+    }
   }
 `;
 
 const App = () => {
+  let user = localStorage.getItem("Usr");
   function adduser() {
     // setFullWidth(e.target.value);
     localStorage.setItem("Usr", fullWidth);
   }
   const [fullWidth, setFullWidth] = useState("true");
-  return (
+  return typeof user == "object" ? (
     <div className="App">
+      {user}
       <Styled
         placeholder="Username"
         onChange={(e) => setFullWidth(e.target.value)}
       />
       {/* <Styled placeholder="Room Id" /> */}
       <Button type="submit" onClick={() => adduser()} value="Submit" />
+    </div>
+  ) : (
+    <div>
+      <Button type="submit" value="Create Room" />
+      <Button className="test" type="submit" value="Join Room" />
+      <Button type="submit" value="Play Solo" />
     </div>
   );
 };

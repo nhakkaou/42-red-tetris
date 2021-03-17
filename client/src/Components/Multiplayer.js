@@ -67,7 +67,7 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
-      if (player.pos.y < 1) {
+      if (stage[0][10 / 2][1] == "merged") {
         setGameOver(true);
         setDropTime(null);
       }

@@ -56,8 +56,10 @@ export const usePlayer = () => {
         collided: false,
       });
     else {
-      for (let i = 0; i < stage[0].length; i++) {
-        if (stage[0][i][1] == "merged") sym = 1;
+      // for (let i = 0; i < stage[0].length; i++) {
+      if (stage[0][S_WIDTH / 2][1] == "merged") {
+        console.log(stage[0][S_WIDTH / 2 - 1]);
+        sym = 1;
       }
       if (sym == 0)
         setPlayer({
