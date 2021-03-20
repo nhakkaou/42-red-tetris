@@ -3,7 +3,7 @@ import Stage from "./Stage";
 import StartBtn from "./StartBtn";
 import Display from "./Display";
 import Help from "./Help";
-import { checkcollision, Createstage } from "../gameHelper";
+import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
@@ -91,6 +91,22 @@ const Tetris = () => {
     drop();
   };
 
+  const verticalDrop = () => {
+    let tmp = 0;
+    for (let i = 0; i < S_HEIGHT; i++) {
+      if (checkcollision(player, stage, { x: 0, y: i })) {
+        tmp = i;
+        break;
+      }
+    }
+    for (let i = tmp; i > 0; i--) {
+      if (!checkcollision(player, stage, { x: 0, y: i })) {
+        updatePlayerPos({ x: 0, y: i, collided: true });
+        break;
+      }
+    }
+  };
+
   const move = ({ keyCode }) => {
     if (!gameOver) {
       if (keyCode === 37) movePlayer(-1);
@@ -99,6 +115,7 @@ const Tetris = () => {
       else if (keyCode === 38) {
         if (player.tetromino[0][1] != "D") playerRotate(stage, 1);
       }
+      else if (keyCode === 32) verticalDrop();
     }
   };
 
@@ -126,25 +143,25 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-            // <Display gameOver={gameOver} text="Game Over" />
-            <div>
-              <Display text={`Level: ${level}`} />
-              <Help />
-            </div>
-          )}
+              // <Display gameOver={gameOver} text="Game Over" />
+              <div>
+                <Display text={`Level: ${level}`} />
+                <Help />
+              </div>
+            )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>
