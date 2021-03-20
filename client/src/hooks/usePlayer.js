@@ -61,12 +61,19 @@ export const usePlayer = () => {
         console.log(stage[0][S_WIDTH / 2 - 1]);
         sym = 1;
       }
-      if (sym == 0)
-        setPlayer({
+      if (sym == 0) {
+        let tet = {
           pos: { x: S_WIDTH / 2 - 1, y: 0 },
           tetromino: randomTetromino().shape,
           collided: false,
-        });
+        };
+        if (!checkcollision(tet, stage, { x: 0, y: 0 }))
+          setPlayer({
+            pos: { x: S_WIDTH / 2 - 1, y: 0 },
+            tetromino: tet.tetromino,
+            collided: false,
+          });
+      }
     }
   }, []);
 
