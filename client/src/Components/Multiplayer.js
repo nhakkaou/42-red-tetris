@@ -127,7 +127,7 @@ const Tetris = () => {
       role="button"
       tabIndex="0"
       onKeyDown={move}
-      onKeyUp={keyUp}
+      onKeyUp={event => { event.preventDefault(); keyUp(event) }}
     >
       <StyledTetris>
         <Stage stage={stage} />
