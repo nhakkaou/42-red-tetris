@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Createstage } from "../gameHelper";
 
-export const useStage = (player, resetPlayer) => {
+export const useStage = (player, resetPlayer, gameOver) => {
   const [stage, setStage] = useState(Createstage());
   const [rowsCleared, setRowsCleared] = useState(0);
 
@@ -35,7 +35,7 @@ export const useStage = (player, resetPlayer) => {
           }
         });
       });
-      if (player.collided) {
+      if (player.collided && !gameOver) {
         resetPlayer(newStage);
         return sweepRows(newStage);
       }

@@ -38,14 +38,13 @@ const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(setGameOver);
   // socket.emit("tetrimino", { trm: player.tetrimino });
-  const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
+  const [stage, setStage, rowsCleared] = useStage(player, resetPlayer, gameOver);
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
   );
-  //console.log('re-render');
 
   const movePlayer = (dir) => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
@@ -67,7 +66,7 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
-      if (stage[0][10 / 2][1] == "merged") {
+      if (player.pos.y < 1) {
         setGameOver(true);
         setDropTime(null);
       }
@@ -156,7 +155,6 @@ const Tetris = () => {
           {gameOver ? (
             <GameOver />
           ) : (
-              // <Display gameOver={gameOver} text="Game Over" />
               <div>
                 <Display text={`Level: ${level}`} />
                 <Help />

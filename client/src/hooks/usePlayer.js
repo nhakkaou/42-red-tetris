@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
 
-export const usePlayer = () => {
+export const usePlayer = (setGameOver) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -48,33 +48,27 @@ export const usePlayer = () => {
   };
 
   const resetPlayer = useCallback((stage) => {
-    let sym = 0;
-    if (!stage)
+    let tet = {
+      pos: { x: S_WIDTH / 2 - 1, y: 0 },
+      tetromino: randomTetromino().shape,
+      collided: false,
+    };
+    if (stage) {
+      if (!checkcollision(tet, stage, { x: 0, y: 0 }))
+        setPlayer({
+          pos: { x: S_WIDTH / 2 - 1, y: 0 },
+          tetromino: tet.tetromino,
+          collided: false,
+        });
+      else
+        setGameOver(true);
+    }
+    else
       setPlayer({
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
-        tetromino: randomTetromino().shape,
+        tetromino: tet.tetromino,
         collided: false,
       });
-    else {
-      // for (let i = 0; i < stage[0].length; i++) {
-      if (stage[0][S_WIDTH / 2][1] == "merged") {
-        console.log(stage[0][S_WIDTH / 2 - 1]);
-        sym = 1;
-      }
-      if (sym == 0) {
-        let tet = {
-          pos: { x: S_WIDTH / 2 - 1, y: 0 },
-          tetromino: randomTetromino().shape,
-          collided: false,
-        };
-        if (!checkcollision(tet, stage, { x: 0, y: 0 }))
-          setPlayer({
-            pos: { x: S_WIDTH / 2 - 1, y: 0 },
-            tetromino: tet.tetromino,
-            collided: false,
-          });
-      }
-    }
   }, []);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];
