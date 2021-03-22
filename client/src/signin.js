@@ -1,6 +1,8 @@
 import "./App.css";
 import styled from "styled-components";
 import { useState } from "react";
+import io from "socket.io-client";
+
 const Styled = styled.input`
   box-sizing: border-box;
   display: flex;
@@ -38,11 +40,26 @@ const Button = styled.input`
 `;
 
 const App = () => {
+  const socket = io("http://localhost:4242/", {
+    query: {
+      usr: localStorage.getItem("Usr"),
+    },
+  });
+
+  socket.on("connection", (socket) => {});
+  socket.on("disconnect", (socket) => {
+    console.log("Server Down");
+  });
+
   const [sym, setSym] = useState(0);
+  const [Room, setRoomname] = useState("");
   let user = localStorage.getItem("Usr");
   function adduser() {
-    // setFullWidth(e.target.value);
     localStorage.setItem("Usr", fullWidth);
+  }
+  function addRoom() {
+    console.log(Room);
+    socket.emit("CreateRoom", { name: Room });
   }
   const [fullWidth, setFullWidth] = useState("true");
   return typeof user == "object" ? (
@@ -52,14 +69,21 @@ const App = () => {
         placeholder="Username"
         onChange={(e) => setFullWidth(e.target.value)}
       />
-      {/* <Styled placeholder="Room Id" /> */}
       <Button type="submit" onClick={() => adduser()} value="Submit" />
     </div>
   ) : (
     <div>
       <Button type="submit" onClick={() => setSym(1)} value="Create Room" />
       {sym == 1 ? (
-        <Button type="text" placeholder="Room name" />
+        <>
+          <Button
+            type="text"
+            placeholder="Room name"
+            onChange={(e) => setRoomname(e.target.value)}
+            value={Room}
+          />
+          <Button type="submit" onClick={() => addRoom()} value="Submit" />
+        </>
       ) : (
         <>
           <Button className="test" type="submit" value="Join Room" />

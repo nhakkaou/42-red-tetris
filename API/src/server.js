@@ -22,6 +22,10 @@ class Server {
         socket.on("tetrimino", (message) => {
           console.log(message);
         });
+        socket.on("CreateRoom", (message) => {
+          // console.log(message.Name);
+          console.log(socket.rooms);
+        });
         // console.log(socket.rooms);
         // console.log(users);
       })
