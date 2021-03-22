@@ -38,6 +38,7 @@ const Button = styled.input`
 `;
 
 const App = () => {
+  const [sym, setSym] = useState(0);
   let user = localStorage.getItem("Usr");
   function adduser() {
     // setFullWidth(e.target.value);
@@ -56,9 +57,15 @@ const App = () => {
     </div>
   ) : (
     <div>
-      <Button type="submit" value="Create Room" />
-      <Button className="test" type="submit" value="Join Room" />
-      <Button type="submit" value="Play Solo" />
+      <Button type="submit" onClick={() => setSym(1)} value="Create Room" />
+      {sym == 1 ? (
+        <Button type="text" placeholder="Room name" />
+      ) : (
+        <>
+          <Button className="test" type="submit" value="Join Room" />
+          <Button type="submit" value="Play Solo" />
+        </>
+      )}
     </div>
   );
 };
