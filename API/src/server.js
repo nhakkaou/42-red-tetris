@@ -2,20 +2,26 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const rnd = require("./helpers");
 class Server {
   constructor() {
     let users = [{ admin: 0, id: "", user: "" }];
+    let rooms = [{ user: "", room: "" }];
+    let t = "";
     this.app = express();
     this.app.use(bodyParser.json());
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: process.env.URL_SERVER,
+        credentials: true,
+      })
+    );
     this.http = http.Server(this.app);
     this.io = require("socket.io")(this.http);
     this.io
       .on("connection", function (socket) {
         if (socket.handshake.query.usr.length > 0) {
           users.push({ id: socket.id, user: socket.handshake.query.usr });
-          socket.join("GHORFA");
         }
 
         socket.emit("connection", { message: "Server good!!" });
@@ -23,15 +29,33 @@ class Server {
           console.log(message);
         });
         socket.on("CreateRoom", (message) => {
-          // console.log(message.Name);
+          let sym = 0;
+          for (let i = 0; i < rooms.length; i++)
+            if (rooms[i].room == message.name) {
+              sym = 1;
+              socket.emit("CreateRoom", { err: "Room Existe" });
+              break;
+            }
+          if (sym == 0) {
+            socket.join(message.name);
+            rooms.push({
+              user: socket.handshake.query.usr,
+              room: message.name,
+            });
+            socket.emit("CreateRoom", { msg: "Room created" });
+          }
           console.log(socket.rooms);
+          // console.log(JSON.parse(socket.rooms))
         });
-        // console.log(socket.rooms);
         // console.log(users);
       })
       .on("disconnect", function (socket) {
         socket.emit("disconnect", { message: "Server Down!!" });
       });
+    this.app.get("/", async (req, res) => {
+      let rs = await rnd;
+      res.send(rs);
+    });
   }
   listen() {
     this.http.listen(4242, () => {
