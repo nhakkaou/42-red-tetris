@@ -25,8 +25,9 @@ class Server {
         }
 
         socket.emit("connection", { message: "Server good!!" });
-        socket.on("tetrimino", (message) => {
-          console.log(message);
+        socket.on("tetrimino", async () => {
+          let rs = await rnd;
+          if (rs.length > 0) socket.emit("tetrimino", rs);
         });
         socket.on("CreateRoom", (message) => {
           let sym = 0;
@@ -52,10 +53,6 @@ class Server {
       .on("disconnect", function (socket) {
         socket.emit("disconnect", { message: "Server Down!!" });
       });
-    this.app.get("/", async (req, res) => {
-      let rs = await rnd;
-      res.send(rs);
-    });
   }
   listen() {
     this.http.listen(4242, () => {

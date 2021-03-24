@@ -12,21 +12,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-// import io from "socket.io-client";
+import io from "socket.io-client";
+import { Tetrominos } from "../tetrominos";
 
 const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
+  // const [tetriminos, SetTetrs] = useState([]);
+  // const [index, setIndx] = useState(0);
   // const socket = io("http://localhost:4242/", {
   //   query: {
   //     usr: localStorage.getItem("Usr"),
   //   },
   // });
-
-  // socket.on("connection", (socket) => {
-  //   console.log("socket.message");
-  // });
+  // useEffect(() => {
+  //   if (tetriminos.length <= 5) socket.emit("tetrimino");
+  // }, [tetriminos]);
+  // socket.on("connection", (sk) => {});
   // socket.on("disconnect", (socket) => {
   //   console.log("Server Down");
   // });
@@ -38,9 +41,15 @@ const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(setGameOver);
+  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
+    setGameOver
+  );
   // socket.emit("tetrimino", { trm: player.tetrimino });
-  const [stage, setStage, rowsCleared] = useStage(player, resetPlayer, gameOver);
+  const [stage, setStage, rowsCleared] = useStage(
+    player,
+    resetPlayer,
+    gameOver
+  );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
@@ -51,10 +60,14 @@ const Tetris = () => {
       updatePlayerPos({ x: dir, y: 0 });
   };
 
-  const startGame = () => {
+  const startGame = async () => {
     audio.play();
+    socket.emit("tetrimino");
     setStage(Createstage());
     setDropTime(1000);
+    // await socket.on("tetrimino", (msg) => {
+    //   SetTetrs([msg]);
+    // });
     resetPlayer();
     setGameOver(false);
     setScore(0);
@@ -113,8 +126,7 @@ const Tetris = () => {
       else if (keyCode === 40) dropPlayer();
       else if (keyCode === 38) {
         if (player.tetromino[0][1] != "D") playerRotate(stage, 1);
-      }
-      else if (keyCode === 32) verticalDrop();
+      } else if (keyCode === 32) verticalDrop();
     }
   };
 
@@ -127,7 +139,10 @@ const Tetris = () => {
       role="button"
       tabIndex="0"
       onKeyDown={move}
-      onKeyUp={event => { event.preventDefault(); keyUp(event) }}
+      onKeyUp={(event) => {
+        event.preventDefault();
+        keyUp(event);
+      }}
     >
       <StyledTetris>
         <Stage stage={stage} />
@@ -142,24 +157,24 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-              <div>
-                <Display text={`Level: ${level}`} />
-                <Help />
-              </div>
-            )}
+            <div>
+              <Display text={`Level: ${level}`} />
+              <Help />
+            </div>
+          )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>

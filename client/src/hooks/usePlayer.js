@@ -21,8 +21,28 @@ export const usePlayer = (setGameOver) => {
   };
 
   const playerRotate = (stage, dir) => {
+    let sym = 0;
     const clonedPlayer = JSON.parse(JSON.stringify(player));
-    clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
+    if (clonedPlayer.tetromino.length === 4) {
+      for (let i = 0; i < clonedPlayer.tetromino[0].length; i++)
+        if (clonedPlayer.tetromino[0][i] !== "I") {
+          sym = 1;
+          break;
+        }
+      sym == 1
+        ? (clonedPlayer.tetromino = [
+            ["I", "I", "I", "I"],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+          ])
+        : (clonedPlayer.tetromino = [
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+          ]);
+    } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
     let offset = 1;
@@ -50,6 +70,7 @@ export const usePlayer = (setGameOver) => {
   const resetPlayer = useCallback((stage) => {
     let tet = {
       pos: { x: S_WIDTH / 2 - 1, y: 0 },
+      // tetromino: tetromino ? tetromino.shape : randomTetromino().shape,
       tetromino: randomTetromino().shape,
       collided: false,
     };
@@ -60,10 +81,8 @@ export const usePlayer = (setGameOver) => {
           tetromino: tet.tetromino,
           collided: false,
         });
-      else
-        setGameOver(true);
-    }
-    else
+      else setGameOver(true);
+    } else
       setPlayer({
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
         tetromino: tet.tetromino,
