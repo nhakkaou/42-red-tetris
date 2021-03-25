@@ -1,8 +1,13 @@
 import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
+import { useSelector } from "react-redux";
 
-export const usePlayer = (setGameOver) => {
+export const usePlayer = (setGameOver, dispatch) => {
+  const stateTetrominos = useSelector((state) => {
+    console.log("STATE >", state.player.tetrominos[0]);
+    return state.player.tetrominos;
+  });
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -68,12 +73,15 @@ export const usePlayer = (setGameOver) => {
   };
 
   const resetPlayer = useCallback((stage) => {
+    console.log("stateTetrominos");
+    console.log(stateTetrominos);
     let tet = {
       pos: { x: S_WIDTH / 2 - 1, y: 0 },
       // tetromino: tetromino ? tetromino.shape : randomTetromino().shape,
-      tetromino: randomTetromino().shape,
+      tetromino: stateTetrominos[0] && stateTetrominos[0].shape,
       collided: false,
     };
+    console.log("tet", tet);
     if (stage) {
       if (!checkcollision(tet, stage, { x: 0, y: 0 }))
         setPlayer({

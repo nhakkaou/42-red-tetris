@@ -13,26 +13,29 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import io from "socket.io-client";
-import { Tetrominos } from "../tetrominos";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_PLAYER } from "../actions/playerAction";
 
 const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
-  // const [tetriminos, SetTetrs] = useState([]);
-  // const [index, setIndx] = useState(0);
-  // const socket = io("http://localhost:4242/", {
-  //   query: {
-  //     usr: localStorage.getItem("Usr"),
-  //   },
-  // });
-  // useEffect(() => {
-  //   if (tetriminos.length <= 5) socket.emit("tetrimino");
-  // }, [tetriminos]);
-  // socket.on("connection", (sk) => {});
-  // socket.on("disconnect", (socket) => {
-  //   console.log("Server Down");
-  // });
+  const [tetriminos, SetTetrs] = useState([]);
+  const [index, setIndx] = useState(0);
+  const dispatch = useDispatch();
+
+  const socket = io("http://localhost:4242/", {
+    query: {
+      usr: localStorage.getItem("Usr"),
+    },
+  });
+  useEffect(() => {
+    if (tetriminos.length <= 15) socket.emit("tetrimino");
+  }, [tetriminos]);
+  socket.on("connection", (sk) => {});
+  socket.on("disconnect", (socket) => {
+    console.log("Server Down");
+  });
   const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
   useEffect(() => {
@@ -42,7 +45,8 @@ const Tetris = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
-    setGameOver
+    setGameOver,
+    dispatch
   );
   // socket.emit("tetrimino", { trm: player.tetrimino });
   const [stage, setStage, rowsCleared] = useStage(
@@ -65,14 +69,16 @@ const Tetris = () => {
     socket.emit("tetrimino");
     setStage(Createstage());
     setDropTime(1000);
-    // await socket.on("tetrimino", (msg) => {
-    //   SetTetrs([msg]);
-    // });
-    resetPlayer();
-    setGameOver(false);
-    setScore(0);
-    setRows(0);
-    setLevel(0);
+    await socket.on("tetrimino", (msg) => {
+      console.log(msg);
+      dispatch({ type: UPDATE_PLAYER, data: msg });
+
+      resetPlayer();
+      setGameOver(false);
+      setScore(0);
+      setRows(0);
+      setLevel(0);
+    });
   };
 
   const drop = () => {
