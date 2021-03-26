@@ -53,6 +53,11 @@ class Server {
       .on("disconnect", function (socket) {
         socket.emit("disconnect", { message: "Server Down!!" });
       });
+    this.app.get("/home", (req, res) => {
+      let rst = rnd;
+      console.log(rst);
+      res.send(rst);
+    });
   }
   listen() {
     this.http.listen(4242, () => {

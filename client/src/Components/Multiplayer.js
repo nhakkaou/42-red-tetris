@@ -20,18 +20,26 @@ const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
-  const [tetriminos, SetTetrs] = useState([]);
-  const [index, setIndx] = useState(0);
   const dispatch = useDispatch();
-
+  let stateTetrominos = useSelector((state) => {
+    //console.log("STATE >", state.player.tetrominos);
+    return state.player.tetrominos;
+  });
+  const [stateTetrominosTmp, SetTetrs] = useState(stateTetrominos);
   const socket = io("http://localhost:4242/", {
     query: {
       usr: localStorage.getItem("Usr"),
     },
   });
   useEffect(() => {
-    if (tetriminos.length <= 15) socket.emit("tetrimino");
-  }, [tetriminos]);
+    console.log("STATEDZB", stateTetrominos);
+    SetTetrs(stateTetrominos);
+    if (stateTetrominos.length <= 5) {
+      console.log("Length", stateTetrominos.length);
+
+      socket.emit("tetrimino");
+    }
+  }, [stateTetrominos]);
   socket.on("connection", (sk) => {});
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
@@ -46,7 +54,8 @@ const Tetris = () => {
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
-    dispatch
+    dispatch,
+    stateTetrominosTmp
   );
   // socket.emit("tetrimino", { trm: player.tetrimino });
   const [stage, setStage, rowsCleared] = useStage(
@@ -63,22 +72,23 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
       updatePlayerPos({ x: dir, y: 0 });
   };
+  socket.on("tetrimino", (msg) => {
+    console.log("HA LMSG", msg);
+    const data = [...stateTetrominos, ...msg];
+    dispatch({ type: UPDATE_PLAYER, data: data });
+    console.log("HA STATE", stateTetrominos);
+  });
 
-  const startGame = async () => {
+  const startGame = () => {
     audio.play();
-    socket.emit("tetrimino");
+    // socket.emit("tetrimino");
     setStage(Createstage());
     setDropTime(1000);
-    await socket.on("tetrimino", (msg) => {
-      console.log(msg);
-      dispatch({ type: UPDATE_PLAYER, data: msg });
-
-      resetPlayer();
-      setGameOver(false);
-      setScore(0);
-      setRows(0);
-      setLevel(0);
-    });
+    resetPlayer();
+    setGameOver(false);
+    setScore(0);
+    setRows(0);
+    setLevel(0);
   };
 
   const drop = () => {
@@ -95,6 +105,7 @@ const Tetris = () => {
       setLevel((prev) => prev + 1);
       setDropTime(1000 / level + 1 + 200);
     }
+    // socket.emit("tetrimino");
   };
 
   const keyUp = ({ keyCode }) => {
