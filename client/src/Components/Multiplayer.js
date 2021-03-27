@@ -13,33 +13,41 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import io from "socket.io-client";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 
 const Label = styled.label`
   cursor: pointer;
 `;
-const Tetris = () => {
+const Tetris = (props) => {
   const dispatch = useDispatch();
-  let stateTetrominos = useSelector((state) => {
-    //console.log("STATE >", state.player.tetrominos);
-    return state.player.tetrominos;
-  });
-  const [stateTetrominosTmp, SetTetrs] = useState(stateTetrominos);
+
+  // const props.tetris = useSelector((state) => {
+  //   //console.log("STATE >", state.player.tetrominos);
+  //   return state.player.tetrominos;
+  // });
+
+  // console.log("STATEDZB", props.tetris);
   const socket = io("http://localhost:4242/", {
     query: {
       usr: localStorage.getItem("Usr"),
     },
   });
-  useEffect(() => {
-    console.log("STATEDZB", stateTetrominos);
-    SetTetrs(stateTetrominos);
-    if (stateTetrominos.length <= 5) {
-      console.log("Length", stateTetrominos.length);
 
+  /*************** */
+  useEffect(() => {
+    // console.log("Length", props.tetris.length);
+    if (props.tetris.length <= 5) {
       socket.emit("tetrimino");
     }
-  }, [stateTetrominos]);
+    socket.on("tetrimino", (msg) => {
+      console.log("HA LMSG", msg);
+      // let data = props.tetris;
+      // data = [...data, ...msg];
+      dispatch({ type: UPDATE_PLAYER, data: [...props.tetris, ...msg] });
+    });
+  }, [props.tetris]);
+  /*************** */
   socket.on("connection", (sk) => {});
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
@@ -54,8 +62,7 @@ const Tetris = () => {
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
-    dispatch,
-    stateTetrominosTmp
+    dispatch
   );
   // socket.emit("tetrimino", { trm: player.tetrimino });
   const [stage, setStage, rowsCleared] = useStage(
@@ -72,12 +79,6 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
       updatePlayerPos({ x: dir, y: 0 });
   };
-  socket.on("tetrimino", (msg) => {
-    console.log("HA LMSG", msg);
-    const data = [...stateTetrominos, ...msg];
-    dispatch({ type: UPDATE_PLAYER, data: data });
-    console.log("HA STATE", stateTetrominos);
-  });
 
   const startGame = () => {
     audio.play();
@@ -198,4 +199,8 @@ const Tetris = () => {
     </StyledtetrisWrapper>
   );
 };
-export default Tetris;
+const mapStateToProps = (state) => ({
+  tetris: state.player.tetrominos,
+});
+
+export default connect(mapStateToProps, {})(Tetris);

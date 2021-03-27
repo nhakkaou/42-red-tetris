@@ -94,9 +94,9 @@ export default function (state = DEFAULT_STATE, action) {
       return { tetrominos: [...action.data] };
     case DELETE_PLAYER: {
       // let res = action.data;
-      // res.shift();
-      console.log(action.data);
-      return { tetrominos: [, ...action.data] };
+      action.data.shift();
+      // console.log(action.data);
+      return { tetrominos: [...action.data] };
     }
     default:
       return state;
