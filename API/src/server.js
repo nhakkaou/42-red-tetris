@@ -27,7 +27,7 @@ class Server {
         socket.emit("connection", { message: "Server good!!" });
         socket.on("tetrimino", async () => {
           let rs = await rnd;
-          if (rs.length > 0) socket.emit("tetrimino", rs);
+          if (rs.length > 0) socket.emit("new_tetriminos", rs);
         });
         socket.on("CreateRoom", (message) => {
           let sym = 0;

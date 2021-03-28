@@ -1,4 +1,4 @@
-import { UPDATE_PLAYER, DELETE_PLAYER } from "../actions/playerAction";
+import { UPDATE_PLAYER } from "../actions/playerAction";
 
 const DEFAULT_STATE = {
   tetrominos: [
@@ -90,13 +90,9 @@ const DEFAULT_STATE = {
 
 export default function (state = DEFAULT_STATE, action) {
   switch (action.type) {
-    case UPDATE_PLAYER:
+    case UPDATE_PLAYER: {
+      //console.log(action.data)
       return { tetrominos: [...action.data] };
-    case DELETE_PLAYER: {
-      // let res = action.data;
-      // res.shift();
-      console.log(action.data);
-      return { tetrominos: [, ...action.data] };
     }
     default:
       return state;
