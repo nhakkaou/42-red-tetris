@@ -13,58 +13,53 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import io from "socket.io-client";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 
 const Label = styled.label`
   cursor: pointer;
 `;
-const Tetris = (props) => {
+const Tetris = () => {
   const dispatch = useDispatch();
-
-  // const props.tetris = useSelector((state) => {
-  //   //console.log("STATE >", state.player.tetrominos);
-  //   return state.player.tetrominos;
-  // });
-
-  // console.log("STATEDZB", props.tetris);
+  let stateTetrominos = useSelector((state) => {
+    return state.player.tetrominos;
+  });
   const socket = io("http://localhost:4242/", {
     query: {
       usr: localStorage.getItem("Usr"),
     },
   });
-
-  /*************** */
-  useEffect(() => {
-    // console.log("Length", props.tetris.length);
-    if (props.tetris.length <= 5) {
-      socket.emit("tetrimino");
-    }
-    socket.on("tetrimino", (msg) => {
-      console.log("HA LMSG", msg);
-      // let data = props.tetris;
-      // data = [...data, ...msg];
-      dispatch({ type: UPDATE_PLAYER, data: [...props.tetris, ...msg] });
-    });
-  }, [props.tetris]);
-  /*************** */
-  socket.on("connection", (sk) => {});
+  socket.on("connection", (sk) => { });
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
+
+  useEffect(() => {
+    if (stateTetrominos.length <= 5) {
+      socket.emit("tetrimino");
+    }
+    socket.on("new_tetriminos", (msg) => {
+      const data = [...stateTetrominos, ...msg];
+      dispatch({ type: UPDATE_PLAYER, data: data });
+    });
+
+  }, [stateTetrominos]);
+
   const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
   useEffect(() => {
     audio.addEventListener("ended", () => audio.play());
   }, []);
+
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
-    dispatch
+    dispatch,
+    stateTetrominos
   );
-  // socket.emit("tetrimino", { trm: player.tetrimino });
+
   const [stage, setStage, rowsCleared] = useStage(
     player,
     resetPlayer,
@@ -82,7 +77,6 @@ const Tetris = (props) => {
 
   const startGame = () => {
     audio.play();
-    // socket.emit("tetrimino");
     setStage(Createstage());
     setDropTime(1000);
     resetPlayer();
@@ -106,7 +100,6 @@ const Tetris = (props) => {
       setLevel((prev) => prev + 1);
       setDropTime(1000 / level + 1 + 200);
     }
-    // socket.emit("tetrimino");
   };
 
   const keyUp = ({ keyCode }) => {
@@ -175,32 +168,28 @@ const Tetris = (props) => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-            <div>
-              <Display text={`Level: ${level}`} />
-              <Help />
-            </div>
-          )}
+              <div>
+                <Display text={`Level: ${level}`} />
+                <Help />
+              </div>
+            )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>
   );
 };
-const mapStateToProps = (state) => ({
-  tetris: state.player.tetrominos,
-});
-
-export default connect(mapStateToProps, {})(Tetris);
+export default Tetris;

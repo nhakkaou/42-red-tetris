@@ -2,13 +2,9 @@ import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
 import { useSelector } from "react-redux";
-import { DELETE_PLAYER } from "../actions/playerAction";
+import { UPDATE_PLAYER } from "../actions/playerAction";
 
-export const usePlayer = (setGameOver, dispatch) => {
-  const stateTetrominos = useSelector((state) => {
-    //console.log("STATE >", state.player.tetrominos);
-    return state.player.tetrominos;
-  });
+export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -37,17 +33,17 @@ export const usePlayer = (setGameOver, dispatch) => {
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-            ["I", "I", "I", "I"],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-          ])
+          ["I", "I", "I", "I"],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+        ])
         : (clonedPlayer.tetromino = [
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-          ]);
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+        ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
@@ -74,16 +70,15 @@ export const usePlayer = (setGameOver, dispatch) => {
   };
 
   const resetPlayer = useCallback((stage) => {
-    //console.log("wewe", stateTetrominos);
+    const arr = stateTetrominos;
     let tet = {
       pos: { x: S_WIDTH / 2 - 1, y: 0 },
-      // tetromino: tetromino ? tetromino.shape : randomTetromino().shape,
-      tetromino: stateTetrominos[0] && stateTetrominos[0].shape,
+      tetromino: arr[0]?.shape,
       collided: false,
     };
-    stateTetrominos.shift();
-    dispatch({ type: DELETE_PLAYER, data: [...stateTetrominos] });
-    console.log("USEPLAYER", stateTetrominos);
+    arr.shift();
+    console.log('arr', arr)
+    dispatch({ type: UPDATE_PLAYER, data: arr });
     if (stage) {
       if (!checkcollision(tet, stage, { x: 0, y: 0 }))
         setPlayer({
@@ -98,7 +93,7 @@ export const usePlayer = (setGameOver, dispatch) => {
         tetromino: tet.tetromino,
         collided: false,
       });
-  }, []);
+  }, [stateTetrominos]);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];
 };
