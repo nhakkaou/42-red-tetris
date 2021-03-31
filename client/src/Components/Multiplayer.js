@@ -5,14 +5,14 @@ import Display from "./Display";
 import Help from "./Help";
 import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
-import { useStage, usePlayer, useInterval } from "../hooks";
+import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
 import url from "../img/tetriminos.mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import io from "socket.io-client";
+
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 
@@ -24,25 +24,21 @@ const Tetris = () => {
   let stateTetrominos = useSelector((state) => {
     return state.player.tetrominos;
   });
-  const socket = io("http://localhost:4242/", {
-    query: {
-      usr: localStorage.getItem("Usr"),
-    },
-  });
-  socket.on("connection", (sk) => { });
+  socket.on("connection", (sk) => {});
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
 
   useEffect(() => {
     if (stateTetrominos.length <= 5) {
+      console.warn("Rselt");
       socket.emit("tetrimino");
     }
     socket.on("new_tetriminos", (msg) => {
+      console.log("msg");
       const data = [...stateTetrominos, ...msg];
       dispatch({ type: UPDATE_PLAYER, data: data });
     });
-
   }, [stateTetrominos]);
 
   const [playing, setPlaying] = useState(true);
@@ -168,24 +164,24 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-              <div>
-                <Display text={`Level: ${level}`} />
-                <Help />
-              </div>
-            )}
+            <div>
+              <Display text={`Level: ${level}`} />
+              <Help />
+            </div>
+          )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>
