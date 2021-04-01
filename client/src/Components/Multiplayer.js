@@ -21,6 +21,7 @@ const Label = styled.label`
 `;
 const Tetris = () => {
   const dispatch = useDispatch();
+
   let stateTetrominos = useSelector((state) => {
     return state.player.tetrominos;
   });
@@ -28,6 +29,11 @@ const Tetris = () => {
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
+
+  // socket.on("connection", (sk) => {});
+  // socket.on("disconnect", (socket) => {
+  //   console.log("Server Down");
+  // });
 
   useEffect(() => {
     if (stateTetrominos.length <= 5) {
@@ -53,7 +59,7 @@ const Tetris = () => {
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
     dispatch,
-    stateTetrominos
+    stateTetrominos.player.tetrominos
   );
 
   const [stage, setStage, rowsCleared] = useStage(
