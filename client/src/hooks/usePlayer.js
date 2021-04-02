@@ -69,31 +69,34 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
     }));
   };
 
-  const resetPlayer = useCallback((stage) => {
-    const arr = stateTetrominos;
-    let tet = {
-      pos: { x: S_WIDTH / 2 - 1, y: 0 },
-      tetromino: arr[0]?.shape,
-      collided: false,
-    };
-    arr.shift();
-    console.log('arr', arr)
-    dispatch({ type: UPDATE_PLAYER, data: arr });
-    if (stage) {
-      if (!checkcollision(tet, stage, { x: 0, y: 0 }))
+  const resetPlayer = useCallback(
+    (stage) => {
+      const arr = stateTetrominos;
+      let tet = {
+        pos: { x: S_WIDTH / 2 - 1, y: 0 },
+        tetromino: arr[0]?.shape,
+        collided: false,
+      };
+      arr.shift();
+      console.log("arr", arr);
+      dispatch({ type: UPDATE_PLAYER, data: arr });
+      if (stage) {
+        if (!checkcollision(tet, stage, { x: 0, y: 0 }))
+          setPlayer({
+            pos: { x: S_WIDTH / 2 - 1, y: 0 },
+            tetromino: tet.tetromino,
+            collided: false,
+          });
+        else setGameOver(true);
+      } else
         setPlayer({
           pos: { x: S_WIDTH / 2 - 1, y: 0 },
           tetromino: tet.tetromino,
           collided: false,
         });
-      else setGameOver(true);
-    } else
-      setPlayer({
-        pos: { x: S_WIDTH / 2 - 1, y: 0 },
-        tetromino: tet.tetromino,
-        collided: false,
-      });
-  }, [stateTetrominos]);
+    },
+    [stateTetrominos]
+  );
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];
 };

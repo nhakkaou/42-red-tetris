@@ -17,7 +17,11 @@ class Server {
       })
     );
     this.http = http.Server(this.app);
-    this.io = require("socket.io")(this.http);
+    this.io = require("socket.io")(this.http, {
+      cors: {
+        origin: "*",
+      },
+    });
     this.io
       .on("connection", function (socket) {
         if (socket.handshake.query.usr.length > 0) {
