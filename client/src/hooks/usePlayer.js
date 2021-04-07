@@ -87,7 +87,9 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
             tetromino: tet.tetromino,
             collided: false,
           });
-        else setGameOver(true);
+        else {
+          setGameOver(true);
+        }
       } else
         setPlayer({
           pos: { x: S_WIDTH / 2 - 1, y: 0 },

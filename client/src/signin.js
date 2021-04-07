@@ -1,7 +1,7 @@
 import "./App.css";
 import styled from "styled-components";
 import { useState } from "react";
-import io from "socket.io-client";
+import { socket } from "./hooks/index";
 
 const Styled = styled.input`
   box-sizing: border-box;
@@ -40,12 +40,6 @@ const Button = styled.input`
 `;
 
 const App = () => {
-  const socket = io("http://localhost:4242/", {
-    query: {
-      usr: localStorage.getItem("Usr"),
-    },
-  });
-
   socket.on("CreateRoom", (message) => {
     if (message.err) alert(message.err);
     else console.log(message.msg);

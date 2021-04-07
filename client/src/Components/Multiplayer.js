@@ -34,14 +34,15 @@ const Tetris = () => {
   // socket.on("disconnect", (socket) => {
   //   console.log("Server Down");
   // });
-
+  let [counter, setC] = useState(0);
   useEffect(() => {
     if (stateTetrominos.length <= 5) {
       console.warn("Rselt");
       socket.emit("tetrimino");
     }
-    socket.on("new_tetriminos", (msg) => {
-      console.log("msg");
+    socket.once("new_tetriminos", (msg) => {
+      setC(counter++);
+      console.warn("msg", counter);
       const data = [...stateTetrominos, ...msg];
       dispatch({ type: UPDATE_PLAYER, data: data });
     });
@@ -59,7 +60,7 @@ const Tetris = () => {
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
     dispatch,
-    stateTetrominos.player.tetrominos
+    stateTetrominos
   );
 
   const [stage, setStage, rowsCleared] = useStage(
@@ -89,6 +90,7 @@ const Tetris = () => {
   };
 
   const drop = () => {
+    console.log("collision", checkcollision(player, stage, { x: 0, y: 1 }));
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
@@ -126,7 +128,7 @@ const Tetris = () => {
     }
     for (let i = tmp; i > 0; i--) {
       if (!checkcollision(player, stage, { x: 0, y: i })) {
-        updatePlayerPos({ x: 0, y: i, collided: true });
+        updatePlayerPos({ x: 0, y: i, collided: false });
         break;
       }
     }
