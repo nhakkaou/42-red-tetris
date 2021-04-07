@@ -25,7 +25,7 @@ const Tetris = () => {
   let stateTetrominos = useSelector((state) => {
     return state.player.tetrominos;
   });
-  socket.on("connection", (sk) => {});
+  socket.on("connection", (sk) => { });
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
@@ -172,24 +172,24 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-            <div>
-              <Display text={`Level: ${level}`} />
-              <Help />
-            </div>
-          )}
+              <div>
+                <Display text={`Level: ${level}`} />
+                <Help />
+              </div>
+            )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>

@@ -33,17 +33,17 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-            ["I", "I", "I", "I"],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-          ])
+          ["I", "I", "I", "I"],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+        ])
         : (clonedPlayer.tetromino = [
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-          ]);
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+        ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
