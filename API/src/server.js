@@ -5,20 +5,8 @@ const bodyParser = require("body-parser");
 const rnd = require("./helpers");
 class Server {
   constructor() {
-    let tab = [
-      {
-        shape: [
-          ["D", "D", 0],
-          ["D", "D", 0],
-          [0, 0, 0],
-        ],
-        color: "255, 6, 251",
-      },
-    ];
-
     let users = [{ admin: 0, id: "", user: "" }];
     let rooms = [{ user: "", room: "" }];
-    let t = "";
     this.app = express();
     this.app.use(bodyParser.json());
     this.app.use(
@@ -43,6 +31,7 @@ class Server {
         socket.emit("connection", { message: "Server good!!" });
         socket.on("tetrimino", async () => {
           let rs = await rnd;
+          console.log(rs)
           if (rs.length > 0) socket.emit("new_tetriminos", rs);
         });
         socket.on("CreateRoom", (message) => {

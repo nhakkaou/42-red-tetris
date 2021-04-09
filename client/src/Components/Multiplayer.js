@@ -34,11 +34,12 @@ const Tetris = () => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    // if (stateTetrominos.length <= 1) {
-    //   console.warn("Rselt");
-    //   socket.emit("tetrimino");
-    // }
+    if (stateTetrominos.length <= 5) {
+      console.warn("Rselt");
+      socket.emit("tetrimino");
+    }
     socket.once("new_tetriminos", (msg) => {
+      console.log("msg", msg)
       const data = [...stateTetrominos, ...msg];
       dispatch({ type: UPDATE_PLAYER, data: data });
     });
