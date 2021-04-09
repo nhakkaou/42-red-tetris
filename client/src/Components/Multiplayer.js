@@ -25,24 +25,20 @@ const Tetris = () => {
   let stateTetrominos = useSelector((state) => {
     return state.player.tetrominos;
   });
-  socket.on("connection", (sk) => { });
+  socket.on("connection", (sk) => {});
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
-
   // socket.on("connection", (sk) => {});
   // socket.on("disconnect", (socket) => {
   //   console.log("Server Down");
   // });
-  let [counter, setC] = useState(0);
   useEffect(() => {
-    if (stateTetrominos.length <= 5) {
-      console.warn("Rselt");
-      socket.emit("tetrimino");
-    }
+    // if (stateTetrominos.length <= 1) {
+    //   console.warn("Rselt");
+    //   socket.emit("tetrimino");
+    // }
     socket.once("new_tetriminos", (msg) => {
-      setC(counter++);
-      console.warn("msg", counter);
       const data = [...stateTetrominos, ...msg];
       dispatch({ type: UPDATE_PLAYER, data: data });
     });
@@ -172,24 +168,24 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-              <div>
-                <Display text={`Level: ${level}`} />
-                <Help />
-              </div>
-            )}
+            <div>
+              <Display text={`Level: ${level}`} />
+              <Help />
+            </div>
+          )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>

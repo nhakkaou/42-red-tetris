@@ -5,6 +5,17 @@ const bodyParser = require("body-parser");
 const rnd = require("./helpers");
 class Server {
   constructor() {
+    let tab = [
+      {
+        shape: [
+          ["D", "D", 0],
+          ["D", "D", 0],
+          [0, 0, 0],
+        ],
+        color: "255, 6, 251",
+      },
+    ];
+
     let users = [{ admin: 0, id: "", user: "" }];
     let rooms = [{ user: "", room: "" }];
     let t = "";
@@ -18,6 +29,7 @@ class Server {
     );
     this.http = http.Server(this.app);
     this.io = require("socket.io")(this.http, {
+      pingInterval: 60000,
       cors: {
         origin: "*",
       },
