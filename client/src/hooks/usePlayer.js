@@ -72,7 +72,7 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
 
   const resetPlayer = useCallback(
     (stage) => {
-      console.log("state",stateTetrominos)
+      console.log("state", stateTetrominos);
       const arr = stateTetrominos;
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },

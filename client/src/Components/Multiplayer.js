@@ -39,7 +39,7 @@ const Tetris = () => {
       socket.emit("tetrimino");
     }
     socket.once("new_tetriminos", (msg) => {
-      console.log("msg", msg)
+      console.log("msg", msg);
       const data = [...stateTetrominos, ...msg];
       dispatch({ type: UPDATE_PLAYER, data: data });
     });

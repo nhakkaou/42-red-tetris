@@ -41,7 +41,7 @@ const Button = styled.input`
 
 const App = () => {
   socket.on("CreateRoom", (message) => {
-    if (message.err) alert(message.err);
+    if (message.err) console.warn(message.err);
     else console.log(message.msg);
   });
   socket.on("connection", function (socket) {});
@@ -62,7 +62,6 @@ const App = () => {
   const [fullWidth, setFullWidth] = useState("true");
   return typeof user == "object" ? (
     <div className="App">
-      {user}
       <Styled
         placeholder="Username"
         onChange={(e) => setFullWidth(e.target.value)}
