@@ -28,3 +28,17 @@ h1 {
   text-align: center;
   padding-top: 100px;
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 60%;
+  margin: 20px auto;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  width: auto;
+}

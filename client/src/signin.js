@@ -51,6 +51,7 @@ const App = () => {
 
   const [sym, setSym] = useState(0);
   const [Room, setRoomname] = useState("");
+  const [rooms, setRooms] = useState([]);
   let user = localStorage.getItem("Usr");
   function adduser() {
     localStorage.setItem("Usr", fullWidth);
@@ -58,6 +59,14 @@ const App = () => {
   function addRoom() {
     console.log(Room);
     socket.emit("CreateRoom", { name: Room });
+  }
+  function listRoom() {
+    socket.emit("listRoom");
+    socket.on("listRoom", (rslt) => {
+      console.log("rslt");
+      console.log(rslt);
+      setRooms([...rslt]);
+    });
   }
   const [fullWidth, setFullWidth] = useState("true");
   return typeof user == "object" ? (
@@ -83,7 +92,12 @@ const App = () => {
         </>
       ) : (
         <>
-          <Button className="test" type="submit" value="Join Room" />
+          <Button
+            className="test"
+            onClick={() => listRoom()}
+            type="submit"
+            value="Join Room"
+          />
           <Button type="submit" value="Play Solo" />
         </>
       )}

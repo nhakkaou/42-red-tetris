@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 import { socket } from "../hooks";
 
-export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
+export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -76,7 +76,10 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos) => {
       const arr = stateTetrominos;
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
-        tetromino: Tetrominos[stateTetrominos[0]]?.shape,
+        tetromino:
+          symM == 1
+            ? Tetrominos[stateTetrominos[0]]?.shape
+            : randomTetromino().shape,
         collided: false,
       };
       arr.shift();

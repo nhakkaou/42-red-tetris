@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 
@@ -27,6 +27,7 @@ const Tetris = () => {
   });
   socket.on("connection", (sk) => {});
   socket.on("disconnect", (socket) => {
+    dispatch({ type: UPDATE_PLAYER, data: [] });
     console.log("Server Down");
   });
   // socket.on("connection", (sk) => {});
@@ -34,9 +35,14 @@ const Tetris = () => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    if (stateTetrominos.length <= 5) {
-      console.warn("Rselt");
-      socket.emit("tetrimino");
+    if (stateTetrominos.length <= 1) {
+      // console.warn("Rselt");
+      // socket.emit("tetrimino");
+      axios.get(`http://10.12.9.10:4242/home`).then((res) => {
+        console.log(res.data);
+        const data = [...stateTetrominos, ...res.data];
+        dispatch({ type: UPDATE_PLAYER, data: data });
+      });
     }
     socket.once("new_tetriminos", (msg) => {
       console.log("msg", msg);
@@ -57,7 +63,8 @@ const Tetris = () => {
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
     dispatch,
-    stateTetrominos
+    stateTetrominos,
+    0
   );
 
   const [stage, setStage, rowsCleared] = useStage(

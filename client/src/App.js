@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Signin from "./signin";
 import Home from "./home";
 import styled from "styled-components";
+import JoinRoom from "./Rooms";
 
 function App() {
   const Button = styled.input`
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path="/home">
             <Home />
+          </Route>
+          <Route path="/joinroom">
+            <JoinRoom />
           </Route>
         </Switch>
       </div>

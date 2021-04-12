@@ -1,11 +1,7 @@
 import { UPDATE_PLAYER } from "../actions/playerAction";
 
 const DEFAULT_STATE = {
-  tetrominos: [
-      "I",
-      "I",
-      "I"
-  ]
+  tetrominos: [],
 };
 
 export default function (state = DEFAULT_STATE, action) {

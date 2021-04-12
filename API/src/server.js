@@ -47,12 +47,28 @@ class Server {
             rooms.push({
               user: socket.handshake.query.usr,
               room: message.name,
+              admin: 1,
             });
             socket.emit("CreateRoom", { msg: "Room created" });
           }
+
           console.log(rooms);
           console.log(socket.rooms);
           // console.log(JSON.parse(socket.rooms))
+        });
+        socket.on("listRoom", () => {
+          let tmp = [];
+          for (let i = 0; i < rooms.length; i++) {
+            let j = 0;
+            let c = 0;
+            while (j < rooms.length) {
+              if (rooms[i].room == rooms[j].room) c++;
+              j++;
+            }
+            tmp.push({ room: rooms[i].room, members: c });
+          }
+          console.log(tmp);
+          socket.emit("listRoom", tmp);
         });
         // console.log(users);
       })
