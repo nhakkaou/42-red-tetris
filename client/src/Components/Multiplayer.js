@@ -35,20 +35,20 @@ const Tetris = () => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    if (stateTetrominos.length <= 1) {
+    if (stateTetrominos.length <= 1 && 1 == 1) {
       // console.warn("Rselt");
       // socket.emit("tetrimino");
-      axios.get(`http://10.12.9.10:4242/home`).then((res) => {
+      axios.get(`http://localhost:4242/home`).then((res) => {
         console.log(res.data);
         const data = [...stateTetrominos, ...res.data];
         dispatch({ type: UPDATE_PLAYER, data: data });
       });
+      socket.once("new_tetriminos", (msg) => {
+        console.log("msg", msg);
+        const data = [...stateTetrominos, ...msg];
+        dispatch({ type: UPDATE_PLAYER, data: data });
+      });
     }
-    socket.once("new_tetriminos", (msg) => {
-      console.log("msg", msg);
-      const data = [...stateTetrominos, ...msg];
-      dispatch({ type: UPDATE_PLAYER, data: data });
-    });
   }, [stateTetrominos]);
 
   const [playing, setPlaying] = useState(true);
@@ -64,7 +64,7 @@ const Tetris = () => {
     setGameOver,
     dispatch,
     stateTetrominos,
-    0
+    1
   );
 
   const [stage, setStage, rowsCleared] = useStage(
@@ -94,7 +94,6 @@ const Tetris = () => {
   };
 
   const drop = () => {
-    console.log("collision", checkcollision(player, stage, { x: 0, y: 1 }));
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
@@ -104,16 +103,18 @@ const Tetris = () => {
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
-    if (rows > level + 1 * 10) {
+    if (rows > level + 1) {
       setLevel((prev) => prev + 1);
-      setDropTime(1000 / level + 1 + 200);
+      console.log("increment drop time", 1000 / level + 1 * 10);
+      console.log("LEVEL", level);
+      if (level > 0) setDropTime(1000 / level + 1 * 10);
     }
   };
 
   const keyUp = ({ keyCode }) => {
     if (!gameOver && keyCode === 40) {
       if (level == 0) setDropTime(1000);
-      else setDropTime(1000 / level + 1 + 200);
+      else setDropTime(1000);
     }
   };
 

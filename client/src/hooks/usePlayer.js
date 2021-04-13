@@ -73,7 +73,7 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
   const resetPlayer = useCallback(
     (stage) => {
       console.log("state", stateTetrominos);
-      const arr = stateTetrominos;
+      // const arr = stateTetrominos;
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
         tetromino:
@@ -82,9 +82,9 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
             : randomTetromino().shape,
         collided: false,
       };
-      arr.shift();
-      console.log("arr", arr);
-      dispatch({ type: UPDATE_PLAYER, data: arr });
+      stateTetrominos.shift();
+      // console.log("arr", arr);
+      dispatch({ type: UPDATE_PLAYER, data: stateTetrominos });
       if (stage) {
         if (!checkcollision(tet, stage, { x: 0, y: 0 }))
           setPlayer({

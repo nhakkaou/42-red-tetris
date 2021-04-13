@@ -11,7 +11,7 @@ function randomTetromino() {
     1
   )[0];
   arr.push(randomTetro);
-  if (arr.length >= 5) return arr;
+  if (arr.length >= 3) return arr;
   else return randomTetromino();
 }
 module.exports = randomTetromino();
