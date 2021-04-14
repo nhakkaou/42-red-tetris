@@ -1,10 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  useLocation,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
 import Signin from "./signin";
 import Home from "./home";
 import styled from "styled-components";
 import JoinRoom from "./Rooms";
-
 function App() {
   const Button = styled.input`
     box-sizing: border-box;
@@ -24,8 +29,13 @@ function App() {
       background: #333;
     }
   `;
-  console.log("TEST");
 
+  function useQuery() {
+    console.log(new URLSearchParams());
+    // return new URLSearchParams(useLocation().search);
+  }
+  let query = useQuery();
+  // console.log(query.get());
   return (
     <Router>
       <div>

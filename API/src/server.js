@@ -83,7 +83,7 @@ class Server {
   }
   listen() {
     this.http.listen(4242, () => {
-      console.log(`Listening on http://localhost:4242`);
+      console.log(`Listening on http://10.12.4.15:4242`);
     });
   }
 }
