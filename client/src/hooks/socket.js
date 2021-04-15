@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-export const socket = io("http://10.12.4.15:4242/", {
+export const socket = io("http://localhost:4242/", {
   query: {
     usr: localStorage.getItem("Usr"),
   },

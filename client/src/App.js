@@ -1,10 +1,9 @@
 import React from "react";
 import {
-  useLocation,
   BrowserRouter as Router,
+  useLocation,
   Switch,
   Route,
-  Link,
 } from "react-router-dom";
 import Signin from "./signin";
 import Home from "./home";
@@ -29,13 +28,8 @@ function App() {
       background: #333;
     }
   `;
-
-  function useQuery() {
-    console.log(new URLSearchParams());
-    // return new URLSearchParams(useLocation().search);
-  }
-  let query = useQuery();
-  // console.log(query.get());
+  // const l = useLocation();
+  // console.log(l);
   return (
     <Router>
       <div>
@@ -46,6 +40,7 @@ function App() {
             <Button type="submit" value="Join Room" />
             <Button type="submit" value="Play Solo" />
           </Route> */}
+
           <Route path="/signin">
             <Signin />
           </Route>
@@ -54,6 +49,9 @@ function App() {
           </Route>
           <Route path="/joinroom">
             <JoinRoom />
+          </Route>
+          <Route path="/">
+            <label>{window.location.hash}</label>
           </Route>
         </Switch>
       </div>

@@ -41,7 +41,7 @@ const JoinRoom = () => {
                       textDecoration: "none",
                       color: "White",
                     }}
-                    href={`http://10.12.4.15:3000/#${item.room}[${usr}]`}
+                    href={`http://localhost:3000/#${item.room}[${usr}]`}
                   >
                     {item.room}
                   </a>

@@ -38,7 +38,7 @@ const Tetris = () => {
     if (stateTetrominos.length <= 1 && 1 == 1) {
       // console.warn("Rselt");
       // socket.emit("tetrimino");
-      axios.get(`http://10.12.4.15:4242/home`).then((res) => {
+      axios.get(`http://localhost:4242/home`).then((res) => {
         console.log(res.data);
         const data = [...stateTetrominos, ...res.data];
         dispatch({ type: UPDATE_PLAYER, data: data });
