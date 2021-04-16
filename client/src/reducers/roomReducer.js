@@ -1,10 +1,10 @@
 import { UPDATE_PLAYER } from "../actions/playerAction";
 
 const DEFAULT_STATE = {
-  username: "",
-  connected: false,
-  is_lost: false,
-  admin: false,
+  name: "",
+  members: 0,
+  startgame: false,
+  mode: "solo",
 };
 
 export default function (state = DEFAULT_STATE, action) {

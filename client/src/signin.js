@@ -2,6 +2,7 @@ import "./App.css";
 import styled from "styled-components";
 import { useState } from "react";
 import { socket } from "./hooks/index";
+import { useHistory } from "react-router-dom";
 
 const Styled = styled.input`
   box-sizing: border-box;
@@ -40,6 +41,7 @@ const Button = styled.input`
 `;
 
 const App = () => {
+  const history = useHistory();
   socket.on("CreateRoom", (message) => {
     if (message.err) console.warn(message.err);
     else console.log(message.msg);
@@ -59,15 +61,9 @@ const App = () => {
   function addRoom() {
     console.log(Room);
     socket.emit("CreateRoom", { name: Room });
+    history.push(`/#${Room}[${user}]`);
   }
-  function listRoom() {
-    socket.emit("listRoom");
-    socket.on("listRoom", (rslt) => {
-      console.log("rslt");
-      console.log(rslt);
-      setRooms([...rslt]);
-    });
-  }
+
   const [fullWidth, setFullWidth] = useState("true");
   return typeof user == "object" ? (
     <div className="App">
@@ -94,7 +90,7 @@ const App = () => {
         <>
           <Button
             className="test"
-            onClick={() => listRoom()}
+            onClick={() => history.push("/joinroom")}
             type="submit"
             value="Join Room"
           />

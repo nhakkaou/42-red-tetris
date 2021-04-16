@@ -35,7 +35,7 @@ const Tetris = () => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    if (stateTetrominos.length <= 1 && 1 == 1) {
+    if (stateTetrominos.length <= 1 && 0 == 1) {
       // console.warn("Rselt");
       // socket.emit("tetrimino");
       axios.get(`http://localhost:4242/home`).then((res) => {
@@ -64,7 +64,7 @@ const Tetris = () => {
     setGameOver,
     dispatch,
     stateTetrominos,
-    1
+    0
   );
 
   const [stage, setStage, rowsCleared] = useStage(
@@ -105,8 +105,8 @@ const Tetris = () => {
     }
     if (rows > level + 1) {
       setLevel((prev) => prev + 1);
-      console.log("increment drop time", 1000 / level + 1 * 10);
-      console.log("LEVEL", level);
+      // console.log("increment drop time", 1000 / level + 1 * 10);
+      // console.log("LEVEL", level);
       if (level > 0) setDropTime(1000 / level + 1 * 10);
     }
   };

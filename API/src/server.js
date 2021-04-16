@@ -28,7 +28,10 @@ class Server {
           users.push({ id: socket.id, user: socket.handshake.query.usr });
         }
 
-        socket.emit("connection", { message: "Server good!!" });
+        socket.on("join", (rs) => {
+          console.log(rs);
+          socket.join(rs.room);
+        });
         socket.on("tetrimino", async () => {
           let rs = await rnd;
           console.log(rs);

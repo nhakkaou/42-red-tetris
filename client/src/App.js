@@ -28,8 +28,7 @@ function App() {
       background: #333;
     }
   `;
-  // const l = useLocation();
-  // console.log(l);
+
   return (
     <Router>
       <div>
@@ -51,7 +50,7 @@ function App() {
             <JoinRoom />
           </Route>
           <Route path="/">
-            <label>{window.location.hash}</label>
+            <Home path={window.location.hash} />
           </Route>
         </Switch>
       </div>
