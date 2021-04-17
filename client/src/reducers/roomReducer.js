@@ -1,4 +1,9 @@
-import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
+import {
+  UPDATE_MEMBER,
+  START_GAME,
+  CHANGE_PIECE,
+  UPDATE_NAME,
+} from "../actions/roomAction";
 
 const DEFAULT_STATE = {
   name: "test",
@@ -16,11 +21,15 @@ export default function (state = DEFAULT_STATE, action) {
     }
     case START_GAME: {
       //console.log(action.data)
-      return { startgame: true };
+      return { ...state, startgame: true };
     }
     case CHANGE_PIECE: {
       //console.log(action.data)
       return { ...state, next_piece: [...action.data] };
+    }
+    case UPDATE_NAME: {
+      //console.log(action.data)
+      return { ...state, name: action.data };
     }
     default:
       return state;

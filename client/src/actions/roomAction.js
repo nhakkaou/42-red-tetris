@@ -1,6 +1,7 @@
 export const UPDATE_MEMBER = "UPDATE_MEMBER";
 export const CHANGE_PIECE = "CHANGE_PIECE";
 export const START_GAME = "START_GAME";
+export const UPDATE_NAME = "UPDATE_NAME";
 
 const updatemember = (data) => ({
   type: UPDATE_MEMBER,
@@ -14,4 +15,8 @@ const startgame = (data) => ({
   type: START_GAME,
   data: data,
 });
-export { startgame, updatemember, nextpiece };
+const updatename = (data) => ({
+  type: UPDATE_NAME,
+  data: data,
+});
+export { startgame, updatemember, nextpiece, updatename };
