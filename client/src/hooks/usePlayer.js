@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
-import { useSelector } from "react-redux";
-import { UPDATE_PLAYER } from "../actions/playerAction";
-import { socket } from "../hooks";
+// import { useSelector } from "react-redux";
+import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
+// import { socket } from "../hooks";
 
 export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
   const [player, setPlayer] = useState({
@@ -84,7 +84,7 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
       };
       stateTetrominos.shift();
       // console.log("arr", arr);
-      dispatch({ type: UPDATE_PLAYER, data: stateTetrominos });
+      dispatch({ type: CHANGE_PIECE, data: stateTetrominos });
       if (stage) {
         if (!checkcollision(tet, stage, { x: 0, y: 0 }))
           setPlayer({

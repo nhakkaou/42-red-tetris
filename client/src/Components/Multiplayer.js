@@ -15,6 +15,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PLAYER } from "../actions/playerAction";
+import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
 
 const Label = styled.label`
   cursor: pointer;
@@ -23,11 +24,11 @@ const Tetris = () => {
   const dispatch = useDispatch();
 
   let stateTetrominos = useSelector((state) => {
-    return state.player.tetrominos;
+    return state.room.next_piece;
   });
   socket.on("connection", (sk) => {});
   socket.on("disconnect", (socket) => {
-    dispatch({ type: UPDATE_PLAYER, data: [] });
+    dispatch({ type: CHANGE_PIECE, data: [] });
     console.log("Server Down");
   });
   // socket.on("connection", (sk) => {});
@@ -35,18 +36,18 @@ const Tetris = () => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    if (stateTetrominos.length <= 1 && 0 == 1) {
+    if (stateTetrominos.length <= 1 && 1 == 1) {
       // console.warn("Rselt");
       // socket.emit("tetrimino");
       axios.get(`http://localhost:4242/home`).then((res) => {
         console.log(res.data);
         const data = [...stateTetrominos, ...res.data];
-        dispatch({ type: UPDATE_PLAYER, data: data });
+        dispatch({ type: CHANGE_PIECE, data: data });
       });
       socket.once("new_tetriminos", (msg) => {
         console.log("msg", msg);
         const data = [...stateTetrominos, ...msg];
-        dispatch({ type: UPDATE_PLAYER, data: data });
+        dispatch({ type: CHANGE_PIECE, data: data });
       });
     }
   }, [stateTetrominos]);
@@ -64,7 +65,7 @@ const Tetris = () => {
     setGameOver,
     dispatch,
     stateTetrominos,
-    0
+    1
   );
 
   const [stage, setStage, rowsCleared] = useStage(
@@ -83,6 +84,7 @@ const Tetris = () => {
   };
 
   const startGame = () => {
+    dispatch({ type: START_GAME, data: true });
     audio.play();
     setStage(Createstage());
     setDropTime(1000);
