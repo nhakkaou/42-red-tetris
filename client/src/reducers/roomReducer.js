@@ -1,7 +1,7 @@
 import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
 
 const DEFAULT_STATE = {
-  name: "",
+  name: "test",
   members: 0,
   startgame: false,
   mode: "solo",
@@ -20,7 +20,7 @@ export default function (state = DEFAULT_STATE, action) {
     }
     case CHANGE_PIECE: {
       //console.log(action.data)
-      return { next_piece: [...action.data] };
+      return { ...state, next_piece: [...action.data] };
     }
     default:
       return state;
