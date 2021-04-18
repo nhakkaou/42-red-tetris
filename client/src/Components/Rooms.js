@@ -1,12 +1,11 @@
-import "./App.css";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { socket } from "./hooks/index";
+import { socket } from "../hooks";
 
 const JoinRoom = () => {
   const [rooms, setRooms] = useState([]);
   const usr = localStorage.getItem("Usr");
-  socket.on("connection", function (socket) {});
+  socket.on("connection", function (socket) { });
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
@@ -50,8 +49,8 @@ const JoinRoom = () => {
               <td>{item.members}/5</td>
             </tr>
           ) : (
-            ""
-          )
+              ""
+            )
         )}
       </table>
     </div>

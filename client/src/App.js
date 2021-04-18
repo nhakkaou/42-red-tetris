@@ -8,7 +8,7 @@ import {
 import Signin from "./signin";
 import Home from "./home";
 import styled from "styled-components";
-import JoinRoom from "./Rooms";
+import JoinRoom from "./Components/Rooms";
 function App() {
   const Button = styled.input`
     box-sizing: border-box;
@@ -34,13 +34,7 @@ function App() {
       <div>
         <h1>1 3 3 7 e t r i s</h1>
         <Switch>
-          {/* <Route path="/">
-            <Button type="submit" value="Create Room" />
-            <Button type="submit" value="Join Room" />
-            <Button type="submit" value="Play Solo" />
-          </Route> */}
-
-          <Route path="/signin">
+          {/* <Route path="/signin">
             <Signin />
           </Route>
           <Route path="/home">
@@ -48,7 +42,7 @@ function App() {
           </Route>
           <Route path="/joinroom">
             <JoinRoom />
-          </Route>
+          </Route> */}
           <Route path="/">
             <Home path={window.location.hash} />
           </Route>

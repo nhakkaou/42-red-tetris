@@ -40,13 +40,13 @@ const Button = styled.input`
   }
 `;
 
-const App = () => {
+const App = (props) => {
   const history = useHistory();
   socket.on("CreateRoom", (message) => {
     if (message.err) console.warn(message.err);
     else console.log(message.msg);
   });
-  socket.on("connection", function (socket) {});
+  socket.on("connection", function (socket) { });
   socket.on("disconnect", (socket) => {
     console.log("Server Down");
   });
@@ -74,31 +74,31 @@ const App = () => {
       <Button type="submit" onClick={() => adduser()} value="Submit" />
     </div>
   ) : (
-    <div>
-      <Button type="submit" onClick={() => setSym(1)} value="Create Room" />
-      {sym == 1 ? (
-        <>
-          <Button
-            type="text"
-            placeholder="Room name"
-            onChange={(e) => setRoomname(e.target.value)}
-            value={Room}
-          />
-          <Button type="submit" onClick={() => addRoom()} value="Submit" />
-        </>
-      ) : (
-        <>
-          <Button
-            className="test"
-            onClick={() => history.push("/joinroom")}
-            type="submit"
-            value="Join Room"
-          />
-          <Button type="submit" value="Play Solo" />
-        </>
-      )}
-    </div>
-  );
+      <div>
+        <Button type="submit" onClick={() => setSym(1)} value="Create Room" />
+        {sym == 1 ? (
+          <>
+            <Button
+              type="text"
+              placeholder="Room name"
+              onChange={(e) => setRoomname(e.target.value)}
+              value={Room}
+            />
+            <Button type="submit" onClick={() => addRoom()} value="Submit" />
+          </>
+        ) : (
+            <>
+              <Button
+                className="test"
+                onClick={() => history.push("/joinroom")}
+                type="submit"
+                value="Join Room"
+              />
+              <Button type="submit" value="Play Solo" />
+            </>
+          )}
+      </div>
+    );
 };
 
 export default App;
