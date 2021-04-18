@@ -14,7 +14,7 @@ import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_PLAYER } from "../actions/playerAction";
+import { ADD_PLAYER } from "../actions/plyersAction";
 import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
 
 const Label = styled.label`
@@ -24,9 +24,14 @@ const Tetris = () => {
   const dispatch = useDispatch();
 
   let stateTetrominos = useSelector((state) => {
-    return state.room.next_piece;
+    return state;
   });
   socket.on("connection", (sk) => {});
+  socket.on("new member", (result) => {
+    dispatch({ type: UPDATE_MEMBER, data: stateTetrominos.room.members++ });
+    dispatch({ type: ADD_PLAYER, data: { user: result.user, score: 0 } });
+  });
+  console.log(stateTetrominos);
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
     console.log("Server Down");
@@ -36,21 +41,21 @@ const Tetris = () => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    if (stateTetrominos.length <= 1 && 1 == 1) {
+    if (stateTetrominos.room.next_piece.length <= 1 && 1 == 1) {
       // console.warn("Rselt");
       // socket.emit("tetrimino");
       axios.get(`http://localhost:4242/home`).then((res) => {
         console.log(res.data);
-        const data = [...stateTetrominos, ...res.data];
+        const data = [...stateTetrominos.room.next_piece, ...res.data];
         dispatch({ type: CHANGE_PIECE, data: data });
       });
       socket.once("new_tetriminos", (msg) => {
         console.log("msg", msg);
-        const data = [...stateTetrominos, ...msg];
+        const data = [...stateTetrominos.room.next_piece, ...msg];
         dispatch({ type: CHANGE_PIECE, data: data });
       });
     }
-  }, [stateTetrominos]);
+  }, [stateTetrominos.room.next_piece]);
 
   const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
@@ -64,7 +69,7 @@ const Tetris = () => {
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
     dispatch,
-    stateTetrominos,
+    stateTetrominos.room.next_piece,
     1
   );
 

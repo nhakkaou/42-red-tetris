@@ -29,8 +29,23 @@ class Server {
         }
 
         socket.on("join", (rs) => {
-          console.log(rs);
-          socket.join(rs.room);
+          let a = rooms.find(
+            (element) => element.user === rs.user && element.room === rs.room
+          );
+          console.log(socket.rooms);
+          console.log(rooms);
+          if (!a || a.user !== rs.user) {
+            let c = 1;
+            for (let i = 1; i < rooms.length; i++)
+              if (rs.room == rooms[i].room) c++;
+            console.log(c);
+            if (c <= 5) {
+              rooms.push({ user: rs.user, room: rs.room });
+              console.log(rooms);
+              socket.join(rs.room);
+              socket.to(rs.room).emit("new member", { user: rs.user });
+            } else console.log("9adiya 3amra");
+          }
         });
         socket.on("tetrimino", async () => {
           let rs = await rnd;

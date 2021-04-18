@@ -17,7 +17,7 @@ export default function (state = DEFAULT_STATE, action) {
   switch (action.type) {
     case UPDATE_MEMBER: {
       //console.log(action.data)
-      return { members: action.data };
+      return { ...state, members: action.data };
     }
     case START_GAME: {
       //console.log(action.data)
