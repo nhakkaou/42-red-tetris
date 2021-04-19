@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { socket } from "./hooks/index";
 import { useHistory } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { ADMIN_PLAYER } from "./actions/playerAction";
 const Styled = styled.input`
   box-sizing: border-box;
   display: flex;
@@ -55,6 +56,7 @@ const App = () => {
   const [Room, setRoomname] = useState("");
   const [rooms, setRooms] = useState([]);
   let user = localStorage.getItem("Usr");
+  const dispatch = useDispatch();
   function adduser() {
     localStorage.setItem("Usr", fullWidth);
   }
@@ -62,6 +64,7 @@ const App = () => {
     console.log(Room);
     socket.emit("CreateRoom", { name: Room });
     history.push(`/#${Room}[${user}]`);
+    dispatch({ type: ADMIN_PLAYER });
   }
 
   const [fullWidth, setFullWidth] = useState("true");

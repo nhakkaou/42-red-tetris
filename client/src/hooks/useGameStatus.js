@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import url from "../img/pop.mp3";
-
-export const useGameStatus = (rowsCleared) => {
+import { socket } from "../hooks";
+export const useGameStatus = (rowsCleared, room, user) => {
   const [score, setScore] = useState(0);
   const [rows, setRows] = useState(0);
   const [level, setLevel] = useState(0);
@@ -12,6 +12,7 @@ export const useGameStatus = (rowsCleared) => {
     if (rowsCleared > 0) {
       setScore((prev) => prev + linePoints[rowsCleared - 1] * (level + 1));
       setRows((prev) => prev + rowsCleared);
+      socket.emit("new score", { user: user, score: score, room: room });
       audio2.play();
     }
   }, [level, linePoints, rowsCleared]);

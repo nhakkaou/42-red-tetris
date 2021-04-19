@@ -47,6 +47,15 @@ class Server {
             } else console.log("9adiya 3amra");
           }
         });
+        socket.on("new score", (rs) => {
+          socket
+            .to(rs.room)
+            .emit("new score", { user: rs.user, score: rs.score });
+        });
+        socket.on("start game", (room) => {
+          console.log(room);
+          socket.to(room).emit("start game");
+        });
         socket.on("tetrimino", async () => {
           let rs = await rnd;
           console.log(rs);

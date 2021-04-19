@@ -1,4 +1,4 @@
-import { UPDATE_PLAYER } from "../actions/playerAction";
+import { UPDATE_PLAYER, ADMIN_PLAYER } from "../actions/playerAction";
 
 const DEFAULT_STATE = {
   username: "",
@@ -10,8 +10,11 @@ const DEFAULT_STATE = {
 export default function (state = DEFAULT_STATE, action) {
   switch (action.type) {
     case UPDATE_PLAYER: {
-      //console.log(action.data)
-      return { tetrominos: [...action.data] };
+      return { ...state, username: action.data, connected: true };
+    }
+
+    case ADMIN_PLAYER: {
+      return { ...state, admin: true };
     }
     default:
       return state;
