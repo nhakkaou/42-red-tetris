@@ -5,6 +5,8 @@ import { socket } from "./hooks";
 import { useDispatch } from "react-redux";
 import { UPDATE_NAME } from "./actions/roomAction";
 import { UPDATE_PLAYER } from "./actions/playerAction";
+import { ADD_PLAYER } from "./actions/plyersAction";
+
 function App(props) {
   socket.on("new score", (rs) => {
     console.log(rs);
@@ -12,10 +14,16 @@ function App(props) {
   const dispatch = useDispatch();
   if (props.path.match(/#[a-zA-Z0-9]+[[a-zA-Z0-9]+]/)) {
     let a = props.path.match(/#(?<room>[a-zA-Z0-9]+)\[(?<usr>[a-zA-Z0-9]+)\]/);
-    // console.log(a);
+    let tab = [
+      {
+        user: a.groups.usr,
+        score: 0,
+      },
+    ];
     socket.emit("join", { user: a.groups.usr, room: a.groups.room });
     dispatch({ type: UPDATE_NAME, data: a.groups.room });
     dispatch({ type: UPDATE_PLAYER, data: a.groups.usr });
+    dispatch({ type: ADD_PLAYER, data: tab });
   }
   return (
     <div className="App">

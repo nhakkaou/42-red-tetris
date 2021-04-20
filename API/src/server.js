@@ -47,19 +47,21 @@ class Server {
             } else console.log("9adiya 3amra");
           }
         });
+        socket.on("new_tetriminos", (room) => {
+          let rst = rnd;
+          console.log(rst);
+          socket.to(room).emit("new_tetriminos", rst);
+        });
+
         socket.on("new score", (rs) => {
           socket
             .to(rs.room)
             .emit("new score", { user: rs.user, score: rs.score });
         });
         socket.on("start game", (room) => {
-          console.log(room);
-          socket.to(room).emit("start game");
-        });
-        socket.on("tetrimino", async () => {
-          let rs = await rnd;
-          console.log(rs);
-          if (rs.length > 0) socket.emit("new_tetriminos", rs);
+          let rst = rnd;
+          console.log(rst);
+          socket.to(room).emit("start game", rst);
         });
         socket.on("CreateRoom", (message) => {
           let sym = 0;
@@ -78,10 +80,6 @@ class Server {
             });
             socket.emit("CreateRoom", { msg: "Room created" });
           }
-
-          console.log(rooms);
-          console.log(socket.rooms);
-          // console.log(JSON.parse(socket.rooms))
         });
         socket.on("listRoom", () => {
           let tmp = [];
@@ -97,7 +95,6 @@ class Server {
           console.log(tmp);
           socket.emit("listRoom", tmp);
         });
-        // console.log(users);
       })
       .on("disconnect", function (socket) {
         socket.emit("disconnect", { message: "Server Down!!" });
@@ -110,7 +107,7 @@ class Server {
   }
   listen() {
     this.http.listen(4242, () => {
-      console.log(`Listening on http://localhost:4242`);
+      console.log(`Listening on http://10.12.4.15:4242`);
     });
   }
 }

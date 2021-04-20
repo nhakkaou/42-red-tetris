@@ -26,16 +26,27 @@ const Tetris = () => {
   let stateTetrominos = useSelector((state) => {
     return state;
   });
-  socket.on("connection", (sk) => {});
   socket.on("new member", (result) => {
-    console.log("tesststs");
-    dispatch({ type: UPDATE_MEMBER, data: stateTetrominos.room.members++ });
-    dispatch({ type: ADD_PLAYER, data: { user: result.user, score: 0 } });
+    let tmp = stateTetrominos.players.find(
+      (element) => element.user == result.user
+    );
+    let tab = stateTetrominos.players;
+    if (!tmp || tmp.user !== result.user) {
+      tab.push({ user: result.user, score: 0 });
+      dispatch({ type: UPDATE_MEMBER, data: stateTetrominos.room.members++ });
+      dispatch({ type: ADD_PLAYER, data: tab });
+    }
   });
   // console.log(stateTetrominos);
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
     console.log("Server Down");
+  });
+  socket.once("new_tetriminos", (msg) => {
+    console.warn("HI MOTHERFUCKERS 1");
+    console.table(msg);
+    const data = [...stateTetrominos.room.next_piece, ...msg];
+    dispatch({ type: CHANGE_PIECE, data: data });
   });
   // socket.on("connection", (sk) => {});
   // socket.on("disconnect", (socket) => {
@@ -43,14 +54,11 @@ const Tetris = () => {
   // });
   useEffect(() => {
     if (stateTetrominos.room.next_piece.length <= 1 && 1 == 1) {
-      axios.get(`http://localhost:4242/home`).then((res) => {
-        const data = [...stateTetrominos.room.next_piece, ...res.data];
-        dispatch({ type: CHANGE_PIECE, data: data });
-      });
-      socket.once("new_tetriminos", (msg) => {
-        const data = [...stateTetrominos.room.next_piece, ...msg];
-        dispatch({ type: CHANGE_PIECE, data: data });
-      });
+      // axios.get(`http://10.12.4.15:4242/home`).then((res) => {
+      //   const data = [...stateTetrominos.room.next_piece, ...res.data];
+      //   dispatch({ type: CHANGE_PIECE, data: data });
+      // });
+      socket.emit("new_tetriminos", stateTetrominos.room.name);
     }
   }, [stateTetrominos.room.next_piece]);
 
@@ -87,9 +95,9 @@ const Tetris = () => {
       updatePlayerPos({ x: dir, y: 0 });
   };
 
-  socket.on("start game", () => {
-    alert("START");
+  socket.on("start game", (data) => {
     dispatch({ type: START_GAME, data: true });
+    // dispatch({ type: CHANGE_PIECE, data: data });
     audio.play();
     setStage(Createstage());
     setDropTime(1000);
@@ -214,11 +222,11 @@ const Tetris = () => {
               <Help />
             </div>
           )}
-          {/* {stateTetrominos.player.admin && !stateTetrominos.room.startgame ? ( */}
-          <StartBtn callback={startGame} room={stateTetrominos.room.name} />
-          {/* ) : (
+          {stateTetrominos.player.admin && !stateTetrominos.room.startgame ? (
+            <StartBtn callback={startGame} room={stateTetrominos.room.name} />
+          ) : (
             ""
-          )} */}
+          )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

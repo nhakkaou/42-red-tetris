@@ -5,6 +5,7 @@ import { socket } from "./hooks/index";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ADMIN_PLAYER } from "./actions/playerAction";
+import { ADD_PLAYER } from "./actions/plyersAction";
 const Styled = styled.input`
   box-sizing: border-box;
   display: flex;
@@ -61,10 +62,11 @@ const App = () => {
     localStorage.setItem("Usr", fullWidth);
   }
   function addRoom() {
-    console.log(Room);
+    let tab = [{ user: user, score: 0 }];
     socket.emit("CreateRoom", { name: Room });
-    history.push(`/#${Room}[${user}]`);
     dispatch({ type: ADMIN_PLAYER });
+    dispatch({ type: ADD_PLAYER, data: tab });
+    history.push(`/#${Room}[${user}]`);
   }
 
   const [fullWidth, setFullWidth] = useState("true");
