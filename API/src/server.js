@@ -29,13 +29,39 @@ class Server {
         }
 
         socket.on("join", (rs) => {
-          console.log(rs);
-          socket.join(rs.room);
+          let a = rooms.find(
+            (element) => element.user === rs.user && element.room === rs.room
+          );
+          console.log(socket.rooms);
+          console.log(rooms);
+          if (!a || a.user !== rs.user) {
+            let c = 1;
+            for (let i = 1; i < rooms.length; i++)
+              if (rs.room == rooms[i].room) c++;
+            console.log(c);
+            if (c <= 5) {
+              rooms.push({ user: rs.user, room: rs.room });
+              console.log(rooms);
+              socket.join(rs.room);
+              socket.to(rs.room).emit("new member", { user: rs.user });
+            } else console.log("9adiya 3amra");
+          }
         });
-        socket.on("tetrimino", async () => {
-          let rs = await rnd;
-          console.log(rs);
-          if (rs.length > 0) socket.emit("new_tetriminos", rs);
+        socket.on("new_tetriminos", (room) => {
+          let rst = rnd;
+          console.log(rst);
+          socket.to(room).emit("new_tetriminos", rst);
+        });
+
+        socket.on("new score", (rs) => {
+          socket
+            .to(rs.room)
+            .emit("new score", { user: rs.user, score: rs.score });
+        });
+        socket.on("start game", (room) => {
+          let rst = rnd;
+          console.log(rst);
+          socket.to(room).emit("start game", rst);
         });
         socket.on("CreateRoom", (message) => {
           let sym = 0;
@@ -54,10 +80,6 @@ class Server {
             });
             socket.emit("CreateRoom", { msg: "Room created" });
           }
-
-          console.log(rooms);
-          console.log(socket.rooms);
-          // console.log(JSON.parse(socket.rooms))
         });
         socket.on("listRoom", () => {
           let tmp = [];
@@ -73,7 +95,6 @@ class Server {
           console.log(tmp);
           socket.emit("listRoom", tmp);
         });
-        // console.log(users);
       })
       .on("disconnect", function (socket) {
         socket.emit("disconnect", { message: "Server Down!!" });
@@ -86,7 +107,7 @@ class Server {
   }
   listen() {
     this.http.listen(4242, () => {
-      console.log(`Listening on http://localhost:4242`);
+      console.log(`Listening on http://10.12.4.15:4242`);
     });
   }
 }

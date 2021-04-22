@@ -9,8 +9,7 @@ export default function (state = DEFAULT_STATE, action) {
       return { score: action.data };
     }
     case ADD_PLAYER: {
-      console.log(action.data);
-      return [...state, action.data];
+      return [...action.data];
     }
     default:
       return state;

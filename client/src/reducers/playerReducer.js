@@ -1,4 +1,4 @@
-import { UPDATE_PLAYER, ADD_PLAYER_NAME } from "../actions/playerAction";
+import { UPDATE_PLAYER, ADD_PLAYER_NAME, ADMIN_PLAYER } from "../actions/playerAction";
 
 const DEFAULT_STATE = {
   username: "",
@@ -14,8 +14,11 @@ export default function (state = DEFAULT_STATE, action) {
       return { ...state, username: action.data };
     }
     case UPDATE_PLAYER: {
-      //console.log(action.data)
-      return { ...action.data };
+      return { ...state, username: action.data, connected: true };
+    }
+
+    case ADMIN_PLAYER: {
+      return { ...state, admin: true };
     }
     default:
       return state;

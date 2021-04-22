@@ -14,7 +14,7 @@ import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_PLAYER } from "../actions/playerAction";
+import { ADD_PLAYER } from "../actions/plyersAction";
 import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
 
 const Label = styled.label`
@@ -24,33 +24,43 @@ const Tetris = () => {
   const dispatch = useDispatch();
 
   let stateTetrominos = useSelector((state) => {
-    return state.room.next_piece;
+    return state;
   });
-  socket.on("connection", (sk) => {});
+  socket.on("new member", (result) => {
+    let tmp = stateTetrominos.players.find(
+      (element) => element.user == result.user
+    );
+    let tab = stateTetrominos.players;
+    if (!tmp || tmp.user !== result.user) {
+      tab.push({ user: result.user, score: 0 });
+      dispatch({ type: UPDATE_MEMBER, data: stateTetrominos.room.members++ });
+      dispatch({ type: ADD_PLAYER, data: tab });
+    }
+  });
+  // console.log(stateTetrominos);
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
     console.log("Server Down");
+  });
+  socket.once("new_tetriminos", (msg) => {
+    console.warn("HI MOTHERFUCKERS 1");
+    console.table(msg);
+    const data = [...stateTetrominos.room.next_piece, ...msg];
+    dispatch({ type: CHANGE_PIECE, data: data });
   });
   // socket.on("connection", (sk) => {});
   // socket.on("disconnect", (socket) => {
   //   console.log("Server Down");
   // });
   useEffect(() => {
-    if (stateTetrominos.length <= 1 && 1 == 1) {
-      // console.warn("Rselt");
-      // socket.emit("tetrimino");
-      axios.get(`http://localhost:4242/home`).then((res) => {
-        console.log(res.data);
-        const data = [...stateTetrominos, ...res.data];
-        dispatch({ type: CHANGE_PIECE, data: data });
-      });
-      socket.once("new_tetriminos", (msg) => {
-        console.log("msg", msg);
-        const data = [...stateTetrominos, ...msg];
-        dispatch({ type: CHANGE_PIECE, data: data });
-      });
+    if (stateTetrominos.room.next_piece.length <= 1 && 1 == 1) {
+      // axios.get(`http://10.12.4.15:4242/home`).then((res) => {
+      //   const data = [...stateTetrominos.room.next_piece, ...res.data];
+      //   dispatch({ type: CHANGE_PIECE, data: data });
+      // });
+      socket.emit("new_tetriminos", stateTetrominos.room.name);
     }
-  }, [stateTetrominos]);
+  }, [stateTetrominos.room.next_piece]);
 
   const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
@@ -64,7 +74,7 @@ const Tetris = () => {
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
     dispatch,
-    stateTetrominos,
+    stateTetrominos.room.next_piece,
     1
   );
 
@@ -75,7 +85,9 @@ const Tetris = () => {
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
-    rowsCleared
+    rowsCleared,
+    stateTetrominos.room.name,
+    stateTetrominos.player.username
   );
 
   const movePlayer = (dir) => {
@@ -83,8 +95,21 @@ const Tetris = () => {
       updatePlayerPos({ x: dir, y: 0 });
   };
 
+  socket.on("start game", (data) => {
+    dispatch({ type: START_GAME, data: true });
+    // dispatch({ type: CHANGE_PIECE, data: data });
+    audio.play();
+    setStage(Createstage());
+    setDropTime(1000);
+    resetPlayer();
+    setGameOver(false);
+    setScore(0);
+    setRows(0);
+    setLevel(0);
+  });
   const startGame = () => {
     dispatch({ type: START_GAME, data: true });
+    socket.emit("start game", stateTetrominos.room.name);
     audio.play();
     setStage(Createstage());
     setDropTime(1000);
@@ -197,7 +222,11 @@ const Tetris = () => {
               <Help />
             </div>
           )}
-          <StartBtn callback={startGame} />
+          {stateTetrominos.player.admin && !stateTetrominos.room.startgame ? (
+            <StartBtn callback={startGame} room={stateTetrominos.room.name} />
+          ) : (
+            ""
+          )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>
