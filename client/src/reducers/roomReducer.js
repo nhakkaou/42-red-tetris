@@ -6,7 +6,7 @@ import {
 } from "../actions/roomAction";
 
 const DEFAULT_STATE = {
-  name: "test",
+  name: "",
   members: 0,
   startgame: false,
   mode: "solo",

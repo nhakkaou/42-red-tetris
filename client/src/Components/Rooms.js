@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { socket } from "../hooks";
-import { useHistory } from "react-router-dom";
+import { UPDATE_NAME } from "../actions/roomAction";
 import { useSelector } from "react-redux";
 import { StyledButton, StyledInput } from './styling/StyledForm'
-import Tetris from "./Multiplayer";
+import { useDispatch } from "react-redux";
 
 const Rooms = () => {
-  const history = useHistory();
+  const dispatch = useDispatch();
   const [rooms, setRooms] = useState([]);
   const [Room, setRoomname] = useState("");
-  const [roomAdded, setRoomAdded] = useState(false);
 
   let playerState = useSelector((state) => {
     return state.player;
@@ -21,10 +20,9 @@ const Rooms = () => {
   });
 
   function addRoom() {
-
+    dispatch({ type: UPDATE_NAME, data: Room });
     socket.emit("CreateRoom", { name: Room });
-    history.push(`/#${Room}[${playerState.username}]`);
-    setRoomAdded(true)
+    window.location.hash = `${Room}[${playerState.username}]`;
   }
 
   useEffect(() => {
@@ -38,7 +36,7 @@ const Rooms = () => {
   });
 
   return (
-    !roomAdded ? (<div>
+    <div>
       <StyledInput
         placeholder="Create room"
         onChange={(e) => setRoomname(e.target.value)}
@@ -73,7 +71,7 @@ const Rooms = () => {
             )
         )}
       </table>
-    </div>) : (<Tetris />)
+    </div>
   );
 };
 
