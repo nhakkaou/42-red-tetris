@@ -1,3 +1,5 @@
+import { socket } from "../hooks";
+
 export const UPDATE_MEMBER = "UPDATE_MEMBER";
 export const CHANGE_PIECE = "CHANGE_PIECE";
 export const START_GAME = "START_GAME";
@@ -19,4 +21,9 @@ const updatename = (data) => ({
   type: UPDATE_NAME,
   data: data,
 });
-export { startgame, updatemember, nextpiece, updatename };
+const createRoom = (usr, room) => {
+  return dispatch => {
+    socket.emit("CreateRoom", { name: room, user: usr });
+  };
+};
+export { startgame, updatemember, nextpiece, updatename, createRoom };

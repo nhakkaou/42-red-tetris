@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { socket } from "../hooks";
-import { UPDATE_NAME } from "../actions/roomAction";
+import axios from "axios";
+import { createRoom } from "../actions/roomAction";
 import { useSelector } from "react-redux";
 import { StyledButton, StyledInput } from './styling/StyledForm'
 import { useDispatch } from "react-redux";
@@ -14,26 +14,15 @@ const Rooms = () => {
     return state.player;
   });
 
-  socket.on("connection", function (socket) { });
-  socket.on("disconnect", (socket) => {
-    console.log("Server Down");
-  });
-
   function addRoom() {
-    dispatch({ type: UPDATE_NAME, data: Room });
-    socket.emit("CreateRoom", { name: Room });
-    window.location.hash = `${Room}[${playerState.username}]`;
+    dispatch(createRoom(playerState.username, Room));
   }
 
   useEffect(() => {
-    socket.emit("listRoom");
+    axios.get(`${process.env.REACT_APP_API_URL}/getRooms`).then((res) => {
+      setRooms([...res.data]);
+    });
   }, []);
-
-  socket.on("listRoom", (rslt) => {
-    console.log("rslt");
-    console.log(rslt);
-    setRooms([...rslt]);
-  });
 
   return (
     <div>

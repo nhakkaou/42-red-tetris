@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_PLAYER } from "../actions/plyersAction";
 import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
@@ -204,29 +203,29 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-            <div>
-              <Display text={`Level: ${level}`} />
-              <Help />
-            </div>
-          )}
+              <div>
+                <Display text={`Level: ${level}`} />
+                <Help />
+              </div>
+            )}
           {stateTetrominos.player.admin && !stateTetrominos.room.startgame ? (
             <StartBtn callback={startGame} room={stateTetrominos.room.name} />
           ) : (
-            ""
-          )}
+              ""
+            )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

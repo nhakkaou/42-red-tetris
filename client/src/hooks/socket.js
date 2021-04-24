@@ -1,6 +1,3 @@
 import io from "socket.io-client";
-export const socket = io("http://localhost:4242/", {
-  query: {
-    usr: localStorage.getItem("Usr"),
-  },
-});
+
+export const socket = io(process.env.REACT_APP_API_URL);

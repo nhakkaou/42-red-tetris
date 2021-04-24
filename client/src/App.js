@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import AddName from "./Components/AddName";
-import Tetris from "./Components/Multiplayer";
-import Rooms from "./Components/Rooms"
+import AddName from "./components/AddName";
+import Tetris from "./components/Multiplayer";
+import Rooms from "./components/Rooms"
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import "./App.css"
@@ -11,6 +11,7 @@ import { UPDATE_PLAYER } from "./actions/playerAction";
 import { ADD_PLAYER } from "./actions/plyersAction";
 
 function App() {
+  toast.configure();
   let State = useSelector((state) => {
     return state;
   });
@@ -22,6 +23,7 @@ function App() {
       const regexp = /(?<room>[a-zA-Z0-9]{1,12})\[(?<usr>[a-zA-Z0-9]{1,12})\]/;
       const found = hash.match(regexp);
       if (!found) {
+        console.log('error')
         toast.error(
           "[ERROR] Player and Room names must be 1 to 12 alphanumeric characters in length"
         );
@@ -38,7 +40,6 @@ function App() {
       dispatch({ type: UPDATE_PLAYER, data: found.groups.usr });
       dispatch({ type: ADD_PLAYER, data: tab });
     };
-
     checkHash();
   }, [])
 

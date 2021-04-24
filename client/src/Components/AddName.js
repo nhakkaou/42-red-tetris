@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { socket } from "../hooks/index";
 import { addPlayerName } from "../actions/playerAction";
 import { useDispatch } from "react-redux";
 import { StyledButton, StyledInput } from './styling/StyledForm'
@@ -7,20 +6,9 @@ import { StyledButton, StyledInput } from './styling/StyledForm'
 const AddName = () => {
   const dispatch = useDispatch();
   const [username, setUserName] = useState("");
-
-  socket.on("CreateRoom", (message) => {
-    if (message.err) console.warn(message.err);
-    else console.log(message.msg);
-  });
-  socket.on("connection", function (socket) { });
-  socket.on("disconnect", (socket) => {
-    console.log("Server Down");
-  });
   function adduser() {
-    console.log(username)
     dispatch(addPlayerName(username));
   }
-
   return (
     <div className="App">
       <StyledInput
@@ -30,7 +18,6 @@ const AddName = () => {
       <StyledButton type="submit" onClick={() => adduser()} value="Create" />
     </div>
   )
-
 };
 
 export default AddName;
