@@ -3,6 +3,7 @@ import {
   START_GAME,
   CHANGE_PIECE,
   UPDATE_NAME,
+  ROOM_JOINED
 } from "../actions/roomAction";
 
 const DEFAULT_STATE = {
@@ -30,6 +31,9 @@ export default function (state = DEFAULT_STATE, action) {
     case UPDATE_NAME: {
       //console.log(action.data)
       return { ...state, name: action.data };
+    }
+    case ROOM_JOINED: {
+      return { ...state, name: action.data.room };
     }
     default:
       return state;

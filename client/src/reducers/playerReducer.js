@@ -14,7 +14,7 @@ export default function (state = DEFAULT_STATE, action) {
       return { ...state, username: action.data };
     }
     case UPDATE_PLAYER: {
-      return { ...state, username: action.data, connected: true };
+      return { ...state, username: action.data.user, connected: true, admin: action.data.is_admin ? true : false };
     }
 
     case ADMIN_PLAYER: {

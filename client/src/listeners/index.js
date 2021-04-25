@@ -1,27 +1,26 @@
 import { socket } from "../hooks/index";
-import { UPDATE_NAME } from "../actions/roomAction";
+import { ROOM_JOINED } from "../actions/roomAction";
 import { toast } from 'react-toastify';
+import { checkHash } from "../actions/checkHash";
+import { UPDATE_PLAYER } from "../actions/playerAction";
 
 export const stethoscope = (dispatch) => {
     window.onhashchange = () => {
-        toast.dark("Hash changed a shriiif!")
-        //handleHash(dispatch);
+        checkHash();
     }
 
     socket.on("connection", function (socket) {
 
     });
+    socket.on("start game", () => console.log("SALAAAAAM"))
 
     socket.on("disconnect", (socket) => {
         console.log("Server Down");
     });
 
-    socket.on("RoomCreated", (message) => {
-        if (message.err) console.warn(message.err)
-        else {
-            dispatch({ type: UPDATE_NAME, data: message.room });
-            window.location.hash = `${message.room}[${message.user}]`;
-        }
+    socket.on("Join_success", (data) => {
+        dispatch({ type: UPDATE_PLAYER, data });
+        dispatch({ type: ROOM_JOINED, data });
     });
 
     socket.on("TOASTIFY", data => {

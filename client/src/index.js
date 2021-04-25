@@ -4,8 +4,10 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./Store";
 import { stethoscope } from "./listeners";
+import { checkHash } from "./actions/checkHash";
 
 stethoscope(store.dispatch)
+checkHash()
 
 ReactDOM.render(
   <Provider store={store}>

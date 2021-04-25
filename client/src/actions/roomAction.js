@@ -4,6 +4,7 @@ export const UPDATE_MEMBER = "UPDATE_MEMBER";
 export const CHANGE_PIECE = "CHANGE_PIECE";
 export const START_GAME = "START_GAME";
 export const UPDATE_NAME = "UPDATE_NAME";
+export const ROOM_JOINED = "ROOM_JOINED";
 
 const updatemember = (data) => ({
   type: UPDATE_MEMBER,
@@ -21,9 +22,4 @@ const updatename = (data) => ({
   type: UPDATE_NAME,
   data: data,
 });
-const createRoom = (usr, room) => {
-  return dispatch => {
-    socket.emit("CreateRoom", { name: room, user: usr });
-  };
-};
-export { startgame, updatemember, nextpiece, updatename, createRoom };
+export { startgame, updatemember, nextpiece, updatename };

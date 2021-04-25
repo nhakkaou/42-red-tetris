@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const rnd = require("./helpers");
+const helpers = require("./helpers");
 class Server {
   constructor() {
     let users = [{ admin: 0, id: "", user: "" }];
@@ -44,8 +44,8 @@ class Server {
           }
         });
         socket.on("new_tetriminos", (room) => {
-          let rst = rnd;
-          //console.log(rst);
+          let rst = helpers.randomTetromino();
+          //console.log(rst, room);
           socket.to(room).emit("new_tetriminos", rst);
         });
 
@@ -55,37 +55,37 @@ class Server {
             .emit("new score", { user: rs.user, score: rs.score });
         });
         socket.on("start game", (room) => {
-          let rst = rnd;
+          // let rst = helpers.randomTetromino();
           //console.log(rst);
-          socket.to(room).emit("start game", rst);
+          socket.to(room).emit("start game");
         });
-        socket.on("CreateRoom", (message) => {
-          // let sym = 0;
-          // for (let i = 0; i < rooms.length; i++)
-          //   if (rooms[i].room == message.name) {
-          //     sym = 1;
-          //     socket.emit("CreateRoom", { err: "Room Existe" });
-          //     break;
-          //   }
-          // if (sym == 0) {
-          //   socket.join(message.name);
-          //   rooms.push({
-          //     user: message.user,
-          //     room: message.name,
-          //     admin: 1,
-          //   });
-          //   socket.emit("RoomCreated", { room: message.name, user: message.user });
-          // }
-          console.log(io.sockets.adapter.rooms)
-          if (io.sockets.adapter.rooms.get(message.name)) {
-            const data = { type: "error", message: "Room already exists!" }
-            socket.emit("TOASTIFY", data);
-          }
-          else {
-            socket.join(message.name);
-            const data = { type: "success", message: "Room created!" }
-            socket.emit("TOASTIFY", data);
+        socket.on("joinRoom", (data) => {
+          if (helpers.validateName(data.user) && helpers.validateName(data.room)) {
+            if (io.sockets.adapter.rooms.get(data.room)) {
+              const clients = io.sockets.adapter.rooms.get(data.room);
+              const numClients = clients ? clients.size : 0;
+              console.log('Clients', clients.size)
+              if (numClients + 1 > 5) {
+                console.log('3amra')
+                const message = { type: "error", message: "Room is full!" }
+                socket.emit("TOASTIFY", message);
+                return;
+              }
+              else {
+                socket.join(data.room);
+                const message = { type: "success", message: "Joined room!" }
+                socket.emit("Join_success", data)
+                socket.emit("TOASTIFY", message);
+              }
+            }
+            else {
+              socket.join(data.room);
+              console.log(io.sockets.adapter.rooms.get(data.room).size);
 
+              const message = { type: "success", message: "Created room!" }
+              socket.emit("Join_success", { ...data, is_admin: true })
+              socket.emit("TOASTIFY", message);
+            }
           }
         });
       })

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { createRoom } from "../actions/roomAction";
 import { useSelector } from "react-redux";
 import { StyledButton, StyledInput } from './styling/StyledForm'
 import { useDispatch } from "react-redux";

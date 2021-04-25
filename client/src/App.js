@@ -2,46 +2,15 @@ import React, { useEffect } from "react";
 import AddName from "./components/AddName";
 import Tetris from "./components/Multiplayer";
 import Rooms from "./components/Rooms"
-import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from 'react-toastify';
+import { useSelector } from "react-redux";
+import { ToastContainer } from 'react-toastify';
 import "./App.css"
 import "react-toastify/dist/ReactToastify.css";
-import { socket } from "./hooks";
-import { UPDATE_NAME } from "./actions/roomAction";
-import { UPDATE_PLAYER } from "./actions/playerAction";
-import { ADD_PLAYER } from "./actions/plyersAction";
 
 function App() {
   let State = useSelector((state) => {
     return state;
   });
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const checkHash = () => {
-      const hash = window.location.hash.substring(1);
-      if (!hash.trim()) return;
-      const regexp = /(?<room>[a-zA-Z0-9]{1,12})\[(?<usr>[a-zA-Z0-9]{1,12})\]/;
-      const found = hash.match(regexp);
-      if (!found) {
-        console.log('error')
-        toast.error(
-          "[ERROR] Player and Room names must be 1 to 12 alphanumeric characters in length"
-        );
-        return;
-      }
-      let tab = [
-        {
-          user: found.groups.usr,
-          score: 0,
-        },
-      ];
-      socket.emit("join", { user: found.groups.usr, room: found.groups.room });
-      dispatch({ type: UPDATE_NAME, data: found.groups.room });
-      dispatch({ type: UPDATE_PLAYER, data: found.groups.usr });
-      dispatch({ type: ADD_PLAYER, data: tab });
-    };
-    checkHash();
-  }, [])
 
   return (
     <div>

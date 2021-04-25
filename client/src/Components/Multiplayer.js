@@ -3,7 +3,7 @@ import Stage from "./Stage";
 import StartBtn from "./StartBtn";
 import Display from "./Display";
 import Help from "./Help";
-import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
+import { S_HEIGHT, checkcollision } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
@@ -21,7 +21,7 @@ const Label = styled.label`
 `;
 const Tetris = () => {
   const dispatch = useDispatch();
-
+  const [sym, setSym] = useState(1);
   let stateTetrominos = useSelector((state) => {
     return state;
   });
@@ -36,28 +36,23 @@ const Tetris = () => {
       dispatch({ type: ADD_PLAYER, data: tab });
     }
   });
-  // console.log(stateTetrominos);
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
     console.log("Server Down");
   });
-  socket.once("new_tetriminos", (msg) => {
-    console.warn("HI MOTHERFUCKERS 1");
-    console.table(msg);
-    const data = [...stateTetrominos.room.next_piece, ...msg];
-    dispatch({ type: CHANGE_PIECE, data: data });
+  socket.on("new_tetriminos", (msg) => {
+    if (sym == 0) {
+      console.log("HI MOTHERFUCKERS 1");
+      setSym(1);
+      const data = [...stateTetrominos.room.next_piece, ...msg];
+      dispatch({ type: CHANGE_PIECE, data: data });
+    }
   });
-  // socket.on("connection", (sk) => {});
-  // socket.on("disconnect", (socket) => {
-  //   console.log("Server Down");
-  // });
   useEffect(() => {
-    if (stateTetrominos.room.next_piece.length <= 1 && 1 == 1) {
-      // axios.get(`http://10.12.4.15:4242/home`).then((res) => {
-      //   const data = [...stateTetrominos.room.next_piece, ...res.data];
-      //   dispatch({ type: CHANGE_PIECE, data: data });
-      // });
+    if (stateTetrominos.room.next_piece.length <= 1 && sym === 1) {
+      console.log("trsl");
       socket.emit("new_tetriminos", stateTetrominos.room.name);
+      setSym(0);
     }
   }, [stateTetrominos.room.next_piece]);
 
@@ -94,29 +89,18 @@ const Tetris = () => {
       updatePlayerPos({ x: dir, y: 0 });
   };
 
-  socket.on("start game", (data) => {
-    dispatch({ type: START_GAME, data: true });
-    // dispatch({ type: CHANGE_PIECE, data: data });
-    audio.play();
-    setStage(Createstage());
-    setDropTime(1000);
-    resetPlayer();
-    setGameOver(false);
-    setScore(0);
-    setRows(0);
-    setLevel(0);
-  });
+
   const startGame = () => {
     dispatch({ type: START_GAME, data: true });
     socket.emit("start game", stateTetrominos.room.name);
-    audio.play();
-    setStage(Createstage());
-    setDropTime(1000);
-    resetPlayer();
-    setGameOver(false);
-    setScore(0);
-    setRows(0);
-    setLevel(0);
+    // audio.play();
+    // setStage(Createstage());
+    // setDropTime(1000);
+    // resetPlayer();
+    // setGameOver(false);
+    // setScore(0);
+    // setRows(0);
+    // setLevel(0);
   };
 
   const drop = () => {
