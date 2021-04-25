@@ -1,7 +1,13 @@
 import { socket } from "../hooks/index";
 import { UPDATE_NAME } from "../actions/roomAction";
+import { toast } from 'react-toastify';
 
 export const stethoscope = (dispatch) => {
+    window.onhashchange = () => {
+        toast.dark("Hash changed a shriiif!")
+        //handleHash(dispatch);
+    }
+
     socket.on("connection", function (socket) {
 
     });
@@ -17,4 +23,18 @@ export const stethoscope = (dispatch) => {
             window.location.hash = `${message.room}[${message.user}]`;
         }
     });
+
+    socket.on("TOASTIFY", data => {
+        switch (data.type) {
+            case "error":
+                toast.error(data.message)
+                break;
+            case "success":
+                toast.success(data.message)
+                break;
+            default:
+                toast.error(data.message)
+                break;
+        }
+    })
 }

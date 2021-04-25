@@ -5,13 +5,13 @@ import Rooms from "./components/Rooms"
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import "./App.css"
+import "react-toastify/dist/ReactToastify.css";
 import { socket } from "./hooks";
 import { UPDATE_NAME } from "./actions/roomAction";
 import { UPDATE_PLAYER } from "./actions/playerAction";
 import { ADD_PLAYER } from "./actions/plyersAction";
 
 function App() {
-  toast.configure();
   let State = useSelector((state) => {
     return state;
   });

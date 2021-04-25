@@ -11,18 +11,18 @@ class Server {
     this.app.use(bodyParser.json());
     this.app.use(
       cors({
-        origin: 'http://localhost:3000',
+        origin: '*',
         credentials: true,
       })
     );
     this.http = http.Server(this.app);
-    this.io = require("socket.io")(this.http, {
+    var io = require("socket.io")(this.http, {
       pingInterval: 60000,
       cors: {
         origin: "*",
       },
     });
-    this.io
+    io
       .on("connection", function (socket) {
         socket.on("join", (rs) => {
           let a = rooms.find(
@@ -45,7 +45,7 @@ class Server {
         });
         socket.on("new_tetriminos", (room) => {
           let rst = rnd;
-          console.log(rst);
+          //console.log(rst);
           socket.to(room).emit("new_tetriminos", rst);
         });
 
@@ -56,25 +56,36 @@ class Server {
         });
         socket.on("start game", (room) => {
           let rst = rnd;
-          console.log(rst);
+          //console.log(rst);
           socket.to(room).emit("start game", rst);
         });
         socket.on("CreateRoom", (message) => {
-          let sym = 0;
-          for (let i = 0; i < rooms.length; i++)
-            if (rooms[i].room == message.name) {
-              sym = 1;
-              socket.emit("CreateRoom", { err: "Room Existe" });
-              break;
-            }
-          if (sym == 0) {
+          // let sym = 0;
+          // for (let i = 0; i < rooms.length; i++)
+          //   if (rooms[i].room == message.name) {
+          //     sym = 1;
+          //     socket.emit("CreateRoom", { err: "Room Existe" });
+          //     break;
+          //   }
+          // if (sym == 0) {
+          //   socket.join(message.name);
+          //   rooms.push({
+          //     user: message.user,
+          //     room: message.name,
+          //     admin: 1,
+          //   });
+          //   socket.emit("RoomCreated", { room: message.name, user: message.user });
+          // }
+          console.log(io.sockets.adapter.rooms)
+          if (io.sockets.adapter.rooms.get(message.name)) {
+            const data = { type: "error", message: "Room already exists!" }
+            socket.emit("TOASTIFY", data);
+          }
+          else {
             socket.join(message.name);
-            rooms.push({
-              user: message.user,
-              room: message.name,
-              admin: 1,
-            });
-            socket.emit("RoomCreated", { room: message.name, user: message.user });
+            const data = { type: "success", message: "Room created!" }
+            socket.emit("TOASTIFY", data);
+
           }
         });
       })

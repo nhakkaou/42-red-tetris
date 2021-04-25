@@ -15,7 +15,8 @@ const Rooms = () => {
   });
 
   function addRoom() {
-    dispatch(createRoom(playerState.username, Room));
+    //dispatch(createRoom(playerState.username, Room));
+    window.location.hash = `${Room}[${playerState.username}]`;
   }
 
   useEffect(() => {
