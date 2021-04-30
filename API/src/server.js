@@ -55,9 +55,9 @@ class Server {
             .emit("new score", { user: rs.user, score: rs.score });
         });
         socket.on("start game", (room) => {
-          // let rst = helpers.randomTetromino();
-          //console.log(rst);
-          socket.to(room).emit("start game");
+          let rst = helpers.randomTetromino();
+          console.log(room);
+          io.sockets.in(room).emit("start game", rst);
         });
         socket.on("joinRoom", (data) => {
           if (helpers.validateName(data.user) && helpers.validateName(data.room)) {

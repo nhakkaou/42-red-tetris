@@ -34,17 +34,17 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-            ["I", "I", "I", "I"],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-          ])
+          ["I", "I", "I", "I"],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+        ])
         : (clonedPlayer.tetromino = [
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-          ]);
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+        ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
@@ -73,7 +73,6 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
   const resetPlayer = useCallback(
     (stage) => {
       console.log("state", stateTetrominos);
-      // const arr = stateTetrominos;
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
         tetromino:
@@ -83,8 +82,6 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
         collided: false,
       };
       stateTetrominos.shift();
-      // console.log("arr", arr);
-      dispatch({ type: CHANGE_PIECE, data: stateTetrominos });
       if (stage) {
         if (!checkcollision(tet, stage, { x: 0, y: 0 }))
           setPlayer({

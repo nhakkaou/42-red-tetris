@@ -3,7 +3,7 @@ import Stage from "./Stage";
 import StartBtn from "./StartBtn";
 import Display from "./Display";
 import Help from "./Help";
-import { S_HEIGHT, checkcollision } from "../gameHelper";
+import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
@@ -51,7 +51,7 @@ const Tetris = () => {
   useEffect(() => {
     if (stateTetrominos.room.next_piece.length <= 1 && sym === 1) {
       console.log("trsl");
-      socket.emit("new_tetriminos", stateTetrominos.room.name);
+      //socket.emit("new_tetriminos", stateTetrominos.room.name);
       setSym(0);
     }
   }, [stateTetrominos.room.next_piece]);
@@ -89,9 +89,21 @@ const Tetris = () => {
       updatePlayerPos({ x: dir, y: 0 });
   };
 
+  useEffect(() => {
+    if (stateTetrominos.room.startgame === true) {
+      audio.play();
+      setStage(Createstage());
+      setDropTime(1000);
+      resetPlayer();
+      setGameOver(false);
+      setScore(0);
+      setRows(0);
+      setLevel(0);
+    }
+  }, [stateTetrominos.room.startgame])
+
 
   const startGame = () => {
-    dispatch({ type: START_GAME, data: true });
     socket.emit("start game", stateTetrominos.room.name);
     // audio.play();
     // setStage(Createstage());
