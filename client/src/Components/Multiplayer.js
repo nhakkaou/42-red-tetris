@@ -14,47 +14,31 @@ import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_PLAYER } from "../actions/plyersAction";
-import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
+import { UPDATE_MEMBER } from "../actions/roomAction";
 
 const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
   const dispatch = useDispatch();
-  const [sym, setSym] = useState(1);
-  let stateTetrominos = useSelector((state) => {
-    return state;
+  let playerState = useSelector((state) => {
+    return state.player;
+  });
+  let roomState = useSelector((state) => {
+    return state.room;
+  });
+  let playersState = useSelector((state) => {
+    return state.players;
   });
   socket.on("new member", (result) => {
-    let tmp = stateTetrominos.players.find(
-      (element) => element.user == result.user
-    );
-    let tab = stateTetrominos.players;
+    let tmp = playersState.find((element) => element.user == result.user);
+    let tab = playersState;
     if (!tmp || tmp.user !== result.user) {
       tab.push({ user: result.user, score: 0 });
-      dispatch({ type: UPDATE_MEMBER, data: stateTetrominos.room.members++ });
+      dispatch({ type: UPDATE_MEMBER, data: roomState.members++ });
       dispatch({ type: ADD_PLAYER, data: tab });
     }
   });
-  socket.on("disconnect", (socket) => {
-    dispatch({ type: CHANGE_PIECE, data: [] });
-    console.log("Server Down");
-  });
-  socket.on("new_tetriminos", (msg) => {
-    if (sym == 0) {
-      console.log("HI MOTHERFUCKERS 1");
-      setSym(1);
-      const data = [...stateTetrominos.room.next_piece, ...msg];
-      dispatch({ type: CHANGE_PIECE, data: data });
-    }
-  });
-  useEffect(() => {
-    if (stateTetrominos.room.next_piece.length <= 1 && sym === 1) {
-      console.log("trsl");
-      //socket.emit("new_tetriminos", stateTetrominos.room.name);
-      setSym(0);
-    }
-  }, [stateTetrominos.room.next_piece]);
 
   const [playing, setPlaying] = useState(true);
   const [audio] = useState(new Audio(url));
@@ -67,8 +51,7 @@ const Tetris = () => {
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
     setGameOver,
-    dispatch,
-    stateTetrominos.room.next_piece,
+    roomState.next_piece,
     1
   );
 
@@ -80,8 +63,8 @@ const Tetris = () => {
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared,
-    stateTetrominos.room.name,
-    stateTetrominos.player.username
+    roomState.name,
+    playerState.username
   );
 
   const movePlayer = (dir) => {
@@ -90,8 +73,16 @@ const Tetris = () => {
   };
 
   useEffect(() => {
-    if (stateTetrominos.room.startgame === true) {
-      audio.play();
+    console.log("nextpeice changed", roomState.next_piece.length);
+    if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
+      console.log("jibakhoya");
+      socket.emit("new_tetriminos", roomState.name);
+    }
+  }, [roomState.next_piece.length]);
+
+  useEffect(() => {
+    if (roomState.startgame === true) {
+      //audio.play();
       setStage(Createstage());
       setDropTime(1000);
       resetPlayer();
@@ -100,19 +91,10 @@ const Tetris = () => {
       setRows(0);
       setLevel(0);
     }
-  }, [stateTetrominos.room.startgame])
-
+  }, [roomState.startgame]);
 
   const startGame = () => {
-    socket.emit("start game", stateTetrominos.room.name);
-    // audio.play();
-    // setStage(Createstage());
-    // setDropTime(1000);
-    // resetPlayer();
-    // setGameOver(false);
-    // setScore(0);
-    // setRows(0);
-    // setLevel(0);
+    socket.emit("start game", roomState.name);
   };
 
   const drop = () => {
@@ -199,29 +181,29 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-              <div>
-                <Display text={`Level: ${level}`} />
-                <Help />
-              </div>
-            )}
-          {stateTetrominos.player.admin && !stateTetrominos.room.startgame ? (
-            <StartBtn callback={startGame} room={stateTetrominos.room.name} />
+            <div>
+              <Display text={`Level: ${level}`} />
+              <Help />
+            </div>
+          )}
+          {playerState.admin && !roomState.startgame ? (
+            <StartBtn callback={startGame} room={roomState.name} />
           ) : (
-              ""
-            )}
+            ""
+          )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

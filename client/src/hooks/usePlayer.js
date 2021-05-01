@@ -1,11 +1,8 @@
 import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
-// import { useSelector } from "react-redux";
-import { UPDATE_MEMBER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
-// import { socket } from "../hooks";
 
-export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
+export const usePlayer = (setGameOver, stateTetrominos, symM) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -34,17 +31,17 @@ export const usePlayer = (setGameOver, dispatch, stateTetrominos, symM) => {
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-          ["I", "I", "I", "I"],
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
-        ])
+            ["I", "I", "I", "I"],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+          ])
         : (clonedPlayer.tetromino = [
-          [0, "I", 0, 0],
-          [0, "I", 0, 0],
-          [0, "I", 0, 0],
-          [0, "I", 0, 0],
-        ]);
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+          ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;

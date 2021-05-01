@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import AddName from "./components/AddName";
-import Tetris from "./components/Multiplayer";
-import Rooms from "./components/Rooms"
+import AddName from "./Components/AddName";
+import Tetris from "./Components/Multiplayer";
+import Rooms from "./Components/Rooms";
 import { useSelector } from "react-redux";
-import { ToastContainer } from 'react-toastify';
-import "./App.css"
+import { ToastContainer } from "react-toastify";
+import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -16,7 +16,13 @@ function App() {
     <div>
       <h1>Red T e t r i s</h1>
       <ToastContainer />
-      {State.player.username === "" ? <AddName /> : State.room.name === "" ? <Rooms /> : <Tetris />}
+      {State.player.username === "" ? (
+        <AddName />
+      ) : State.room.name === "" ? (
+        <Rooms />
+      ) : (
+        <Tetris />
+      )}
     </div>
   );
 }
