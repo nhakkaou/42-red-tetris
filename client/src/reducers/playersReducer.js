@@ -1,4 +1,4 @@
-import { UPDATE_SCORE, ADD_PLAYER } from "../actions/plyersAction";
+import { UPDATE_SCORE, ADD_PLAYER } from "../actions/playersAction";
 
 const DEFAULT_STATE = [];
 

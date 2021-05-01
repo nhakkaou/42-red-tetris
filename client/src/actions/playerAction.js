@@ -1,6 +1,9 @@
-export const ADD_PLAYER_NAME = "ADD_PLAYER_NAME"
+import { socket } from "../hooks";
+
+export const ADD_PLAYER_NAME = "ADD_PLAYER_NAME";
 export const UPDATE_PLAYER = "UPDATE_PLAYER";
 export const ADMIN_PLAYER = "ADMIN_PLAYER";
+export const PLAYER_LOST = "PLAYER_LOST";
 
 const addPlayerName = (data) => ({
   type: ADD_PLAYER_NAME,
@@ -12,5 +15,12 @@ const updateplayer = (data) => ({
   data: data,
 });
 
+const playerLost = (data) => {
+  return (dispatch) => {
+    socket.emit("player_lost", data)
+    dispatch({ type: PLAYER_LOST, data: data.user })
+  };
+}
 
-export { addPlayerName, updateplayer };
+
+export { addPlayerName, updateplayer, playerLost };

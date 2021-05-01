@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const helpers = require("./helpers");
 class Server {
   constructor() {
-    let users = [{ admin: 0, id: "", user: "" }];
+    let users = [{ admin: true, id: "", user: "", hasLost: false }];
     let rooms = [{ user: "", room: "" }];
     this.app = express();
     this.app.use(bodyParser.json());
@@ -27,24 +27,19 @@ class Server {
         let a = rooms.find(
           (element) => element.user === rs.user && element.room === rs.room
         );
-        console.log(socket.rooms);
-        console.log(rooms);
         if (!a || a.user !== rs.user) {
           let c = 1;
           for (let i = 1; i < rooms.length; i++)
             if (rs.room == rooms[i].room) c++;
-          console.log(c);
           if (c <= 5) {
             rooms.push({ user: rs.user, room: rs.room });
-            console.log(rooms);
             socket.join(rs.room);
             socket.to(rs.room).emit("new member", { user: rs.user });
-          } else console.log("9adiya 3amra");
+          } else { console.log("9adiya 3amra"); }
         }
       });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
-        //console.log(rst, room);
         io.sockets.in(room).emit("new_tetriminos", rst);
       });
 
@@ -55,8 +50,13 @@ class Server {
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
-        console.log(room);
+        // console.log(room + " lost");
         io.sockets.in(room).emit("start game", rst);
+      });
+      socket.on("player_lost", (data) => {
+        console.log(data);
+        //count lost players to stop game or not
+        //io.sockets.in(room).emit("start game", rst);
       });
       socket.on("joinRoom", (data) => {
         if (
@@ -66,9 +66,9 @@ class Server {
           if (io.sockets.adapter.rooms.get(data.room)) {
             const clients = io.sockets.adapter.rooms.get(data.room);
             const numClients = clients ? clients.size : 0;
-            console.log("Clients", clients.size);
+            // console.log("Clients", clients.size);
             if (numClients + 1 > 5) {
-              console.log("3amra");
+              // console.log("3amra");
               const message = { type: "error", message: "Room is full!" };
               socket.emit("TOASTIFY", message);
               return;
@@ -80,7 +80,7 @@ class Server {
             }
           } else {
             socket.join(data.room);
-            console.log(io.sockets.adapter.rooms.get(data.room).size);
+            // console.log(io.sockets.adapter.rooms.get(data.room).size);
 
             const message = { type: "success", message: "Created room!" };
             socket.emit("Join_success", { ...data, is_admin: true });

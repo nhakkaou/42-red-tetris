@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import playerReducer from "./playerReducer";
 import roomReducer from "./roomReducer";
-import players from "./players";
+import players from "./playersReducer";
 
 const combinedReducer = combineReducers({
   player: playerReducer,

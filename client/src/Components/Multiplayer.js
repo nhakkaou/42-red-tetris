@@ -13,7 +13,7 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_PLAYER } from "../actions/plyersAction";
+import { ADD_PLAYER } from "../actions/playersAction";
 import { UPDATE_MEMBER } from "../actions/roomAction";
 
 const Label = styled.label`
@@ -50,8 +50,10 @@ const Tetris = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
+    dispatch,
     setGameOver,
-    roomState.next_piece,
+    roomState,
+    playerState,
     1
   );
 
@@ -181,29 +183,29 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-            <div>
-              <Display text={`Level: ${level}`} />
-              <Help />
-            </div>
-          )}
+              <div>
+                <Display text={`Level: ${level}`} />
+                <Help />
+              </div>
+            )}
           {playerState.admin && !roomState.startgame ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
-            ""
-          )}
+              ""
+            )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

@@ -1,8 +1,9 @@
 import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
+import { playerLost } from "../actions/playerAction";
 
-export const usePlayer = (setGameOver, stateTetrominos, symM) => {
+export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -31,17 +32,17 @@ export const usePlayer = (setGameOver, stateTetrominos, symM) => {
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-            ["I", "I", "I", "I"],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-          ])
+          ["I", "I", "I", "I"],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+        ])
         : (clonedPlayer.tetromino = [
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-          ]);
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+        ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
@@ -69,16 +70,16 @@ export const usePlayer = (setGameOver, stateTetrominos, symM) => {
 
   const resetPlayer = useCallback(
     (stage) => {
-      console.log("state", stateTetrominos);
+      console.log("state", roomState.next_piece);
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
         tetromino:
           symM == 1
-            ? Tetrominos[stateTetrominos[0]]?.shape
+            ? Tetrominos[roomState.next_piece[0]]?.shape
             : randomTetromino().shape,
         collided: false,
       };
-      stateTetrominos.shift();
+      roomState.next_piece.shift();
       if (stage) {
         if (!checkcollision(tet, stage, { x: 0, y: 0 }))
           setPlayer({
@@ -88,6 +89,7 @@ export const usePlayer = (setGameOver, stateTetrominos, symM) => {
           });
         else {
           setGameOver(true);
+          dispatch(playerLost({ user: playerState.username, room: roomState.name }));
         }
       } else
         setPlayer({
@@ -96,7 +98,7 @@ export const usePlayer = (setGameOver, stateTetrominos, symM) => {
           collided: false,
         });
     },
-    [stateTetrominos]
+    [roomState.next_piece]
   );
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];

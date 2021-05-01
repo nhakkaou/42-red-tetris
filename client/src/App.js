@@ -21,8 +21,8 @@ function App() {
       ) : State.room.name === "" ? (
         <Rooms />
       ) : (
-        <Tetris />
-      )}
+            <Tetris />
+          )}
     </div>
   );
 }
