@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_PLAYER } from "../actions/playersAction";
 import { UPDATE_MEMBER } from "../actions/roomAction";
-
+import NextPiece from "./NextPiece";
 const Label = styled.label`
   cursor: pointer;
 `;
@@ -49,16 +49,17 @@ const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(
-    dispatch,
-    setGameOver,
-    roomState,
-    playerState,
-    1
-  );
-
-  const [stage, setStage, rowsCleared] = useStage(
+  const [
     player,
+    NextPlayer,
+    updatePlayerPos,
+    resetPlayer,
+    playerRotate,
+  ] = usePlayer(dispatch, setGameOver, roomState, playerState);
+
+  const [stage, stageNext, setStage, rowsCleared] = useStage(
+    player,
+    NextPlayer,
     resetPlayer,
     gameOver
   );
@@ -173,6 +174,7 @@ const Tetris = () => {
       <StyledTetris>
         <Stage stage={stage} />
         <aside>
+          <NextPiece stage={stageNext} />
           <Label>
             {playing ? (
               <FontAwesomeIcon
@@ -183,29 +185,29 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-              <div>
-                <Display text={`Level: ${level}`} />
-                <Help />
-              </div>
-            )}
+            <div>
+              <Display text={`Level: ${level}`} />
+              <Help />
+            </div>
+          )}
           {playerState.admin && !roomState.startgame ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
-              ""
-            )}
+            ""
+          )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

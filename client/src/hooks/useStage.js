@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Createstage } from "../gameHelper";
 
-export const useStage = (player, resetPlayer, gameOver) => {
+export const useStage = (player, NextPlayer, resetPlayer, gameOver) => {
   const [stage, setStage] = useState(Createstage());
+  const [stageNext, setStageNext] = useState(Createstage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
 
   useEffect(() => {
@@ -35,16 +36,28 @@ export const useStage = (player, resetPlayer, gameOver) => {
           }
         });
       });
+
       if (player.collided && !gameOver) {
         resetPlayer(newStage);
+        setStageNext(Createstage(4, 4));
         return sweepRows(newStage);
       }
 
       return newStage;
     };
+    NextPlayer.tetromino.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          stageNext[y][x] = [
+            value,
+            `${NextPlayer.collided ? "merged" : "clear"}`,
+          ];
+        }
+      });
+    });
 
     setStage((prev) => updateStage(prev));
   }, [player]);
 
-  return [stage, setStage, rowsCleared];
+  return [stage, stageNext, setStage, rowsCleared];
 };

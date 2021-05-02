@@ -63,8 +63,8 @@ export const Tetrominos = {
     color: "35, 155, 86",
   },
 };
-export const Createstage = () =>
-  Array.from(Array(S_HEIGHT), () => new Array(S_WIDTH).fill([0, "clear"]));
+export const Createstage = (h = S_HEIGHT, w = S_WIDTH) =>
+  Array.from(Array(h), () => new Array(w).fill([0, "clear"]));
 
 export const checkcollision = (player, stage, { x: moveX, y: moveY }) => {
   for (let y = 0; y < player.tetromino.length; y++) {

@@ -3,7 +3,7 @@ import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
 import { playerLost } from "../actions/playerAction";
 
-export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) => {
+export const usePlayer = (dispatch, setGameOver, roomState, playerState) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -12,7 +12,14 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) =
     tetromino: Tetrominos[0].shape,
     collided: false,
   });
-
+  const [NextPlayer, setNext] = useState({
+    pos: {
+      x: 0,
+      y: 0,
+    },
+    tetromino: Tetrominos[0].shape,
+    collided: false,
+  });
   const rotate = (matrix, dir) => {
     const rotatedTetro = matrix.map((_, colIndex) =>
       matrix.map((col) => col[colIndex])
@@ -32,17 +39,17 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) =
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-          ["I", "I", "I", "I"],
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
-        ])
+            ["I", "I", "I", "I"],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+          ])
         : (clonedPlayer.tetromino = [
-          [0, "I", 0, 0],
-          [0, "I", 0, 0],
-          [0, "I", 0, 0],
-          [0, "I", 0, 0],
-        ]);
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+            [0, "I", 0, 0],
+          ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
@@ -73,10 +80,7 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) =
       console.log("state", roomState.next_piece);
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
-        tetromino:
-          symM == 1
-            ? Tetrominos[roomState.next_piece[0]]?.shape
-            : randomTetromino().shape,
+        tetromino: Tetrominos[roomState.next_piece[0]]?.shape,
         collided: false,
       };
       roomState.next_piece.shift();
@@ -89,7 +93,9 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) =
           });
         else {
           setGameOver(true);
-          dispatch(playerLost({ user: playerState.username, room: roomState.name }));
+          dispatch(
+            playerLost({ user: playerState.username, room: roomState.name })
+          );
         }
       } else
         setPlayer({
@@ -97,9 +103,14 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState, symM) =
           tetromino: tet.tetromino,
           collided: false,
         });
+      setNext({
+        pos: { x: 2, y: 2 },
+        tetromino: Tetrominos[roomState.next_piece[0]]?.shape,
+        collided: false,
+      });
     },
     [roomState.next_piece]
   );
 
-  return [player, updatePlayerPos, resetPlayer, playerRotate];
+  return [player, NextPlayer, updatePlayerPos, resetPlayer, playerRotate];
 };
