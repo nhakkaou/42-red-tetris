@@ -5,8 +5,16 @@ const bodyParser = require("body-parser");
 const helpers = require("./helpers");
 class Server {
   constructor() {
-    let users = [{ admin: true, id: "", user: "", hasLost: false }];
-    let rooms = [{ user: "", room: "" }];
+    let Players = [
+      {
+        admin: false,
+        socketId: "",
+        user: "",
+        hasLost: false,
+        room: "",
+        score: 0,
+      },
+    ];
     this.app = express();
     this.app.use(bodyParser.json());
     this.app.use(
@@ -35,7 +43,9 @@ class Server {
             rooms.push({ user: rs.user, room: rs.room });
             socket.join(rs.room);
             socket.to(rs.room).emit("new member", { user: rs.user });
-          } else { console.log("9adiya 3amra"); }
+          } else {
+            console.log("9adiya 3amra");
+          }
         }
       });
       socket.on("new_tetriminos", (room) => {
@@ -66,43 +76,72 @@ class Server {
           if (io.sockets.adapter.rooms.get(data.room)) {
             const clients = io.sockets.adapter.rooms.get(data.room);
             const numClients = clients ? clients.size : 0;
-            // console.log("Clients", clients.size);
+            console.log("Clients", clients.size);
             if (numClients + 1 > 5) {
-              // console.log("3amra");
+              console.log("3amra");
               const message = { type: "error", message: "Room is full!" };
               socket.emit("TOASTIFY", message);
               return;
             } else {
+              let a = Players.find(
+                (element) =>
+                  element.user === data.user && element.room === data.room
+              );
+              if (!a || a.user !== data.user) {
+                Players.push({
+                  admin: false,
+                  socketId: "",
+                  user: data.user,
+                  hasLost: false,
+                  room: data.room,
+                  score: 0,
+                });
+              }
               socket.join(data.room);
               const message = { type: "success", message: "Joined room!" };
               socket.emit("Join_success", data);
               socket.emit("TOASTIFY", message);
+              io.sockets.in(data.room).emit("new member", Players);
             }
           } else {
             socket.join(data.room);
-            // console.log(io.sockets.adapter.rooms.get(data.room).size);
-
+            let a = Players.find(
+              (element) =>
+                element.user === data.user && element.room === data.room
+            );
+            if (!a || a.user !== data.user) {
+              Players.push({
+                admin: false,
+                socketId: "",
+                user: data.user,
+                hasLost: false,
+                room: data.room,
+                score: 0,
+              });
+            }
+            console.log(io.sockets.adapter.rooms.get(data.room).size);
             const message = { type: "success", message: "Created room!" };
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);
           }
+          console.log(Players);
         }
       });
     }).on("disconnect", function (socket) {
       socket.emit("disconnect", { message: "Server Down!!" });
     });
     this.app.get("/getRooms", (req, res) => {
-      let tmp = [];
-      for (let i = 0; i < rooms.length; i++) {
-        let j = 0;
-        let c = 0;
-        while (j < rooms.length) {
-          if (rooms[i].room == rooms[j].room) c++;
-          j++;
-        }
-        tmp.push({ room: rooms[i].room, members: c });
-      }
-      res.send(tmp);
+      // let tmp = [];
+      // for (let i = 0; i < rooms.length; i++) {
+      //   let j = 0;
+      //   let c = 0;
+      //   while (j < rooms.length) {
+      //     if (rooms[i].room == rooms[j].room) c++;
+      //     j++;
+      //   }
+      //   tmp.push({ room: rooms[i].room, members: c });
+      // }
+      // res.send(tmp);
     });
   }
   listen() {

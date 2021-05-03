@@ -3,7 +3,8 @@ import { ROOM_JOINED, CHANGE_PIECE, START_GAME } from "../actions/roomAction";
 import { toast } from "react-toastify";
 import { checkHash } from "../actions/checkHash";
 import { UPDATE_PLAYER } from "../actions/playerAction";
-
+import { ADD_PLAYER } from "../actions/playersAction";
+import { UPDATE_MEMBER } from "../actions/roomAction";
 export const stethoscope = (dispatch) => {
   window.onhashchange = () => {
     checkHash();
@@ -30,6 +31,18 @@ export const stethoscope = (dispatch) => {
     console.log("ljadid", data);
     dispatch({ type: CHANGE_PIECE, data: data });
   });
+
+  socket.on("new member", (result) => {
+    console.log(result);
+    let tmp = [];
+    let i = 0;
+    for (i = 0; i < result.length; i++)
+      if (result[i].user !== "")
+        tmp.push({ user: result[i].user, score: result[i].score });
+    dispatch({ type: UPDATE_MEMBER, data: i });
+    dispatch({ type: ADD_PLAYER, data: tmp });
+  });
+
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
       case "error":

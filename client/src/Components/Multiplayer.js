@@ -13,8 +13,7 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_PLAYER } from "../actions/playersAction";
-import { UPDATE_MEMBER } from "../actions/roomAction";
+
 import NextPiece from "./NextPiece";
 const Label = styled.label`
   cursor: pointer;
@@ -29,15 +28,6 @@ const Tetris = () => {
   });
   let playersState = useSelector((state) => {
     return state.players;
-  });
-  socket.on("new member", (result) => {
-    let tmp = playersState.find((element) => element.user == result.user);
-    let tab = playersState;
-    if (!tmp || tmp.user !== result.user) {
-      tab.push({ user: result.user, score: 0 });
-      dispatch({ type: UPDATE_MEMBER, data: roomState.members++ });
-      dispatch({ type: ADD_PLAYER, data: tab });
-    }
   });
 
   const [playing, setPlaying] = useState(true);
