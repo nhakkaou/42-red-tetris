@@ -31,32 +31,32 @@ class Server {
       },
     });
     io.on("connection", function (socket) {
-      socket.on("join", (rs) => {
-        let a = rooms.find(
-          (element) => element.user === rs.user && element.room === rs.room
-        );
-        if (!a || a.user !== rs.user) {
-          let c = 1;
-          for (let i = 1; i < rooms.length; i++)
-            if (rs.room == rooms[i].room) c++;
-          if (c <= 5) {
-            rooms.push({ user: rs.user, room: rs.room });
-            socket.join(rs.room);
-            socket.to(rs.room).emit("new member", { user: rs.user });
-          } else {
-            console.log("9adiya 3amra");
-          }
-        }
-      });
+      // socket.on("join", (rs) => {
+      //   let a = rooms.find(
+      //     (element) => element.user === rs.user && element.room === rs.room
+      //   );
+      //   if (!a || a.user !== rs.user) {
+      //     let c = 1;
+      //     for (let i = 1; i < rooms.length; i++)
+      //       if (rs.room == rooms[i].room) c++;
+      //     if (c <= 5) {
+      //       rooms.push({ user: rs.user, room: rs.room });
+      //       socket.join(rs.room);
+      //       socket.to(rs.room).emit("new member", { user: rs.user });
+      //     } else {
+      //       console.log("9adiya 3amra");
+      //     }
+      //   }
+      // });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
       });
 
       socket.on("new score", (rs) => {
-        socket
-          .to(rs.room)
-          .emit("new score", { user: rs.user, score: rs.score });
+        for (let i = 0; i < Players.length; i++)
+          if (Players[i].user == rs.user) Players[i].score = rs.score;
+        io.sockets.in(rs.room).emit("new score", Players);
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
@@ -101,7 +101,6 @@ class Server {
               const message = { type: "success", message: "Joined room!" };
               socket.emit("Join_success", data);
               socket.emit("TOASTIFY", message);
-              io.sockets.in(data.room).emit("new member", Players);
             }
           } else {
             socket.join(data.room);
@@ -124,6 +123,7 @@ class Server {
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);
           }
+          io.sockets.in(data.room).emit("new member", Players);
           console.log(Players);
         }
       });
@@ -131,7 +131,7 @@ class Server {
       socket.emit("disconnect", { message: "Server Down!!" });
     });
     this.app.get("/getRooms", (req, res) => {
-      // let tmp = [];
+      let tmp = [];
       // for (let i = 0; i < rooms.length; i++) {
       //   let j = 0;
       //   let c = 0;
@@ -141,7 +141,7 @@ class Server {
       //   }
       //   tmp.push({ room: rooms[i].room, members: c });
       // }
-      // res.send(tmp);
+      res.send(tmp);
     });
   }
   listen() {

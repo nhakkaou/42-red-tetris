@@ -33,7 +33,6 @@ export const stethoscope = (dispatch) => {
   });
 
   socket.on("new member", (result) => {
-    console.log(result);
     let tmp = [];
     let i = 0;
     for (i = 0; i < result.length; i++)
@@ -42,7 +41,9 @@ export const stethoscope = (dispatch) => {
     dispatch({ type: UPDATE_MEMBER, data: i });
     dispatch({ type: ADD_PLAYER, data: tmp });
   });
-
+  socket.on("new score", (result) =>
+    dispatch({ type: ADD_PLAYER, data: result })
+  );
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
       case "error":

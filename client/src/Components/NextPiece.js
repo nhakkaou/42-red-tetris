@@ -9,6 +9,7 @@ const StyleStage = styled.div`
   );
   grid-template-columns: repeat(${(props) => props.width}, 1fr);
   grid-gap: 1px;
+  width: 50%;
 `;
 const NextPiece = ({ stage }) => (
   <StyleStage width="4" height="4">
