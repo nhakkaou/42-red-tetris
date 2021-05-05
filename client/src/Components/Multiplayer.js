@@ -89,7 +89,15 @@ const Tetris = () => {
   const startGame = () => {
     socket.emit("start game", roomState.name);
   };
-
+  useEffect(() => {
+    if (gameOver) {
+      console.log("HIIII");
+      socket.emit("Loser", {
+        user: playerState.username,
+        room: roomState.name,
+      });
+    }
+  }, [gameOver]);
   const drop = () => {
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
@@ -186,11 +194,11 @@ const Tetris = () => {
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
-            <GameOver />
+            <GameOver score={score} />
           ) : (
             <div>
               <Display text={`Level: ${level}`} />
-              <Help />
+              {/* <Help /> */}
             </div>
           )}
           {playerState.admin && !roomState.startgame ? (

@@ -13,7 +13,11 @@ export const useGameStatus = (rowsCleared, room, user) => {
       setScore((prev) => prev + linePoints[rowsCleared - 1] * (level + 1));
       setRows((prev) => prev + rowsCleared);
       audio2.play();
-      socket.emit("new score", { user: user, score: score, room: room });
+      socket.emit("new score", {
+        user: user,
+        score: score + linePoints[rowsCleared - 1] * (level + 1),
+        room: room,
+      });
     }
   }, [level, linePoints, rowsCleared]);
   useEffect(() => {

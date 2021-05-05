@@ -20,42 +20,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MaxWidthDialog() {
+export default function MaxWidthDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("sm");
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleMaxWidthChange = (event) => {
-    setMaxWidth(event.target.value);
-  };
-
-  const handleFullWidthChange = (event) => {
-    setFullWidth(event.target.checked);
   };
 
   return (
     <React.Fragment>
       <Dialog
+        className="test"
         fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        maxWidth="xs"
         open={open}
         onClose={handleClose}
-        aria-labelledby="max-width-dialog-title"
       >
         <DialogTitle id="max-width-dialog-title">Game Over</DialogTitle>
         <DialogContent>
           <img src={url} />
         </DialogContent>
         <DialogActions>
+          <span>Score: {props.score}</span>
           <Button onClick={handleClose} color="primary">
             Close
           </Button>

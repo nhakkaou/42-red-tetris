@@ -1,44 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=Hanalei&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-image: url("./img/bk.jpg");
-    width: 100vw;
-    height: 100vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
-    overflow: hidden;
+  background-image: url("./img/bk.jpg");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  overflow: hidden;
 }
 
 audio {
-    display: none;
+  display: none;
 }
 
 h1 {
-    color: #492574;
-    font-family: "Hanalei", cursive;
-    font-size: xxx-large;
-    text-shadow: white 1px 0 10px;
-    text-align: center;
-    padding-top: 100px;
+  color: #492574;
+  font-family: "Hanalei", cursive;
+  font-size: xxx-large;
+  text-shadow: white 1px 0 10px;
+  text-align: center;
+  padding-top: 100px;
 }
 
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 60%;
-    margin: 20px auto;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 60%;
+  margin: 20px auto;
 }
 
 td,
 th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    width: auto;
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  width: auto;
 }

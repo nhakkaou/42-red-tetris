@@ -44,6 +44,10 @@ export const stethoscope = (dispatch) => {
   socket.on("new score", (result) =>
     dispatch({ type: ADD_PLAYER, data: result })
   );
+  socket.on("Winner", (rs) => {
+    console.log("The Winner is " + rs.user);
+    alert("The Winner is " + rs.user);
+  });
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
       case "error":

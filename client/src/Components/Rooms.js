@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { StyledButton, StyledInput } from './styling/StyledForm'
+import { StyledButton, StyledInput } from "./styling/StyledForm";
 import { useDispatch } from "react-redux";
 
 const Rooms = () => {
@@ -56,8 +56,8 @@ const Rooms = () => {
               <td>{item.members}/5</td>
             </tr>
           ) : (
-              ""
-            )
+            ""
+          )
         )}
       </table>
     </div>

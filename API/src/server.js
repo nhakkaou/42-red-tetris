@@ -54,19 +54,29 @@ class Server {
       });
 
       socket.on("new score", (rs) => {
-        for (let i = 0; i < Players.length; i++)
+        let tmp = [];
+        for (let i = 0; i < Players.length; i++) {
           if (Players[i].user == rs.user) Players[i].score = rs.score;
-        io.sockets.in(rs.room).emit("new score", Players);
+          tmp.push({ user: Players[i].user, score: Players[i].score });
+        }
+        io.sockets.in(rs.room).emit("new score", tmp);
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
         // console.log(room + " lost");
         io.sockets.in(room).emit("start game", rst);
       });
-      socket.on("player_lost", (data) => {
-        console.log(data);
-        //count lost players to stop game or not
-        //io.sockets.in(room).emit("start game", rst);
+      socket.on("Loser", (data) => {
+        let c = 1;
+        let winner = [];
+        for (let i = 0; i < Players.length; i++) {
+          if (Players[i].hasLost === true) c++;
+          else winner = Players[i];
+          if (Players[i].user === data.user) Players[i].hasLost = true;
+        }
+        if (c === Players.length - 1)
+          io.sockets.in(data.room).emit("Winner", winner);
+        console.log(winner);
       });
       socket.on("joinRoom", (data) => {
         if (
