@@ -5,6 +5,7 @@ import { checkHash } from "../actions/checkHash";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 import { ADD_PLAYER } from "../actions/playersAction";
 import { UPDATE_MEMBER } from "../actions/roomAction";
+import { S_WIDTH, S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 export const stethoscope = (dispatch) => {
   window.onhashchange = () => {
     checkHash();
@@ -16,7 +17,9 @@ export const stethoscope = (dispatch) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
     console.log("Disconnected");
   });
-
+  socket.on("new score", (result) => {
+    dispatch({ type: ADD_PLAYER, data: result });
+  });
   socket.on("Join_success", (data) => {
     dispatch({ type: UPDATE_PLAYER, data });
     dispatch({ type: ROOM_JOINED, data });
@@ -41,9 +44,7 @@ export const stethoscope = (dispatch) => {
     dispatch({ type: UPDATE_MEMBER, data: i });
     dispatch({ type: ADD_PLAYER, data: tmp });
   });
-  socket.on("new score", (result) =>
-    dispatch({ type: ADD_PLAYER, data: result })
-  );
+
   socket.on("Winner", (rs) => {
     console.log("The Winner is " + rs.user);
     alert("The Winner is " + rs.user);

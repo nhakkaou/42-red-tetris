@@ -3,7 +3,7 @@ import Stage from "./Stage";
 import StartBtn from "./StartBtn";
 import Display from "./Display";
 import Help from "./Help";
-import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
+import { S_WIDTH, S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
@@ -13,6 +13,7 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { ADD_PLAYER } from "../actions/playersAction";
 
 import NextPiece from "./NextPiece";
 const Label = styled.label`
@@ -74,9 +75,39 @@ const Tetris = () => {
   }, [roomState.next_piece.length]);
 
   useEffect(() => {
+    let tmp = Createstage();
+    let sym = 0;
+    let x = 1;
+    for (let i = 0; i < S_HEIGHT; i++) {
+      for (let j = 0; j < S_WIDTH; j++)
+        if (stage[i][j][0] === "P") {
+          sym = 1;
+          break;
+        }
+      if (sym === 1) {
+        x += i;
+        break;
+      }
+    }
+    for (let i = x; i < S_HEIGHT; i++) {
+      for (let j = 0; j < S_WIDTH; j++) {
+        tmp[i][j][0] = "P";
+        tmp[i][j][1] = "merged";
+      }
+    }
+    for (let i = S_HEIGHT - 1; i > 0; i--) {
+      for (let j = 0; j < S_WIDTH; j++) {
+        if (stage[i][j][0] !== "P") tmp[i - x][j] = stage[i][j];
+      }
+    }
+    setStage(tmp);
+  });
+
+  useEffect(() => {
     if (roomState.startgame === true) {
       //audio.play();
       setStage(Createstage());
+
       setDropTime(1000);
       resetPlayer();
       setGameOver(false);

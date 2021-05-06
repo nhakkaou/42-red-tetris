@@ -22,23 +22,6 @@ class Server {
       },
     });
     io.on("connection", function (socket) {
-      // socket.on("join", (rs) => {
-      //   let a = rooms.find(
-      //     (element) => element.user === rs.user && element.room === rs.room
-      //   );
-      //   if (!a || a.user !== rs.user) {
-      //     let c = 1;
-      //     for (let i = 1; i < rooms.length; i++)
-      //       if (rs.room == rooms[i].room) c++;
-      //     if (c <= 5) {
-      //       rooms.push({ user: rs.user, room: rs.room });
-      //       socket.join(rs.room);
-      //       socket.to(rs.room).emit("new member", { user: rs.user });
-      //     } else {
-      //       console.log("9adiya 3amra");
-      //     }
-      //   }
-      // });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
