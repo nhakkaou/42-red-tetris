@@ -2,8 +2,9 @@ import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
 import { playerLost } from "../actions/playerAction";
+import { GAME_OVER } from "../actions/roomAction";
 
-export const usePlayer = (dispatch, setGameOver, roomState, playerState) => {
+export const usePlayer = (dispatch, roomState, playerState) => {
   const [player, setPlayer] = useState({
     pos: {
       x: 0,
@@ -39,17 +40,17 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState) => {
         }
       sym == 1
         ? (clonedPlayer.tetromino = [
-            ["I", "I", "I", "I"],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-          ])
+          ["I", "I", "I", "I"],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+        ])
         : (clonedPlayer.tetromino = [
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-            [0, "I", 0, 0],
-          ]);
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+          [0, "I", 0, 0],
+        ]);
     } else clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
@@ -92,7 +93,7 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState) => {
             collided: false,
           });
         else {
-          setGameOver(true);
+          dispatch({ type: GAME_OVER, data: true })
           dispatch(
             playerLost({ user: playerState.username, room: roomState.name })
           );

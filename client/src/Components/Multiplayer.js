@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Stage from "./Stage";
 import StartBtn from "./StartBtn";
 import Display from "./Display";
-import Help from "./Help";
 import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval, socket } from "../hooks";
@@ -15,6 +14,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import NextPiece from "./NextPiece";
+import { GAME_OVER } from "../actions/roomAction";
 const Label = styled.label`
   cursor: pointer;
 `;
@@ -37,7 +37,6 @@ const Tetris = () => {
   }, []);
 
   const [dropTime, setDropTime] = useState(null);
-  const [gameOver, setGameOver] = useState(false);
 
   const [
     player,
@@ -45,13 +44,13 @@ const Tetris = () => {
     updatePlayerPos,
     resetPlayer,
     playerRotate,
-  ] = usePlayer(dispatch, setGameOver, roomState, playerState);
+  ] = usePlayer(dispatch, roomState, playerState);
 
   const [stage, stageNext, setStage, rowsCleared] = useStage(
     player,
     NextPlayer,
     resetPlayer,
-    gameOver
+    roomState.gameOver
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
@@ -68,7 +67,6 @@ const Tetris = () => {
   useEffect(() => {
     console.log("nextpeice changed", roomState.next_piece.length);
     if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
-      console.log("jibakhoya");
       socket.emit("new_tetriminos", roomState.name);
     }
   }, [roomState.next_piece.length]);
@@ -79,7 +77,7 @@ const Tetris = () => {
       setStage(Createstage());
       setDropTime(1000);
       resetPlayer();
-      setGameOver(false);
+      dispatch({ type: GAME_OVER, data: false });
       setScore(0);
       setRows(0);
       setLevel(0);
@@ -90,20 +88,20 @@ const Tetris = () => {
     socket.emit("start game", roomState.name);
   };
   useEffect(() => {
-    if (gameOver) {
+    if (roomState.gameOver) {
       console.log("HIIII");
       socket.emit("Loser", {
         user: playerState.username,
         room: roomState.name,
       });
     }
-  }, [gameOver]);
+  }, [roomState.gameOver]);
   const drop = () => {
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
       if (player.pos.y < 1) {
-        setGameOver(true);
+        dispatch({ type: GAME_OVER, data: true });
         setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
@@ -117,7 +115,7 @@ const Tetris = () => {
   };
 
   const keyUp = ({ keyCode }) => {
-    if (!gameOver && keyCode === 40) {
+    if (!roomState.gameOver && keyCode === 40) {
       if (level == 0) setDropTime(1000);
       else setDropTime(1000);
     }
@@ -145,7 +143,7 @@ const Tetris = () => {
   };
 
   const move = ({ keyCode }) => {
-    if (!gameOver) {
+    if (!roomState.gameOver) {
       if (keyCode === 37) movePlayer(-1);
       else if (keyCode === 39) movePlayer(1);
       else if (keyCode === 40) dropPlayer();
@@ -183,29 +181,34 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
-          {gameOver ? (
+          {roomState.gameOver ? (
             <GameOver score={score} />
           ) : (
-            <div>
-              <Display text={`Level: ${level}`} />
-              {/* <Help /> */}
-            </div>
-          )}
-          {playerState.admin && !roomState.startgame ? (
+              <div>
+                <Display text={`Level: ${level}`} />
+                {/* <Help /> */}
+              </div>
+            )}
+          {playerState.admin && !roomState.startgame && !roomState.gameOver ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
-            ""
-          )}
+              ""
+            )}
+          {playerState.admin && roomState.gameOver ? (
+            <StartBtn callback={startGame} res={true} room={roomState.name} />
+          ) : (
+              ""
+            )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

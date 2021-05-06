@@ -4,6 +4,7 @@ import {
   CHANGE_PIECE,
   UPDATE_NAME,
   ROOM_JOINED,
+  GAME_OVER,
 } from "../actions/roomAction";
 
 const DEFAULT_STATE = {
@@ -12,6 +13,7 @@ const DEFAULT_STATE = {
   startgame: false,
   mode: "solo",
   next_piece: [],
+  gameOver: false
 };
 
 export default function (state = DEFAULT_STATE, action) {
@@ -21,6 +23,9 @@ export default function (state = DEFAULT_STATE, action) {
     }
     case START_GAME: {
       return { ...state, startgame: true };
+    }
+    case GAME_OVER: {
+      return { ...state, startgame: false, gameOver: action.data };
     }
     case CHANGE_PIECE: {
       const data = [...state.next_piece, ...action.data];

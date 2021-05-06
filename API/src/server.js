@@ -67,8 +67,8 @@ class Server {
           if (Players[i].user === data.user) Players[i].hasLost = true;
         }
         if (c === Players.length - 1) {
-          io.sockets.in(data.room).emit("Winner", winner);
           console.log("Pc", winner);
+          io.sockets.in(data.room).emit("Winner", winner);
         }
         console.log(c);
       });

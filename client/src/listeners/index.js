@@ -1,5 +1,5 @@
 import { socket } from "../hooks/index";
-import { ROOM_JOINED, CHANGE_PIECE, START_GAME } from "../actions/roomAction";
+import { ROOM_JOINED, CHANGE_PIECE, START_GAME, GAME_OVER } from "../actions/roomAction";
 import { toast } from "react-toastify";
 import { checkHash } from "../actions/checkHash";
 import { UPDATE_PLAYER } from "../actions/playerAction";
@@ -10,7 +10,7 @@ export const stethoscope = (dispatch) => {
     checkHash();
   };
 
-  socket.on("connection", function (socket) {});
+  socket.on("connection", function (socket) { });
 
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
@@ -45,8 +45,9 @@ export const stethoscope = (dispatch) => {
     dispatch({ type: ADD_PLAYER, data: result })
   );
   socket.on("Winner", (rs) => {
-    console.log("The Winner is " + rs.user);
+    console.log("The Winner is " + rs);
     alert("The Winner is " + rs.user);
+    dispatch({ type: GAME_OVER, data: true });
   });
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
