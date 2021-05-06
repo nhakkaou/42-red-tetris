@@ -5,16 +5,7 @@ const bodyParser = require("body-parser");
 const helpers = require("./helpers");
 class Server {
   constructor() {
-    let Players = [
-      {
-        admin: false,
-        socketId: "",
-        user: "",
-        hasLost: false,
-        room: "",
-        score: 0,
-      },
-    ];
+    let Players = [];
     this.app = express();
     this.app.use(bodyParser.json());
     this.app.use(
@@ -69,14 +60,17 @@ class Server {
       socket.on("Loser", (data) => {
         let c = 1;
         let winner = [];
+        console.log(Players.length);
         for (let i = 0; i < Players.length; i++) {
           if (Players[i].hasLost === true) c++;
           else winner = Players[i];
           if (Players[i].user === data.user) Players[i].hasLost = true;
         }
-        if (c === Players.length - 1)
+        if (c === Players.length - 1) {
           io.sockets.in(data.room).emit("Winner", winner);
-        console.log(winner);
+          console.log("Pc", winner);
+        }
+        console.log(c);
       });
       socket.on("joinRoom", (data) => {
         if (
