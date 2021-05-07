@@ -145,6 +145,7 @@ class Server {
       //   }
       //   tmp.push({ room: rooms[i].room, members: c });
       // }
+
       res.send(tmp);
     });
   }

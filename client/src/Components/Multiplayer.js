@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import NextPiece from "./NextPiece";
-import { GAME_OVER } from "../actions/roomAction";
+import { GAME_OVER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
 const Label = styled.label`
   cursor: pointer;
 `;
@@ -66,25 +66,29 @@ const Tetris = () => {
 
   useEffect(() => {
     console.log("nextpeice changed", roomState.next_piece.length);
-    if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
+    if (roomState.next_piece.length <= 5 && roomState.gameStarted === true) {
       socket.emit("new_tetriminos", roomState.name);
     }
   }, [roomState.next_piece.length]);
 
   useEffect(() => {
-    if (roomState.startgame === true) {
+    if (roomState.gameStarted === true) {
       //audio.play();
       setStage(Createstage());
       setDropTime(1000);
       resetPlayer();
-      dispatch({ type: GAME_OVER, data: false });
+      dispatch({ type: START_GAME });
       setScore(0);
       setRows(0);
       setLevel(0);
     }
-  }, [roomState.startgame]);
+  }, [roomState.gameStarted]);
 
   const startGame = () => {
+    socket.emit("start game", roomState.name);
+  };
+  const restartGame = () => {
+    dispatch({ type: CHANGE_PIECE, data: [] });
     socket.emit("start game", roomState.name);
   };
   useEffect(() => {
@@ -199,13 +203,13 @@ const Tetris = () => {
                 {/* <Help /> */}
               </div>
             )}
-          {playerState.admin && !roomState.startgame && !roomState.gameOver ? (
+          {playerState.admin && !roomState.gameStarted && !roomState.gameOver ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
               ""
             )}
           {playerState.admin && roomState.gameOver ? (
-            <StartBtn callback={startGame} res={true} room={roomState.name} />
+            <StartBtn callback={restartGame} restart={true} room={roomState.name} />
           ) : (
               ""
             )}

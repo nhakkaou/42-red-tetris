@@ -1,6 +1,7 @@
 import {
   UPDATE_MEMBER,
   START_GAME,
+  RESTART_GAME,
   CHANGE_PIECE,
   UPDATE_NAME,
   ROOM_JOINED,
@@ -10,7 +11,7 @@ import {
 const DEFAULT_STATE = {
   name: "",
   members: 0,
-  startgame: false,
+  gameStarted: false,
   mode: "solo",
   next_piece: [],
   gameOver: false
@@ -22,10 +23,10 @@ export default function (state = DEFAULT_STATE, action) {
       return { ...state, members: action.data };
     }
     case START_GAME: {
-      return { ...state, startgame: true };
+      return { ...state, gameStarted: true, gameOver: false };
     }
     case GAME_OVER: {
-      return { ...state, startgame: false, gameOver: action.data };
+      return { ...state, gameStarted: false, gameOver: true };
     }
     case CHANGE_PIECE: {
       const data = [...state.next_piece, ...action.data];

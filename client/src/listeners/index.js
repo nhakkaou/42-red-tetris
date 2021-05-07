@@ -24,7 +24,7 @@ export const stethoscope = (dispatch) => {
 
   socket.on("start game", (data) => {
     dispatch({ type: CHANGE_PIECE, data: data });
-    dispatch({ type: START_GAME, data: true });
+    dispatch({ type: START_GAME });
   });
 
   socket.on("new_tetriminos", (data) => {

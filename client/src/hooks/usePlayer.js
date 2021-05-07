@@ -93,7 +93,7 @@ export const usePlayer = (dispatch, roomState, playerState) => {
             collided: false,
           });
         else {
-          dispatch({ type: GAME_OVER, data: true })
+          dispatch({ type: GAME_OVER })
           dispatch(
             playerLost({ user: playerState.username, room: roomState.name })
           );
