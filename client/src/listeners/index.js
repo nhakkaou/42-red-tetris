@@ -15,7 +15,6 @@ export const stethoscope = (dispatch) => {
 
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
-    console.log("Disconnected");
   });
   socket.on("new score", (result) => {
     dispatch({ type: ADD_PLAYER, data: result });
@@ -31,7 +30,6 @@ export const stethoscope = (dispatch) => {
   });
 
   socket.on("new_tetriminos", (data) => {
-    console.log("ljadid", data);
     dispatch({ type: CHANGE_PIECE, data: data });
   });
 
@@ -46,7 +44,6 @@ export const stethoscope = (dispatch) => {
   });
 
   socket.on("Winner", (rs) => {
-    console.log("The Winner is " + rs.user);
     alert("The Winner is " + rs.user);
   });
   socket.on("TOASTIFY", (data) => {

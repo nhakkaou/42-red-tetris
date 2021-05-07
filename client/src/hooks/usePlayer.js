@@ -77,7 +77,6 @@ export const usePlayer = (dispatch, setGameOver, roomState, playerState) => {
 
   const resetPlayer = useCallback(
     (stage) => {
-      console.log("state", roomState.next_piece);
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
         tetromino: Tetrominos[roomState.next_piece[0]]?.shape,

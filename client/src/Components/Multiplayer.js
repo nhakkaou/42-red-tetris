@@ -67,47 +67,31 @@ const Tetris = () => {
   };
 
   useEffect(() => {
-    console.log("nextpeice changed", roomState.next_piece.length);
     if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
-      console.log("jibakhoya");
       socket.emit("new_tetriminos", roomState.name);
     }
   }, [roomState.next_piece.length]);
 
   useEffect(() => {
+    let f = 1;
+    let c = stage.map((row) => row.map((cell) => (cell[0] === "P" ? f++ : f)));
     let tmp = Createstage();
-    let sym = 0;
-    let x = 1;
-    for (let i = 0; i < S_HEIGHT; i++) {
-      for (let j = 0; j < S_WIDTH; j++)
-        if (stage[i][j][0] === "P") {
-          sym = 1;
-          break;
+    if (f > 0)
+      for (let i = S_HEIGHT - 1; i >= 0; i--) {
+        for (let j = 0; j < S_WIDTH; j++) {
+          tmp[i][j] = ["P", "merged"];
         }
-      if (sym === 1) {
-        x += i;
-        break;
+        f--;
+        if (f == 0) break;
       }
-    }
-    for (let i = x; i < S_HEIGHT; i++) {
-      for (let j = 0; j < S_WIDTH; j++) {
-        tmp[i][j][0] = "P";
-        tmp[i][j][1] = "merged";
-      }
-    }
-    for (let i = S_HEIGHT - 1; i > 0; i--) {
-      for (let j = 0; j < S_WIDTH; j++) {
-        if (stage[i][j][0] !== "P") tmp[i - x][j] = stage[i][j];
-      }
-    }
+
     setStage(tmp);
-  });
+  }, [score]);
 
   useEffect(() => {
     if (roomState.startgame === true) {
       //audio.play();
       setStage(Createstage());
-
       setDropTime(1000);
       resetPlayer();
       setGameOver(false);
@@ -122,7 +106,6 @@ const Tetris = () => {
   };
   useEffect(() => {
     if (gameOver) {
-      console.log("HIIII");
       socket.emit("Loser", {
         user: playerState.username,
         room: roomState.name,
@@ -141,8 +124,7 @@ const Tetris = () => {
     }
     if (rows > level + 1) {
       setLevel((prev) => prev + 1);
-      // console.log("increment drop time", 1000 / level + 1 * 10);
-      // console.log("LEVEL", level);
+
       if (level > 0) setDropTime(1000 / level + 1 * 10);
     }
   };

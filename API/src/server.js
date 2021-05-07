@@ -37,13 +37,13 @@ class Server {
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
-        // console.log(room + " lost");
+
         io.sockets.in(room).emit("start game", rst);
       });
       socket.on("Loser", (data) => {
         let c = 1;
         let winner = [];
-        console.log(Players.length);
+
         for (let i = 0; i < Players.length; i++) {
           if (Players[i].hasLost === true) c++;
           else winner = Players[i];
@@ -51,9 +51,7 @@ class Server {
         }
         if (c === Players.length - 1) {
           io.sockets.in(data.room).emit("Winner", winner);
-          console.log("Pc", winner);
         }
-        console.log(c);
       });
       socket.on("joinRoom", (data) => {
         if (
@@ -63,9 +61,8 @@ class Server {
           if (io.sockets.adapter.rooms.get(data.room)) {
             const clients = io.sockets.adapter.rooms.get(data.room);
             const numClients = clients ? clients.size : 0;
-            console.log("Clients", clients.size);
+
             if (numClients + 1 > 5) {
-              console.log("3amra");
               const message = { type: "error", message: "Room is full!" };
               socket.emit("TOASTIFY", message);
               return;
@@ -105,13 +102,12 @@ class Server {
                 score: 0,
               });
             }
-            console.log(io.sockets.adapter.rooms.get(data.room).size);
+
             const message = { type: "success", message: "Created room!" };
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);
           }
           io.sockets.in(data.room).emit("new member", Players);
-          console.log(Players);
         }
       });
     }).on("disconnect", function (socket) {
