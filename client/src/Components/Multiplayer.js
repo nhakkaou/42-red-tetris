@@ -66,8 +66,9 @@ const Tetris = () => {
   };
   useEffect(() => {
     let f = 1;
-    let c = tmp.map((row) => row.map((cell) => (cell[0] === "P" ? f++ : f)));
+    stage.map((row) => (row[0][0] === "P" ? f++ : f));
     console.log(f);
+    let k = f
     if (f > 0)
       for (let i = S_HEIGHT - 1; i >= 0; i--) {
         for (let j = 0; j < S_WIDTH; j++) {
@@ -76,6 +77,11 @@ const Tetris = () => {
         f--;
         if (f == 0) break;
       }
+      // for (let i = S_HEIGHT - 1; i >= 0; i--) 
+      //   for (let j = 0; j < S_WIDTH; j++) {
+      //     if (stage[i][j] !== 'P')  
+      //       tmp[i - k][j] = stage[i][j]
+      //   }
     setTmp(tmp);
     setStage(tmp, console.log("------", stage));
   }, [score]);
