@@ -13,8 +13,7 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_PLAYER } from "../actions/playersAction";
-
+import { SET_STAGE } from "../actions/playerAction";
 import NextPiece from "./NextPiece";
 const Label = styled.label`
   cursor: pointer;
@@ -39,7 +38,7 @@ const Tetris = () => {
 
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-
+  const [tmp, setTmp] = useState(Createstage());
   const [
     player,
     NextPlayer,
@@ -65,17 +64,10 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
       updatePlayerPos({ x: dir, y: 0 });
   };
-
-  useEffect(() => {
-    if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
-      socket.emit("new_tetriminos", roomState.name);
-    }
-  }, [roomState.next_piece.length]);
-
   useEffect(() => {
     let f = 1;
-    let c = stage.map((row) => row.map((cell) => (cell[0] === "P" ? f++ : f)));
-    let tmp = Createstage();
+    let c = tmp.map((row) => row.map((cell) => (cell[0] === "P" ? f++ : f)));
+    console.log(f);
     if (f > 0)
       for (let i = S_HEIGHT - 1; i >= 0; i--) {
         for (let j = 0; j < S_WIDTH; j++) {
@@ -84,14 +76,20 @@ const Tetris = () => {
         f--;
         if (f == 0) break;
       }
-
-    setStage(tmp);
+    setTmp(tmp);
+    setStage(tmp, console.log("------", stage));
   }, [score]);
+  useEffect(() => {
+    if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
+      socket.emit("new_tetriminos", roomState.name);
+    }
+  }, [roomState.next_piece.length]);
 
   useEffect(() => {
     if (roomState.startgame === true) {
       //audio.play();
       setStage(Createstage());
+      dispatch({ type: SET_STAGE, data: Createstage() });
       setDropTime(1000);
       resetPlayer();
       setGameOver(false);

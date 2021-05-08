@@ -10,7 +10,9 @@ export const useStage = (player, NextPlayer, resetPlayer, gameOver) => {
     setRowsCleared(0);
     const sweepRows = (newStage) =>
       newStage.reduce((ack, row) => {
-        if (row.findIndex((cell) => cell[0] === 0) === -1) {
+        if (row.findIndex((cell) => cell[0] === 0 || cell[0] === "P") === -1) {
+          console.log("dkhaaalt");
+          console.log(newStage);
           setRowsCleared((prev) => prev + 1);
           ack.unshift(new Array(newStage[0].length).fill([0, "clear"]));
           return ack;

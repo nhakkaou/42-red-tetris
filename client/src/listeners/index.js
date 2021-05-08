@@ -6,6 +6,7 @@ import { UPDATE_PLAYER } from "../actions/playerAction";
 import { ADD_PLAYER } from "../actions/playersAction";
 import { UPDATE_MEMBER } from "../actions/roomAction";
 import { S_WIDTH, S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
+
 export const stethoscope = (dispatch) => {
   window.onhashchange = () => {
     checkHash();
@@ -17,6 +18,25 @@ export const stethoscope = (dispatch) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
   });
   socket.on("new score", (result) => {
+    // let f = 1;
+    // let c = stage.map((row) =>
+    //   row.map((cell) => {
+    //     // cell[0] === "P" ? f++ : f;
+    //     console.log(cell[0]);
+    //   })
+    // );
+    // let tmp = Createstage();
+    // console.log(f);
+    // if (f > 0)
+    //   for (let i = S_HEIGHT - 1; i >= 0; i--) {
+    //     for (let j = 0; j < S_WIDTH; j++) {
+    //       tmp[i][j] = ["P", "merged"];
+    //     }
+    //     f--;
+    //     if (f == 0) break;
+    //   }
+
+    // setStage(tmp);
     dispatch({ type: ADD_PLAYER, data: result });
   });
   socket.on("Join_success", (data) => {
