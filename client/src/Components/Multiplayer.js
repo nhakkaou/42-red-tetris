@@ -185,34 +185,40 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {roomState.gameOver ? (
             <GameOver score={score} />
           ) : (
-              <div>
-                <Display text={`Level: ${level}`} />
-                {/* <Help /> */}
-              </div>
-            )}
-          {playerState.admin && !roomState.gameStarted && !roomState.gameOver ? (
+            <div>
+              <Display text={`Level: ${level}`} />
+              {/* <Help /> */}
+            </div>
+          )}
+          {playerState.admin &&
+          !roomState.gameStarted &&
+          !roomState.gameOver ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
-              ""
-            )}
+            ""
+          )}
           {playerState.admin && roomState.gameOver ? (
-            <StartBtn callback={restartGame} restart={true} room={roomState.name} />
+            <StartBtn
+              callback={restartGame}
+              restart={true}
+              room={roomState.name}
+            />
           ) : (
-              ""
-            )}
+            ""
+          )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

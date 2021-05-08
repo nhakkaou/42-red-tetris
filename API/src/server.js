@@ -54,23 +54,32 @@ class Server {
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
-        // console.log(room + " lost");
         io.sockets.in(room).emit("start game", rst);
       });
       socket.on("Loser", (data) => {
-        let c = 1;
-        let winner = [];
-        console.log(Players.length);
+        let winner = {};
+        let lostCount = 0;
         for (let i = 0; i < Players.length; i++) {
-          if (Players[i].hasLost === true) c++;
-          else winner = Players[i];
-          if (Players[i].user === data.user) Players[i].hasLost = true;
+          if (Players[i].user === data.user) {
+            Players[i].hasLost = true;
+            ++lostCount;
+          } else if (
+            Players[i].user !== data.user &&
+            Players[i].hasLost === true
+          ) {
+            ++lostCount;
+          } else if (
+            Players[i].user !== data.user &&
+            Players[i].hasLost === false &&
+            lostCount === Players.length - 1
+          ) {
+            winner = Players[i];
+            console.log("Winner", winner);
+            console.log("Players", Players);
+            io.sockets.in(data.room).emit("Winner", winner);
+            break;
+          }
         }
-        if (c === Players.length - 1) {
-          console.log("Pc", winner);
-          io.sockets.in(data.room).emit("Winner", winner);
-        }
-        console.log(c);
       });
       socket.on("joinRoom", (data) => {
         if (
@@ -80,7 +89,6 @@ class Server {
           if (io.sockets.adapter.rooms.get(data.room)) {
             const clients = io.sockets.adapter.rooms.get(data.room);
             const numClients = clients ? clients.size : 0;
-            console.log("Clients", clients.size);
             if (numClients + 1 > 5) {
               console.log("3amra");
               const message = { type: "error", message: "Room is full!" };
@@ -114,7 +122,7 @@ class Server {
             );
             if (!a || a.user !== data.user) {
               Players.push({
-                admin: false,
+                admin: true,
                 socketId: "",
                 user: data.user,
                 hasLost: false,
@@ -128,7 +136,6 @@ class Server {
             socket.emit("TOASTIFY", message);
           }
           io.sockets.in(data.room).emit("new member", Players);
-          console.log(Players);
         }
       });
     }).on("disconnect", function (socket) {
