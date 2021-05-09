@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Createstage } from "../gameHelper";
+import { SET_STAGE } from "../actions/playerAction";
+import { useDispatch } from "react-redux";
 
 export const useStage = (player, NextPlayer, resetPlayer, gameOver) => {
   const [stage, setStage] = useState(Createstage());
   const [stageNext, setStageNext] = useState(Createstage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     setRowsCleared(0);
     const sweepRows = (newStage) =>

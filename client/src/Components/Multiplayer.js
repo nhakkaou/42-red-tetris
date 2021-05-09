@@ -20,6 +20,7 @@ const Label = styled.label`
 `;
 const Tetris = () => {
   const dispatch = useDispatch();
+
   let playerState = useSelector((state) => {
     return state.player;
   });
@@ -65,25 +66,34 @@ const Tetris = () => {
       updatePlayerPos({ x: dir, y: 0 });
   };
   useEffect(() => {
-    let f = 1;
+    let f = 0;
+    let tmp = Array.from(Array(20), () => new Array(10).fill([0, "clear"]));
     stage.map((row) => (row[0][0] === "P" ? f++ : f));
+
     console.log(f);
-    let k = f
-    if (f > 0)
-      for (let i = S_HEIGHT - 1; i >= 0; i--) {
+
+    let k = f;
+    if (f >= 0)
+      for (let i = 0; i < S_HEIGHT; i++) {
         for (let j = 0; j < S_WIDTH; j++) {
           tmp[i][j] = ["P", "merged"];
         }
+        stage.push(tmp[i]);
         f--;
         if (f == 0) break;
       }
-      // for (let i = S_HEIGHT - 1; i >= 0; i--) 
-      //   for (let j = 0; j < S_WIDTH; j++) {
-      //     if (stage[i][j] !== 'P')  
-      //       tmp[i - k][j] = stage[i][j]
-      //   }
-    setTmp(tmp);
-    setStage(tmp, console.log("------", stage));
+    while (k > 0) {
+      stage.shift();
+      k--;
+    }
+    console.log("stage1", stage);
+    // for (let i = S_HEIGHT - 1; i >= 0; i--)
+    //   for (let j = 0; j < S_WIDTH; j++) {
+    //     if (stage[i][j] !== 'P')
+    //       tmp[i - k][j] = stage[i][j]
+    //   }
+    // setTmp(tmp);
+    setStage(stage);
   }, [score]);
   useEffect(() => {
     if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
