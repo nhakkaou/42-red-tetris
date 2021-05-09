@@ -1,8 +1,9 @@
 import { socket } from "../hooks/index";
+import store from '../Store';
 import { ROOM_JOINED, CHANGE_PIECE, START_GAME, GAME_OVER } from "../actions/roomAction";
 import { toast } from "react-toastify";
 import { checkHash } from "../actions/checkHash";
-import { UPDATE_PLAYER } from "../actions/playerAction";
+import { UPDATE_PLAYER, PLAYER_LOST } from "../actions/playerAction";
 import { ADD_PLAYER } from "../actions/playersAction";
 import { UPDATE_MEMBER } from "../actions/roomAction";
 export const stethoscope = (dispatch) => {
@@ -44,10 +45,11 @@ export const stethoscope = (dispatch) => {
   socket.on("new score", (result) =>
     dispatch({ type: ADD_PLAYER, data: result })
   );
-  socket.on("Winner", (rs) => {
-    console.log("The Winner is " + rs);
-    alert("The Winner is " + rs.user);
-    dispatch({ type: GAME_OVER, data: true });
+  socket.on("Winner", (data) => {
+    console.log("Winner", data)
+    dispatch({ type: GAME_OVER, data: data });
+    if (store.getState().player.username !== data.user)
+      dispatch({ type: PLAYER_LOST, data: data })
   });
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {

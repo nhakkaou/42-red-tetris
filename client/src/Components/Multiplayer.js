@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import NextPiece from "./NextPiece";
 import { GAME_OVER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
+import { playerLost } from "../actions/playerAction";
 const Label = styled.label`
   cursor: pointer;
 `;
@@ -72,6 +73,13 @@ const Tetris = () => {
   }, [roomState.next_piece.length]);
 
   useEffect(() => {
+    if (roomState.gameOver === true)
+      dispatch(
+        playerLost({ user: playerState.username, room: roomState.name })
+      );
+  }, [roomState.gameOver])
+
+  useEffect(() => {
     if (roomState.gameStarted === true) {
       //audio.play();
       setStage(Createstage());
@@ -91,21 +99,12 @@ const Tetris = () => {
     dispatch({ type: CHANGE_PIECE, data: [] });
     socket.emit("start game", roomState.name);
   };
-  useEffect(() => {
-    if (roomState.gameOver) {
-      console.log("HIIII");
-      socket.emit("Loser", {
-        user: playerState.username,
-        room: roomState.name,
-      });
-    }
-  }, [roomState.gameOver]);
   const drop = () => {
     if (!checkcollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
       if (player.pos.y < 1) {
-        dispatch({ type: GAME_OVER, data: true });
+        dispatch({ type: GAME_OVER });
         setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
@@ -185,31 +184,28 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {roomState.gameOver ? (
             <GameOver score={score} />
           ) : (
-            <div>
               <Display text={`Level: ${level}`} />
-              {/* <Help /> */}
-            </div>
-          )}
+            )}
           {playerState.admin &&
-          !roomState.gameStarted &&
-          !roomState.gameOver ? (
-            <StartBtn callback={startGame} room={roomState.name} />
-          ) : (
-            ""
-          )}
+            !roomState.gameStarted &&
+            !roomState.gameOver ? (
+              <StartBtn callback={startGame} room={roomState.name} />
+            ) : (
+              ""
+            )}
           {playerState.admin && roomState.gameOver ? (
             <StartBtn
               callback={restartGame}
@@ -217,8 +213,8 @@ const Tetris = () => {
               room={roomState.name}
             />
           ) : (
-            ""
-          )}
+              ""
+            )}
         </aside>
       </StyledTetris>
     </StyledtetrisWrapper>

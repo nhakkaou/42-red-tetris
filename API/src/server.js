@@ -57,6 +57,7 @@ class Server {
         io.sockets.in(room).emit("start game", rst);
       });
       socket.on("Loser", (data) => {
+        console.log("Loser", data)
         let winner = {};
         let lostCount = 0;
         for (let i = 0; i < Players.length; i++) {
@@ -74,8 +75,6 @@ class Server {
             lostCount === Players.length - 1
           ) {
             winner = Players[i];
-            console.log("Winner", winner);
-            console.log("Players", Players);
             io.sockets.in(data.room).emit("Winner", winner);
             break;
           }

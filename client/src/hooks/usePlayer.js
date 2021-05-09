@@ -94,9 +94,6 @@ export const usePlayer = (dispatch, roomState, playerState) => {
           });
         else {
           dispatch({ type: GAME_OVER })
-          dispatch(
-            playerLost({ user: playerState.username, room: roomState.name })
-          );
         }
       } else
         setPlayer({

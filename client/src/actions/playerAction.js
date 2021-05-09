@@ -17,10 +17,8 @@ const updateplayer = (data) => ({
 
 const playerLost = (data) => {
   return (dispatch) => {
-    socket.emit("player_lost", data)
-    dispatch({ type: PLAYER_LOST, data: data.user })
+    socket.emit("Loser", data)
   };
 }
-
 
 export { addPlayerName, updateplayer, playerLost };
