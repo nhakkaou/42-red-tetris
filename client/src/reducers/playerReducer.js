@@ -3,7 +3,7 @@ import {
   ADD_PLAYER_NAME,
   ADMIN_PLAYER,
   PLAYER_LOST,
-  SET_STAGE,
+  SET_ROW,
 } from "../actions/playerAction";
 
 const DEFAULT_STATE = {
@@ -11,7 +11,7 @@ const DEFAULT_STATE = {
   connected: false,
   lost: false,
   admin: false,
-  stage: [],
+  row: 0,
 };
 
 export default function (state = DEFAULT_STATE, action) {
@@ -33,8 +33,8 @@ export default function (state = DEFAULT_STATE, action) {
     case PLAYER_LOST: {
       return { ...state, lost: true };
     }
-    case SET_STAGE: {
-      return { ...state, stage: [...action.data] };
+    case SET_ROW: {
+      return { ...state, row: action.data };
     }
     default:
       return state;

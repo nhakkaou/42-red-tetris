@@ -13,7 +13,7 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_STAGE } from "../actions/playerAction";
+
 import NextPiece from "./NextPiece";
 const Label = styled.label`
   cursor: pointer;
@@ -39,7 +39,7 @@ const Tetris = () => {
 
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-  const [tmp, setTmp] = useState(Createstage());
+
   const [
     player,
     NextPlayer,
@@ -65,36 +65,18 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
       updatePlayerPos({ x: dir, y: 0 });
   };
+
   useEffect(() => {
-    let f = 0;
-    let tmp = Array.from(Array(20), () => new Array(10).fill([0, "clear"]));
-    stage.map((row) => (row[0][0] === "P" ? f++ : f));
-
-    console.log(f);
-
-    let k = f;
-    if (f >= 0)
-      for (let i = 0; i < S_HEIGHT; i++) {
-        for (let j = 0; j < S_WIDTH; j++) {
-          tmp[i][j] = ["P", "merged"];
-        }
-        stage.push(tmp[i]);
-        f--;
-        if (f == 0) break;
-      }
-    while (k > 0) {
+    let f = 1;
+    let tmp = new Array(10).fill(["P", "merged"]);
+    for (let i = 0; i < S_HEIGHT; i++) if (stage[i][0] === ["P", "merged"]) f++;
+    while (f > 0) {
+      stage.push(tmp);
       stage.shift();
-      k--;
+      f--;
     }
     console.log("stage1", stage);
-    // for (let i = S_HEIGHT - 1; i >= 0; i--)
-    //   for (let j = 0; j < S_WIDTH; j++) {
-    //     if (stage[i][j] !== 'P')
-    //       tmp[i - k][j] = stage[i][j]
-    //   }
-    // setTmp(tmp);
-    setStage(stage);
-  }, [score]);
+  }, [playerState.row]);
   useEffect(() => {
     if (roomState.next_piece.length <= 5 && roomState.startgame === true) {
       socket.emit("new_tetriminos", roomState.name);
@@ -105,7 +87,6 @@ const Tetris = () => {
     if (roomState.startgame === true) {
       //audio.play();
       setStage(Createstage());
-      dispatch({ type: SET_STAGE, data: Createstage() });
       setDropTime(1000);
       resetPlayer();
       setGameOver(false);

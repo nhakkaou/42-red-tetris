@@ -34,6 +34,7 @@ class Server {
           tmp.push({ user: Players[i].user, score: Players[i].score });
         }
         io.sockets.in(rs.room).emit("new score", tmp);
+        socket.in(rs.room).emit("add row", tmp);
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
@@ -114,7 +115,7 @@ class Server {
       socket.emit("disconnect", { message: "Server Down!!" });
     });
     this.app.get("/getRooms", (req, res) => {
-      let tmp = [];
+      // let tmp = [];
       // for (let i = 0; i < rooms.length; i++) {
       //   let j = 0;
       //   let c = 0;
@@ -124,7 +125,6 @@ class Server {
       //   }
       //   tmp.push({ room: rooms[i].room, members: c });
       // }
-      res.send(tmp);
     });
   }
   listen() {

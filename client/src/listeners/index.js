@@ -5,13 +5,11 @@ import { checkHash } from "../actions/checkHash";
 import { UPDATE_PLAYER } from "../actions/playerAction";
 import { ADD_PLAYER } from "../actions/playersAction";
 import { UPDATE_MEMBER } from "../actions/roomAction";
-import { S_WIDTH, S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
-
-export const stethoscope = (dispatch) => {
+import { SET_ROW } from "../actions/playerAction";
+export const stethoscope = (dispatch, getState) => {
   window.onhashchange = () => {
     checkHash();
   };
-
   socket.on("connection", function (socket) {});
 
   socket.on("disconnect", (socket) => {
@@ -19,6 +17,11 @@ export const stethoscope = (dispatch) => {
   });
   socket.on("new score", (result) => {
     dispatch({ type: ADD_PLAYER, data: result });
+  });
+  socket.on("add row", () => {
+    let State = getState();
+    dispatch({ type: SET_ROW, data: State.player.row + 1 });
+    console.log("TEST", State);
   });
   socket.on("Join_success", (data) => {
     dispatch({ type: UPDATE_PLAYER, data });

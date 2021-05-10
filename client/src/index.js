@@ -6,8 +6,8 @@ import store from "./Store";
 import { stethoscope } from "./listeners";
 import { checkHash } from "./actions/checkHash";
 
-stethoscope(store.dispatch)
-checkHash()
+stethoscope(store.dispatch, store.getState);
+checkHash();
 
 ReactDOM.render(
   <Provider store={store}>
