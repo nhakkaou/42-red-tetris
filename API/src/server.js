@@ -36,6 +36,14 @@ class Server {
         io.sockets.in(rs.room).emit("new score", tmp);
         socket.in(rs.room).emit("add row", tmp);
       });
+
+      socket.on("Stage", (rq) => {
+        io.sockets.in(rq.room).emit("Stage", {
+          stage: rq.stage,
+          user: rq.player,
+          players: rq.players,
+        });
+      });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
 
@@ -115,16 +123,23 @@ class Server {
       socket.emit("disconnect", { message: "Server Down!!" });
     });
     this.app.get("/getRooms", (req, res) => {
-      // let tmp = [];
-      // for (let i = 0; i < rooms.length; i++) {
-      //   let j = 0;
-      //   let c = 0;
-      //   while (j < rooms.length) {
-      //     if (rooms[i].room == rooms[j].room) c++;
-      //     j++;
-      //   }
-      //   tmp.push({ room: rooms[i].room, members: c });
-      // }
+      let tmp = [];
+      let tmp2 = Players;
+      let room = "";
+      let c = 1;
+      for (let i = 0; i < tmp2.length; i++) {
+        room = tmp2[i].room;
+
+        for (let j = 0; j < tmp2.length; j++) {
+          if (room === tmp2[j] && room != "") {
+            tmp2[j] = { room: "" };
+            c++;
+          }
+        }
+        console.log(room, c);
+        tmp.push({ room: room, members: c });
+      }
+      res.send(tmp);
     });
   }
   listen() {

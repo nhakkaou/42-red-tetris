@@ -10,6 +10,7 @@ export default function (state = DEFAULT_STATE, action) {
     case ADD_PLAYER: {
       return [...action.data];
     }
+
     default:
       return state;
   }

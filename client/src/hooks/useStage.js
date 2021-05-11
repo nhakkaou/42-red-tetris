@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 import { Createstage } from "../gameHelper";
-import { SET_STAGE } from "../actions/playerAction";
-import { useDispatch } from "react-redux";
 
-export const useStage = (player, NextPlayer, resetPlayer, gameOver) => {
+import { useDispatch } from "react-redux";
+import { socket } from "./socket";
+
+export const useStage = (
+  player,
+  NextPlayer,
+  resetPlayer,
+  gameOver,
+  user,
+  room,
+  players
+) => {
   const [stage, setStage] = useState(Createstage());
   const [stageNext, setStageNext] = useState(Createstage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
-  const dispatch = useDispatch();
   useEffect(() => {
     setRowsCleared(0);
     const sweepRows = (newStage) =>
@@ -44,6 +52,12 @@ export const useStage = (player, NextPlayer, resetPlayer, gameOver) => {
       if (player.collided && !gameOver) {
         resetPlayer(newStage);
         setStageNext(Createstage(4, 4));
+        socket.emit("Stage", {
+          stage: stage,
+          player: user,
+          room: room,
+          players: players,
+        });
         return sweepRows(newStage);
       }
 

@@ -27,7 +27,20 @@ export const stethoscope = (dispatch, getState) => {
     dispatch({ type: UPDATE_PLAYER, data });
     dispatch({ type: ROOM_JOINED, data });
   });
-
+  socket.on("Stage", (rs) => {
+    console.log("salam");
+    for (let i = 0; i < rs.players.length; i++) {
+      if (rs.user == rs.players[i].user) {
+        console.log(rs.user);
+        rs.players[i] = {
+          user: rs.user,
+          score: rs.players[i].score,
+          stage: rs.stage,
+        };
+      }
+    }
+    dispatch({ type: ADD_PLAYER, data: rs.players });
+  });
   socket.on("start game", (data) => {
     dispatch({ type: CHANGE_PIECE, data: data });
     dispatch({ type: START_GAME, data: true });

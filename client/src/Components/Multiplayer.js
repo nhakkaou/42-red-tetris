@@ -52,7 +52,10 @@ const Tetris = () => {
     player,
     NextPlayer,
     resetPlayer,
-    gameOver
+    gameOver,
+    playerState.username,
+    roomState.name,
+    playersState
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
@@ -74,7 +77,7 @@ const Tetris = () => {
       stage.push(tmp);
       stage.shift();
       f--;
-    }
+    } /// !! n oublie pas d'ajoute un test
     console.log("stage1", stage);
   }, [playerState.row]);
   useEffect(() => {
