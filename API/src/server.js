@@ -69,17 +69,19 @@ class Server {
             Players[i].hasLost === true
           ) {
             ++lostCount;
-          } else if (
-            Players[i].user !== data.user &&
-            Players[i].hasLost === false &&
-            lostCount === Players.length - 1
-          ) {
-            winner = Players[i];
-            io.sockets.in(data.room).emit("Winner", winner);
-            break;
           }
         }
-      });
+        if (lostCount === Players.length - 1) {
+          console.log(Players)
+          const index = Players.findIndex(e => e.hasLost === false)
+          console.log(index)
+          if (Players[index]) {
+            winner = Players[index];
+            io.sockets.in(data.room).emit("Winner", winner);
+          }
+        }
+      }
+      );
       socket.on("joinRoom", (data) => {
         if (
           helpers.validateName(data.user) &&
@@ -98,6 +100,7 @@ class Server {
                 (element) =>
                   element.user === data.user && element.room === data.room
               );
+              console.log("pp", a)
               if (!a || a.user !== data.user) {
                 Players.push({
                   admin: false,
@@ -119,6 +122,7 @@ class Server {
               (element) =>
                 element.user === data.user && element.room === data.room
             );
+            console.log("admin", a)
             if (!a || a.user !== data.user) {
               Players.push({
                 admin: true,
@@ -129,7 +133,7 @@ class Server {
                 score: 0,
               });
             }
-            console.log(io.sockets.adapter.rooms.get(data.room).size);
+
             const message = { type: "success", message: "Created room!" };
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);

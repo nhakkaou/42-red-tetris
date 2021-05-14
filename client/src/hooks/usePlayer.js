@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Tetrominos, randomTetromino } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
-import { playerLost } from "../actions/playerAction";
+import { playerLost, PLAYER_LOST } from "../actions/playerAction";
 import { GAME_OVER } from "../actions/roomAction";
 
 export const usePlayer = (dispatch, roomState, playerState) => {
@@ -78,7 +78,6 @@ export const usePlayer = (dispatch, roomState, playerState) => {
 
   const resetPlayer = useCallback(
     (stage) => {
-      console.log("state", roomState.next_piece);
       let tet = {
         pos: { x: S_WIDTH / 2 - 1, y: 0 },
         tetromino: Tetrominos[roomState.next_piece[0]]?.shape,
@@ -94,6 +93,7 @@ export const usePlayer = (dispatch, roomState, playerState) => {
           });
         else {
           dispatch({ type: GAME_OVER })
+          dispatch({ type: PLAYER_LOST })
         }
       } else
         setPlayer({

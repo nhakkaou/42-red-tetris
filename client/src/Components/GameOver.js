@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MaxWidthDialog(props) {
+export default function MaxWidthDialog({ score, player }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -39,12 +39,12 @@ export default function MaxWidthDialog(props) {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle id="max-width-dialog-title">Game Over</DialogTitle>
+        <DialogTitle id="max-width-dialog-title">{player.lost === true ? 'You lost' : 'You Won'}</DialogTitle>
         <DialogContent>
           <img src={url} />
         </DialogContent>
         <DialogActions>
-          <span>Score: {props.score}</span>
+          <span>Score: {score}</span>
           <Button onClick={handleClose} color="primary">
             Close
           </Button>

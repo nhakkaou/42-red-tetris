@@ -15,20 +15,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import NextPiece from "./NextPiece";
 import { GAME_OVER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
-import { playerLost } from "../actions/playerAction";
+import { playerLost, PLAYER_LOST } from "../actions/playerAction";
 const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
-  const dispatch = useDispatch();
+  let dispatch = useDispatch();
   let playerState = useSelector((state) => {
     return state.player;
   });
   let roomState = useSelector((state) => {
     return state.room;
-  });
-  let playersState = useSelector((state) => {
-    return state.players;
   });
 
   const [playing, setPlaying] = useState(true);
@@ -66,7 +63,6 @@ const Tetris = () => {
   };
 
   useEffect(() => {
-    console.log("nextpeice changed", roomState.next_piece.length);
     if (roomState.next_piece.length <= 5 && roomState.gameStarted === true) {
       socket.emit("new_tetriminos", roomState.name);
     }
@@ -105,6 +101,7 @@ const Tetris = () => {
     else {
       if (player.pos.y < 1) {
         dispatch({ type: GAME_OVER });
+        dispatch({ type: PLAYER_LOST })
         setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
@@ -195,7 +192,7 @@ const Tetris = () => {
           </Label>
           <Display text={`Score: ${score}`} />
           {roomState.gameOver ? (
-            <GameOver score={score} />
+            <GameOver player={playerState} score={score} />
           ) : (
               <Display text={`Level: ${level}`} />
             )}

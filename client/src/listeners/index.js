@@ -29,7 +29,6 @@ export const stethoscope = (dispatch) => {
   });
 
   socket.on("new_tetriminos", (data) => {
-    console.log("ljadid", data);
     dispatch({ type: CHANGE_PIECE, data: data });
   });
 
@@ -47,9 +46,9 @@ export const stethoscope = (dispatch) => {
   );
   socket.on("Winner", (data) => {
     console.log("Winner", data)
-    dispatch({ type: GAME_OVER, data: data });
+    dispatch({ type: GAME_OVER });
     if (store.getState().player.username !== data.user)
-      dispatch({ type: PLAYER_LOST, data: data })
+      dispatch({ type: PLAYER_LOST })
   });
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
