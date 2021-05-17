@@ -13,7 +13,7 @@ const StyleStage = styled.div`
 `;
 const NextPiece = ({ stage }) => (
   <StyleStage width="4" height="4">
-    {stage.map((row, i) =>
+    {stage?.map((row, i) =>
       row.map((cell, x) => <Cell key={x} type={cell[0]} />)
     )}
   </StyleStage>
