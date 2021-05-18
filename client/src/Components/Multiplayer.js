@@ -78,7 +78,6 @@ const Tetris = () => {
       stage.shift();
       f--;
     } /// !! n oublie pas d'ajoute un test
-    console.log("stage1", stage);
   }, [playerState.row]);
   useEffect(() => {
     if (roomState.next_piece.length <= 5 && roomState.startgame === true) {

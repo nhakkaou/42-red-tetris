@@ -21,17 +21,14 @@ export const stethoscope = (dispatch, getState) => {
   socket.on("add row", () => {
     let State = getState();
     dispatch({ type: SET_ROW, data: State.player.row + 1 });
-    console.log("TEST", State);
   });
   socket.on("Join_success", (data) => {
     dispatch({ type: UPDATE_PLAYER, data });
     dispatch({ type: ROOM_JOINED, data });
   });
   socket.on("Stage", (rs) => {
-    console.log("salam");
     for (let i = 0; i < rs.players.length; i++) {
       if (rs.user == rs.players[i].user) {
-        console.log(rs.user);
         rs.players[i] = {
           user: rs.user,
           score: rs.players[i].score,
