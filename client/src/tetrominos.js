@@ -3,6 +3,10 @@ export const Tetrominos = {
     shape: [[0]],
     color: "0, 0, 0",
   },
+  P: {
+    shape: [[0]],
+    color: "36, 37, 38",
+  },
   I: {
     shape: [
       ["I", "I", "I", "I"],
@@ -64,12 +68,44 @@ export const Tetrominos = {
 
 const randomIntFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 var pieces = [];
 export const randomTetromino = () => {
   if (pieces.length == 0)
-    pieces = ["I", "I", "I", "I", "J", "J", "J", "J", "L", "L", "L", "L", "D", "D", "D", "D", "S", "S", "S", "S", "T", "T", "T", "T", "Z", "Z", "Z", "Z"];
-  const randomTetro = pieces.splice(randomIntFromInterval(0, pieces.length - 1), 1)[0];
+    pieces = [
+      "I",
+      "I",
+      "I",
+      "I",
+      "J",
+      "J",
+      "J",
+      "J",
+      "L",
+      "L",
+      "L",
+      "L",
+      "D",
+      "D",
+      "D",
+      "D",
+      "S",
+      "S",
+      "S",
+      "S",
+      "T",
+      "T",
+      "T",
+      "T",
+      "Z",
+      "Z",
+      "Z",
+      "Z",
+    ];
+  const randomTetro = pieces.splice(
+    randomIntFromInterval(0, pieces.length - 1),
+    1
+  )[0];
   return Tetrominos[randomTetro];
 };

@@ -20,12 +20,16 @@ const Label = styled.label`
   cursor: pointer;
 `;
 const Tetris = () => {
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
+
   let playerState = useSelector((state) => {
     return state.player;
   });
   let roomState = useSelector((state) => {
     return state.room;
+  });
+  let playersState = useSelector((state) => {
+    return state.players;
   });
 
   const [playing, setPlaying] = useState(true);
@@ -48,7 +52,10 @@ const Tetris = () => {
     player,
     NextPlayer,
     resetPlayer,
-    roomState.gameOver
+    roomState.gameOver,
+    playerState.username,
+    roomState.name,
+    playersState
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
@@ -63,6 +70,17 @@ const Tetris = () => {
   };
 
   useEffect(() => {
+    let f = 1;
+    let tmp = new Array(10).fill(["P", "merged"]);
+    for (let i = 0; i < S_HEIGHT; i++) if (stage[i][0] === ["P", "merged"]) f++;
+    while (f > 0) {
+      stage.push(tmp);
+      stage.shift();
+      f--;
+    } /// !! n oublie pas d'ajoute un test
+  }, [playerState.row]);
+  useEffect(() => {
+    console.log('wewe')
     if (roomState.next_piece.length <= 5 && roomState.gameStarted === true) {
       socket.emit("new_tetriminos", roomState.name);
     }
@@ -108,8 +126,7 @@ const Tetris = () => {
     }
     if (rows > level + 1) {
       setLevel((prev) => prev + 1);
-      // console.log("increment drop time", 1000 / level + 1 * 10);
-      // console.log("LEVEL", level);
+
       if (level > 0) setDropTime(1000 / level + 1 * 10);
     }
   };

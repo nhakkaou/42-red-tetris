@@ -22,23 +22,6 @@ class Server {
       },
     });
     io.on("connection", function (socket) {
-      // socket.on("join", (rs) => {
-      //   let a = rooms.find(
-      //     (element) => element.user === rs.user && element.room === rs.room
-      //   );
-      //   if (!a || a.user !== rs.user) {
-      //     let c = 1;
-      //     for (let i = 1; i < rooms.length; i++)
-      //       if (rs.room == rooms[i].room) c++;
-      //     if (c <= 5) {
-      //       rooms.push({ user: rs.user, room: rs.room });
-      //       socket.join(rs.room);
-      //       socket.to(rs.room).emit("new member", { user: rs.user });
-      //     } else {
-      //       console.log("9adiya 3amra");
-      //     }
-      //   }
-      // });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
@@ -51,6 +34,15 @@ class Server {
           tmp.push({ user: Players[i].user, score: Players[i].score });
         }
         io.sockets.in(rs.room).emit("new score", tmp);
+        socket.in(rs.room).emit("add row", tmp);
+      });
+
+      socket.on("Stage", (rq) => {
+        io.sockets.in(rq.room).emit("Stage", {
+          stage: rq.stage,
+          user: rq.player,
+          players: rq.players,
+        });
       });
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
@@ -91,7 +83,6 @@ class Server {
             const clients = io.sockets.adapter.rooms.get(data.room);
             const numClients = clients ? clients.size : 0;
             if (numClients + 1 > 5) {
-              console.log("3amra");
               const message = { type: "error", message: "Room is full!" };
               socket.emit("TOASTIFY", message);
               return;
@@ -146,16 +137,21 @@ class Server {
     });
     this.app.get("/getRooms", (req, res) => {
       let tmp = [];
-      // for (let i = 0; i < rooms.length; i++) {
-      //   let j = 0;
-      //   let c = 0;
-      //   while (j < rooms.length) {
-      //     if (rooms[i].room == rooms[j].room) c++;
-      //     j++;
-      //   }
-      //   tmp.push({ room: rooms[i].room, members: c });
-      // }
+      let tmp2 = Players;
+      let room = "";
+      let c = 1;
+      for (let i = 0; i < tmp2.length; i++) {
+        room = tmp2[i].room;
 
+        for (let j = 0; j < tmp2.length; j++) {
+          if (room === tmp2[j] && room != "") {
+            tmp2[j] = { room: "" };
+            c++;
+          }
+        }
+        console.log(room, c);
+        tmp.push({ room: room, members: c });
+      }
       res.send(tmp);
     });
   }
