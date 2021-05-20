@@ -7,6 +7,7 @@ export const RESTART_GAME = "RESTART_GAME";
 export const GAME_OVER = "GAME_OVER";
 export const UPDATE_NAME = "UPDATE_NAME";
 export const ROOM_JOINED = "ROOM_JOINED";
+export const CLEAR_PIECES = "CLEAR_PIECES"
 
 const updatemember = (data) => ({
   type: UPDATE_MEMBER,

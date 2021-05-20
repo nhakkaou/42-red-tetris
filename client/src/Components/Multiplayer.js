@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import NextPiece from "./NextPiece";
-import { GAME_OVER, START_GAME, CHANGE_PIECE } from "../actions/roomAction";
+import { GAME_OVER, START_GAME, CLEAR_PIECES } from "../actions/roomAction";
 import { playerLost, PLAYER_LOST } from "../actions/playerAction";
 const Label = styled.label`
   cursor: pointer;
@@ -110,7 +110,7 @@ const Tetris = () => {
     socket.emit("start game", roomState.name);
   };
   const restartGame = () => {
-    dispatch({ type: CHANGE_PIECE, data: [] });
+    dispatch({ type: CLEAR_PIECES });
     socket.emit("start game", roomState.name);
   };
   const drop = () => {
