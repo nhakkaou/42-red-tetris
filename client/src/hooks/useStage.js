@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Createstage } from "../gameHelper";
-
-import { useDispatch } from "react-redux";
 import { socket } from "./socket";
 
 export const useStage = (
