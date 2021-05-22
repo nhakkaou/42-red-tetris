@@ -40,16 +40,19 @@ const StyledTitle = styled.div`
       position: relative;
       top: 0;
       left: 0;
-      padding: 0px 10px;
-      margin: -20px 0 0 30px;
+      border-radius: 20px;
+      padding: 0px 40px;
+      margin: -20px 0px 20px 0px;
       background: #333;
+      font-size: 0.8 rem;
+      color: white;
 `;
 
-const NextPiece = ({ stage }) => (
+const NextPiece = ({ stage, nextPiece }) => (
   <Styledisplay>
-    <StyledTitle>Next:</StyledTitle>
+    <StyledTitle>Next</StyledTitle>
     <StyleStage width="4" height="3">
-      {stage?.map((row, i) =>
+      {nextPiece.length > 0 && stage?.map((row, i) =>
         row.map((cell, x) => <StyledCell key={x} type={cell[0]} color={Tetrominos[cell[0]]?.color} />)
       )}
     </StyleStage>

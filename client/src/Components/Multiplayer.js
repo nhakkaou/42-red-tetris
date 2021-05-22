@@ -46,7 +46,7 @@ const Tetris = () => {
     updatePlayerPos,
     resetPlayer,
     playerRotate,
-  ] = usePlayer(dispatch, roomState, playerState);
+  ] = usePlayer(dispatch, roomState, roomState);
 
   const [stage, stageNext, setStage, rowsCleared] = useStage(
     player,
@@ -80,7 +80,6 @@ const Tetris = () => {
     } /// !! n oublie pas d'ajoute un test
   }, [playerState.row]);
   useEffect(() => {
-    console.log('wewe')
     if (roomState.next_piece.length <= 5 && roomState.gameStarted === true) {
       socket.emit("new_tetriminos", roomState.name);
     }
@@ -187,7 +186,7 @@ const Tetris = () => {
       <StyledTetris>
         <Stage stage={stage} />
         <aside>
-          <NextPiece stage={stageNext} />
+          <NextPiece nextPiece={roomState.next_piece} stage={stageNext} />
           <Label>
             {playing ? (
               <FontAwesomeIcon

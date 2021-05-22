@@ -61,7 +61,6 @@ export const stethoscope = (dispatch, getState) => {
     dispatch({ type: ADD_PLAYER, data: result })
   );
   socket.on("Winner", (data) => {
-    console.log("Winner", data)
     dispatch({ type: GAME_OVER });
     if (store.getState().player.username !== data.user)
       dispatch({ type: PLAYER_LOST })

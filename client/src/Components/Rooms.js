@@ -32,10 +32,12 @@ const Rooms = () => {
       />
       <StyledButton type="submit" onClick={() => addRoom()} value="Create" />
       <table>
-        <tr>
-          <th>Room Name</th>
-          <th>Members</th>
-        </tr>
+        <tbody>
+          <tr>
+            <th>Room Name</th>
+            <th>Members</th>
+          </tr></tbody>
+
 
         {rooms.map((item, i) =>
           item.room.length > 1 ? (
@@ -56,8 +58,8 @@ const Rooms = () => {
               <td>{item.members}/5</td>
             </tr>
           ) : (
-            ""
-          )
+              ""
+            )
         )}
       </table>
     </div>

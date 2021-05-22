@@ -31,7 +31,6 @@ const Tetris = () => {
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
   );
-  //console.log('re-render');
 
   const movePlayer = (dir) => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
@@ -114,25 +113,25 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
+                <FontAwesomeIcon
+                  onClick={function () {
+                    setPlaying(true);
+                    audio.play();
+                  }}
+                  icon={faVolumeOff}
+                />
+              )}
           </Label>
           <Display text={`Score: ${score}`} />
           {gameOver ? (
             <GameOver />
           ) : (
-            // <Display gameOver={gameOver} text="Game Over" />
-            <div>
-              <Display text={`Level: ${level}`} />
-              <Help />
-            </div>
-          )}
+              // <Display gameOver={gameOver} text="Game Over" />
+              <div>
+                <Display text={`Level: ${level}`} />
+                <Help />
+              </div>
+            )}
           <StartBtn callback={startGame} />
         </aside>
       </StyledTetris>
