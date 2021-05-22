@@ -10,6 +10,7 @@ const StyleStage = styled.div`
   grid-template-columns: repeat(${(props) => props.width}, 1fr);
   grid-gap: 1px;
   width: 100%;
+  padding-top: 10px;
 `;
 const StyledCell = styled.div`
   width: auto;
@@ -34,18 +35,21 @@ const Styledisplay = styled.div`
     color: ${props => (props.gameOver ? 'red' : '#999')};
     background: #000;
     font-size: 0.8 rem;
+    position: relative;
 
 `
 const StyledTitle = styled.div`
-      position: relative;
-      top: 0;
-      left: 0;
-      border-radius: 20px;
-      padding: 0px 40px;
-      margin: -20px 0px 20px 0px;
-      background: #333;
-      font-size: 0.8 rem;
-      color: white;
+position: absolute;
+top: 0;
+left: 50%;
+border-radius: 20px;
+padding: 6px 40px;
+margin: 0px 0px 20px 0px;
+background: #333;
+font-size: 0.8 rem;
+color: white;
+transform: translate(-50%, -50%);
+}
 `;
 
 const NextPiece = ({ stage, nextPiece }) => (

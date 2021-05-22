@@ -84,32 +84,36 @@ export const usePlayer = (dispatch, roomState) => {
         collided: false,
       };
       roomState.next_piece.shift();
+      let playerSet = false;
       if (stage) {
-        if (!checkcollision(tet, stage, { x: 0, y: 0 }))
+        if (!checkcollision(tet, stage, { x: 0, y: 0 })) {
           setPlayer({
             pos: { x: S_WIDTH / 2 - 1, y: 0 },
             tetromino: tet.tetromino,
             collided: false,
           });
+          playerSet = true;
+        }
         else {
           dispatch({ type: GAME_OVER })
           dispatch({ type: PLAYER_LOST })
         }
-      } else
+      } else {
         setPlayer({
           pos: { x: S_WIDTH / 2 - 1, y: 0 },
           tetromino: tet.tetromino,
           collided: false,
         });
-
+        playerSet = true;
+      }
       setNext({
         pos: { x: 2, y: 2 },
-        tetromino: Tetrominos[roomState.next_piece[0]]?.shape,
+        tetromino: playerSet ? Tetrominos[roomState.next_piece[0]]?.shape : Tetrominos[roomState.next_piece[1]]?.shape,
         collided: false,
       });
     },
     [roomState.next_piece]
   );
 
-  return [player, NextPlayer, updatePlayerPos, resetPlayer, playerRotate];
+  return [player, NextPlayer, setNext, updatePlayerPos, resetPlayer, playerRotate];
 };

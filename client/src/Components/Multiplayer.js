@@ -55,7 +55,8 @@ const Tetris = () => {
     roomState.gameOver,
     playerState.username,
     roomState.name,
-    playersState
+    playersState,
+    roomState.next_piece,
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(

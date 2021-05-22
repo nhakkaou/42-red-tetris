@@ -9,7 +9,8 @@ export const useStage = (
   gameOver,
   user,
   room,
-  players
+  players,
+  nextPiece
 ) => {
   const [stage, setStage] = useState(Createstage());
   const [stageNext, setStageNext] = useState(Createstage(4, 4));
@@ -59,7 +60,7 @@ export const useStage = (
 
       return newStage;
     };
-    NextPlayer.tetromino && NextPlayer.tetromino.forEach((row, y) => {
+    nextPiece.length > 0 && NextPlayer.tetromino && NextPlayer.tetromino.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
           stageNext[y][x] = [
