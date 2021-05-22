@@ -59,7 +59,7 @@ export const useStage = (
 
       return newStage;
     };
-    NextPlayer.tetromino.forEach((row, y) => {
+    NextPlayer.tetromino && NextPlayer.tetromino.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
           stageNext[y][x] = [
