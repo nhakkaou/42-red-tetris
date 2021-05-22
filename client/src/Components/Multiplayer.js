@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Stage from "./Stage";
 import StartBtn from "./StartBtn";
 import Display from "./Display";
-import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
+import { S_HEIGHT, checkcollision, Createstage, S_WIDTH } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
@@ -12,7 +12,7 @@ import GameOver from "./GameOver";
 import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-
+import StagePlayers from "./StagePlayers";
 import NextPiece from "./NextPiece";
 import { GAME_OVER, START_GAME, CLEAR_PIECES } from "../actions/roomAction";
 import { playerLost, PLAYER_LOST } from "../actions/playerAction";
@@ -70,17 +70,16 @@ const Tetris = () => {
   };
 
   useEffect(() => {
-    let f = 1;
+    let f = roomState.gameStarted ? 1 : 0;
     let tmp = new Array(10).fill(["P", "merged"]);
     for (let i = 0; i < S_HEIGHT; i++) if (stage[i][0] === ["P", "merged"]) f++;
     while (f > 0) {
       stage.push(tmp);
       stage.shift();
       f--;
-    } /// !! n oublie pas d'ajoute un test
+    }
   }, [playerState.row]);
   useEffect(() => {
-    console.log('wewe')
     if (roomState.next_piece.length <= 5 && roomState.gameStarted === true) {
       socket.emit("new_tetriminos", roomState.name);
     }
@@ -91,7 +90,7 @@ const Tetris = () => {
       dispatch(
         playerLost({ user: playerState.username, room: roomState.name })
       );
-  }, [roomState.gameOver])
+  }, [roomState.gameOver]);
 
   useEffect(() => {
     if (roomState.gameStarted === true) {
@@ -119,7 +118,7 @@ const Tetris = () => {
     else {
       if (player.pos.y < 1) {
         dispatch({ type: GAME_OVER });
-        dispatch({ type: PLAYER_LOST })
+        dispatch({ type: PLAYER_LOST });
         setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
@@ -198,28 +197,28 @@ const Tetris = () => {
                 icon={faVolumeUp}
               />
             ) : (
-                <FontAwesomeIcon
-                  onClick={function () {
-                    setPlaying(true);
-                    audio.play();
-                  }}
-                  icon={faVolumeOff}
-                />
-              )}
+              <FontAwesomeIcon
+                onClick={function () {
+                  setPlaying(true);
+                  audio.play();
+                }}
+                icon={faVolumeOff}
+              />
+            )}
           </Label>
           <Display text={`Score: ${score}`} />
           {roomState.gameOver ? (
             <GameOver player={playerState} score={score} />
           ) : (
-              <Display text={`Level: ${level}`} />
-            )}
+            <Display text={`Level: ${level}`} />
+          )}
           {playerState.admin &&
-            !roomState.gameStarted &&
-            !roomState.gameOver ? (
-              <StartBtn callback={startGame} room={roomState.name} />
-            ) : (
-              ""
-            )}
+          !roomState.gameStarted &&
+          !roomState.gameOver ? (
+            <StartBtn callback={startGame} room={roomState.name} />
+          ) : (
+            ""
+          )}
           {playerState.admin && roomState.gameOver ? (
             <StartBtn
               callback={restartGame}
@@ -227,9 +226,17 @@ const Tetris = () => {
               room={roomState.name}
             />
           ) : (
-              ""
-            )}
+            ""
+          )}
         </aside>
+
+        {playersState.map((row, i) => {
+          return row.user !== playerState.username ? (
+            <StagePlayers key={i} stage={row.stage} user={row.user} />
+          ) : (
+            ""
+          );
+        })}
       </StyledTetris>
     </StyledtetrisWrapper>
   );

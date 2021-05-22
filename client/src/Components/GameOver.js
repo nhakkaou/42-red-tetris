@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Switch from "@material-ui/core/Switch";
 import url from "../img/tenor.gif";
+import url1 from "../img/README.gif";
 const useStyles = makeStyles((theme) => ({
   Dialog: {
     justifyContent: "center",
@@ -39,9 +40,15 @@ export default function MaxWidthDialog({ score, player }) {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle id="max-width-dialog-title">{player.lost === true ? 'You lost' : 'You Won'}</DialogTitle>
+        <DialogTitle id="max-width-dialog-title">
+          {player.lost === true ? "You lost" : "You Won"}
+        </DialogTitle>
         <DialogContent>
-          <img src={url} />
+          {player.lost === true ? (
+            <img src={url} />
+          ) : (
+            <img style={{ width: "50%" }} src={url1} />
+          )}
         </DialogContent>
         <DialogActions>
           <span>Score: {score}</span>

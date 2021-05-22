@@ -31,7 +31,11 @@ class Server {
         let tmp = [];
         for (let i = 0; i < Players.length; i++) {
           if (Players[i].user == rs.user) Players[i].score = rs.score;
-          tmp.push({ user: Players[i].user, score: Players[i].score });
+          tmp.push({
+            user: Players[i].user,
+            score: Players[i].score,
+            stage: Players[i].stage,
+          });
         }
         io.sockets.in(rs.room).emit("new score", tmp);
         socket.in(rs.room).emit("add row", tmp);
@@ -49,7 +53,7 @@ class Server {
         io.sockets.in(room).emit("start game", rst);
       });
       socket.on("Loser", (data) => {
-        console.log("Loser", data)
+        console.log("Loser", data);
         let winner = {};
         let lostCount = 0;
         for (let i = 0; i < Players.length; i++) {
@@ -64,16 +68,15 @@ class Server {
           }
         }
         if (lostCount === Players.length - 1) {
-          console.log(Players)
-          const index = Players.findIndex(e => e.hasLost === false)
-          console.log(index)
+          console.log(Players);
+          const index = Players.findIndex((e) => e.hasLost === false);
+          console.log(index);
           if (Players[index]) {
             winner = Players[index];
             io.sockets.in(data.room).emit("Winner", winner);
           }
         }
-      }
-      );
+      });
       socket.on("joinRoom", (data) => {
         if (
           helpers.validateName(data.user) &&
@@ -91,7 +94,7 @@ class Server {
                 (element) =>
                   element.user === data.user && element.room === data.room
               );
-              console.log("pp", a)
+              console.log("pp", a);
               if (!a || a.user !== data.user) {
                 Players.push({
                   admin: false,
@@ -113,7 +116,7 @@ class Server {
               (element) =>
                 element.user === data.user && element.room === data.room
             );
-            console.log("admin", a)
+            console.log("admin", a);
             if (!a || a.user !== data.user) {
               Players.push({
                 admin: true,
@@ -137,21 +140,12 @@ class Server {
     });
     this.app.get("/getRooms", (req, res) => {
       let tmp = [];
-      let tmp2 = Players;
-      let room = "";
-      let c = 1;
-      for (let i = 0; i < tmp2.length; i++) {
-        room = tmp2[i].room;
+      Players.forEach((element, i) => {
+        let c = Players.filter((el) => el.room == element.room).length;
 
-        for (let j = 0; j < tmp2.length; j++) {
-          if (room === tmp2[j] && room != "") {
-            tmp2[j] = { room: "" };
-            c++;
-          }
-        }
-        console.log(room, c);
-        tmp.push({ room: room, members: c });
-      }
+        if (tmp.filter((el) => el.room === element.room).length === 0)
+          tmp.push({ room: element.room, members: c });
+      });
       res.send(tmp);
     });
   }

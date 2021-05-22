@@ -1,6 +1,11 @@
 import { socket } from "../hooks/index";
-import store from '../Store';
-import { ROOM_JOINED, CHANGE_PIECE, START_GAME, GAME_OVER } from "../actions/roomAction";
+import store from "../Store";
+import {
+  ROOM_JOINED,
+  CHANGE_PIECE,
+  START_GAME,
+  GAME_OVER,
+} from "../actions/roomAction";
 import { toast } from "react-toastify";
 import { checkHash } from "../actions/checkHash";
 import { UPDATE_PLAYER, PLAYER_LOST } from "../actions/playerAction";
@@ -11,7 +16,7 @@ export const stethoscope = (dispatch, getState) => {
   window.onhashchange = () => {
     checkHash();
   };
-  socket.on("connection", function (socket) { });
+  socket.on("connection", function (socket) {});
 
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
@@ -53,7 +58,7 @@ export const stethoscope = (dispatch, getState) => {
     let i = 0;
     for (i = 0; i < result.length; i++)
       if (result[i].user !== "")
-        tmp.push({ user: result[i].user, score: result[i].score });
+        tmp.push({ user: result[i].user, score: result[i].score, stage: [] });
     dispatch({ type: UPDATE_MEMBER, data: i });
     dispatch({ type: ADD_PLAYER, data: tmp });
   });
@@ -61,10 +66,10 @@ export const stethoscope = (dispatch, getState) => {
     dispatch({ type: ADD_PLAYER, data: result })
   );
   socket.on("Winner", (data) => {
-    console.log("Winner", data)
+    console.log("Winner", data);
     dispatch({ type: GAME_OVER });
     if (store.getState().player.username !== data.user)
-      dispatch({ type: PLAYER_LOST })
+      dispatch({ type: PLAYER_LOST });
   });
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {

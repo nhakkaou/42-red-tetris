@@ -32,33 +32,36 @@ const Rooms = () => {
       />
       <StyledButton type="submit" onClick={() => addRoom()} value="Create" />
       <table>
-        <tr>
-          <th>Room Name</th>
-          <th>Members</th>
-        </tr>
-
-        {rooms.map((item, i) =>
-          item.room.length > 1 ? (
-            <tr style={{ margin: "0 auto" }} key={i}>
-              <td>
-                <strong>
-                  <a
-                    style={{
-                      textDecoration: "none",
-                      color: "White",
-                    }}
-                    href={`http://localhost:3000/#${item.room}[${playerState.username}]`}
-                  >
-                    {item.room}
-                  </a>
-                </strong>
-              </td>
-              <td>{item.members}/5</td>
-            </tr>
-          ) : (
-            ""
-          )
-        )}
+        <thead>
+          <tr>
+            <th>Room Name</th>
+            <th>Members</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rooms.map((item, i) =>
+            item.room.length > 1 ? (
+              <tr style={{ margin: "0 auto" }} key={i}>
+                <td>
+                  <strong>
+                    <a
+                      style={{
+                        textDecoration: "none",
+                        color: "White",
+                      }}
+                      href={`http://localhost:3000/#${item.room}[${playerState.username}]`}
+                    >
+                      {item.room}
+                    </a>
+                  </strong>
+                </td>
+                <td>{item.members}/5</td>
+              </tr>
+            ) : (
+              ""
+            )
+          )}
+        </tbody>
       </table>
     </div>
   );
