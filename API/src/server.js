@@ -47,9 +47,11 @@ class Server {
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("start game", rst);
+        Players.forEach(e => {
+          e.hasLost = false
+        });
       });
       socket.on("Loser", (data) => {
-        console.log("Loser", data)
         let winner = {};
         let lostCount = 0;
         for (let i = 0; i < Players.length; i++) {
@@ -64,9 +66,7 @@ class Server {
           }
         }
         if (lostCount === Players.length - 1) {
-          console.log(Players)
           const index = Players.findIndex(e => e.hasLost === false)
-          console.log(index)
           if (Players[index]) {
             winner = Players[index];
             io.sockets.in(data.room).emit("Winner", winner);
@@ -91,7 +91,6 @@ class Server {
                 (element) =>
                   element.user === data.user && element.room === data.room
               );
-              console.log("pp", a)
               if (!a || a.user !== data.user) {
                 Players.push({
                   admin: false,
@@ -113,7 +112,6 @@ class Server {
               (element) =>
                 element.user === data.user && element.room === data.room
             );
-            console.log("admin", a)
             if (!a || a.user !== data.user) {
               Players.push({
                 admin: true,
@@ -149,7 +147,6 @@ class Server {
             c++;
           }
         }
-        console.log(room, c);
         tmp.push({ room: room, members: c });
       }
       res.send(tmp);
