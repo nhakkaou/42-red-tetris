@@ -9,7 +9,8 @@ describe("Room test", () => {
     expect(reducerRoom(undefined, {})).toEqual({
       name: "",
       members: 0,
-      startgame: false,
+      gameOver: false,
+      gameStarted: false,
       mode: "solo",
       next_piece: [],
     });
@@ -18,7 +19,8 @@ describe("Room test", () => {
     expect(reducerRoom(undefined, { type: actionRoom.START_GAME })).toEqual({
       name: "",
       members: 0,
-      startgame: true,
+      gameOver: false,
+      gameStarted: true,
       mode: "solo",
       next_piece: [],
     });
@@ -30,7 +32,8 @@ describe("Room test", () => {
     ).toEqual({
       name: "",
       members: 6,
-      startgame: false,
+      gameOver: false,
+      gameStarted: false,
       mode: "solo",
       next_piece: [],
     });
@@ -44,7 +47,8 @@ describe("Room test", () => {
     ).toEqual({
       name: "",
       members: 0,
-      startgame: false,
+      gameOver: false,
+      gameStarted: false,
       mode: "solo",
       next_piece: ["L", "T"],
     });
@@ -56,7 +60,8 @@ describe("Room test", () => {
     ).toEqual({
       name: "Test",
       members: 0,
-      startgame: false,
+      gameOver: false,
+      gameStarted: false,
       mode: "solo",
       next_piece: [],
     });
