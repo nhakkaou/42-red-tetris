@@ -60,16 +60,18 @@ export const useStage = (
 
       return newStage;
     };
-    nextPiece.length > 0 && NextPlayer.tetromino && NextPlayer.tetromino.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          stageNext[y][x] = [
-            value,
-            `${NextPlayer.collided ? "merged" : "clear"}`,
-          ];
-        }
+    if (nextPiece.length > 0 && NextPlayer.tetromino) {
+      NextPlayer.tetromino.forEach((row, y) => {
+        row.forEach((value, x) => {
+          if (value !== 0) {
+            stageNext[y][x] = [
+              value,
+              `${NextPlayer.collided ? "merged" : "clear"}`,
+            ];
+          }
+        });
       });
-    });
+    } else setStageNext(Createstage(4, 4))
 
     setStage((prev) => updateStage(prev));
   }, [player]);

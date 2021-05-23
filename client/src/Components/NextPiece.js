@@ -56,7 +56,7 @@ const NextPiece = ({ stage, nextPiece }) => (
   <Styledisplay>
     <StyledTitle>Next</StyledTitle>
     <StyleStage width="4" height="3">
-      {nextPiece.length > 0 && stage?.map((row, i) =>
+      {stage && nextPiece.length > 0 && stage?.map((row, i) =>
         row.map((cell, x) => <StyledCell key={x} type={cell[0]} color={Tetrominos[cell[0]]?.color} />)
       )}
     </StyleStage>

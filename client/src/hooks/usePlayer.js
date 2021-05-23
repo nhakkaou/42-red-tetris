@@ -108,12 +108,12 @@ export const usePlayer = (dispatch, roomState) => {
       }
       setNext({
         pos: { x: 2, y: 2 },
-        tetromino: playerSet ? Tetrominos[roomState.next_piece[0]]?.shape : Tetrominos[roomState.next_piece[1]]?.shape,
+        tetromino: Tetrominos[roomState.next_piece[0]]?.shape,
         collided: false,
       });
     },
     [roomState.next_piece]
   );
 
-  return [player, NextPlayer, setNext, updatePlayerPos, resetPlayer, playerRotate];
+  return [player, NextPlayer, updatePlayerPos, resetPlayer, playerRotate];
 };
