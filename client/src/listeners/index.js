@@ -16,7 +16,7 @@ export const stethoscope = (dispatch, getState) => {
   window.onhashchange = () => {
     checkHash();
   };
-  socket.on("connection", function (socket) {});
+  socket.on("connection", function (socket) { });
 
   socket.on("disconnect", (socket) => {
     dispatch({ type: CHANGE_PIECE, data: [] });
@@ -66,7 +66,6 @@ export const stethoscope = (dispatch, getState) => {
     dispatch({ type: ADD_PLAYER, data: result })
   );
   socket.on("Winner", (data) => {
-    console.log("Winner", data);
     dispatch({ type: GAME_OVER });
     if (store.getState().player.username !== data.user)
       dispatch({ type: PLAYER_LOST });

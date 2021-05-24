@@ -1,14 +1,14 @@
 import { useState, useCallback } from "react";
-import { Tetrominos, randomTetromino } from "../tetrominos";
+import { Tetrominos } from "../tetrominos";
 import { S_WIDTH, checkcollision } from "../gameHelper";
-import { playerLost, PLAYER_LOST } from "../actions/playerAction";
+import { PLAYER_LOST } from "../actions/playerAction";
 import { GAME_OVER } from "../actions/roomAction";
 
-export const usePlayer = (dispatch, roomState, playerState) => {
+export const usePlayer = (dispatch, roomState) => {
   const [player, setPlayer] = useState({
     pos: {
-      x: 0,
-      y: 0,
+      x: 2,
+      y: 2,
     },
     tetromino: Tetrominos[0].shape,
     collided: false,
@@ -18,7 +18,7 @@ export const usePlayer = (dispatch, roomState, playerState) => {
       x: 0,
       y: 0,
     },
-    tetromino: Tetrominos[0].shape,
+    tetromino: null,
     collided: false,
   });
   const rotate = (matrix, dir) => {
@@ -84,23 +84,28 @@ export const usePlayer = (dispatch, roomState, playerState) => {
         collided: false,
       };
       roomState.next_piece.shift();
+      let playerSet = false;
       if (stage) {
-        if (!checkcollision(tet, stage, { x: 0, y: 0 }))
+        if (!checkcollision(tet, stage, { x: 0, y: 0 })) {
           setPlayer({
             pos: { x: S_WIDTH / 2 - 1, y: 0 },
             tetromino: tet.tetromino,
             collided: false,
           });
+          playerSet = true;
+        }
         else {
           dispatch({ type: GAME_OVER })
           dispatch({ type: PLAYER_LOST })
         }
-      } else
+      } else {
         setPlayer({
           pos: { x: S_WIDTH / 2 - 1, y: 0 },
           tetromino: tet.tetromino,
           collided: false,
         });
+        playerSet = true;
+      }
       setNext({
         pos: { x: 2, y: 2 },
         tetromino: Tetrominos[roomState.next_piece[0]]?.shape,

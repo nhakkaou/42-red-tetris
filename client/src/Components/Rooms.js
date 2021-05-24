@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { StyledButton, StyledInput } from "./styling/StyledForm";
-import { useDispatch } from "react-redux";
 
 const Rooms = () => {
-  const dispatch = useDispatch();
+
   const [rooms, setRooms] = useState([]);
   const [Room, setRoomname] = useState("");
 
@@ -14,7 +13,6 @@ const Rooms = () => {
   });
 
   function addRoom() {
-    //dispatch(createRoom(playerState.username, Room));
     window.location.hash = `${Room}[${playerState.username}]`;
   }
 

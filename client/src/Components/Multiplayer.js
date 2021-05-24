@@ -46,7 +46,7 @@ const Tetris = () => {
     updatePlayerPos,
     resetPlayer,
     playerRotate,
-  ] = usePlayer(dispatch, roomState, playerState);
+  ] = usePlayer(dispatch, roomState, roomState);
 
   const [stage, stageNext, setStage, rowsCleared] = useStage(
     player,
@@ -55,7 +55,8 @@ const Tetris = () => {
     roomState.gameOver,
     playerState.username,
     roomState.name,
-    playersState
+    playersState,
+    roomState.next_piece,
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
@@ -186,7 +187,7 @@ const Tetris = () => {
       <StyledTetris>
         <Stage stage={stage} />
         <aside>
-          <NextPiece stage={stageNext} />
+          <NextPiece nextPiece={roomState.next_piece} stage={stageNext} />
           <Label>
             {playing ? (
               <FontAwesomeIcon
@@ -213,8 +214,8 @@ const Tetris = () => {
             <Display text={`Level: ${level}`} />
           )}
           {playerState.admin &&
-          !roomState.gameStarted &&
-          !roomState.gameOver ? (
+            !roomState.gameStarted &&
+            !roomState.gameOver ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
             ""
