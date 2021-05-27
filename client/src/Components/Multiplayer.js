@@ -19,7 +19,9 @@ import { playerLost, PLAYER_LOST } from "../actions/playerAction";
 const Label = styled.label`
   cursor: pointer;
 `;
-const Tetris = () => {
+const Tetris = () => {  
+
+
   const dispatch = useDispatch();
 
   let playerState = useSelector((state) => {

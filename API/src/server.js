@@ -77,6 +77,7 @@ class Server {
           }
         }
       });
+      socket.on("Leave", (rs) => console.log(rs))
       socket.on("joinRoom", (data) => {
         if (
           helpers.validateName(data.user) &&
