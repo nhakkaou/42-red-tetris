@@ -38,7 +38,7 @@ const Rooms = () => {
         </thead>
         <tbody>
           {rooms.map((item, i) =>
-            item.room.length > 1 ? (
+            item.room.length > 0 && (
               <tr style={{ margin: "0 auto" }} key={i}>
                 <td>
                   <strong>
@@ -55,8 +55,6 @@ const Rooms = () => {
                 </td>
                 <td>{item.members}/5</td>
               </tr>
-            ) : (
-              ""
             )
           )}
         </tbody>

@@ -6,6 +6,7 @@ const helpers = require("./helpers");
 class Server {
   constructor() {
     let Players = [];
+    //let Rooms = [];
     this.app = express();
     this.app.use(bodyParser.json());
     this.app.use(
@@ -26,7 +27,7 @@ class Server {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
       });
-
+      socket.on("disconnect", reason => console.log(socket.handshake.query))
       socket.on("new score", (rs) => {
         let tmp = [];
         for (let i = 0; i < Players.length; i++) {
@@ -126,11 +127,17 @@ class Server {
               });
             }
 
+            // Rooms.push({ name: data.room, gameStarted: false, playersNbr: 1 })
+
             const message = { type: "success", message: "Created room!" };
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);
           }
-          io.sockets.in(data.room).emit("new member", Players);
+          let arr = Players.filter(
+            (element) =>
+              element.room === data.room
+          );
+          io.sockets.in(data.room).emit("new member", arr);
         }
       });
     }).on("disconnect", function (socket) {

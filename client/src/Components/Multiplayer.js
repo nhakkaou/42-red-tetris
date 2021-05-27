@@ -87,10 +87,12 @@ const Tetris = () => {
   }, [roomState.next_piece.length]);
 
   useEffect(() => {
-    if (roomState.gameOver === true)
+    if (roomState.gameOver === true) {
+      setDropTime(null)
       dispatch(
         playerLost({ user: playerState.username, room: roomState.name })
       );
+    }
   }, [roomState.gameOver]);
 
   useEffect(() => {
@@ -233,7 +235,7 @@ const Tetris = () => {
 
         {playersState.map((row, i) => {
           return row.user !== playerState.username ? (
-            <StagePlayers key={i} stage={row.stage} user={row.user} />
+            <StagePlayers key={i} stage={row.stage.length > 0 ? row.stage : Createstage()} user={row.user} />
           ) : (
             ""
           );
