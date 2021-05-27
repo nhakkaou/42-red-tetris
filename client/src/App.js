@@ -10,15 +10,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   
-  window.onbeforeunload = (event) => {
+  window.onbeforeunload = (e) => {
+    socket.emit("Leave", {user: State.player.username, room: State.room.name}) 
+    return ''  
+  };
+  window.onunload =  function(e) {
     
-      const e = event || window.event;
-      e.preventDefault();
-      if (e) {
-        e.returnValue = '';
-      }
-      return '';
     
+    
+    console.log("KHROOJ T(AWED");
+    
+
   };
   let State = useSelector((state) => {
     return state;

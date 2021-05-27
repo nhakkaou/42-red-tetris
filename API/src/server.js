@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const helpers = require("./helpers");
 class Server {
   constructor() {
+    console.log("ZEBii");
     let Players = [];
     this.app = express();
     this.app.use(bodyParser.json());
@@ -77,7 +78,11 @@ class Server {
           }
         }
       });
-      socket.on("Leave", (rs) => console.log(rs))
+      
+      socket.on("Leave", (res) => {
+        console.log(res)
+        console.log("(AWWWDA")
+      })
       socket.on("joinRoom", (data) => {
         if (
           helpers.validateName(data.user) &&
