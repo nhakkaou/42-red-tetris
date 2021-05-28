@@ -9,19 +9,7 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  
-  window.onbeforeunload = (e) => {
-    socket.emit("Leave", {user: State.player.username, room: State.room.name}) 
-    return ''  
-  };
-  window.onunload =  function(e) {
-    
-    
-    
-    console.log("KHROOJ T(AWED");
-    
 
-  };
   let State = useSelector((state) => {
     return state;
   });

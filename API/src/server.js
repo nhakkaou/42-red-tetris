@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const helpers = require("./helpers");
 class Server {
   constructor() {
-    console.log("ZEBii");
     let Players = [];
     this.app = express();
     this.app.use(bodyParser.json());
@@ -23,6 +22,17 @@ class Server {
       },
     });
     io.on("connection", function (socket) {
+
+      socket.on("disconnect", (sk) => {
+        let tmp = Players.find((el) => el.socketId === socket.id)
+        if (tmp)
+        {
+          console.log(tmp.room)
+          socket.leave(tmp.room)
+          tmp = Players.filter((el) => el.socketId !== socket.id)
+          Players = tmp
+        }
+      });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
@@ -81,7 +91,7 @@ class Server {
       
       socket.on("Leave", (res) => {
         console.log(res)
-        console.log("(AWWWDA")
+        console.log(socket.id)
       })
       socket.on("joinRoom", (data) => {
         if (
@@ -124,7 +134,7 @@ class Server {
             if (!a || a.user !== data.user) {
               Players.push({
                 admin: true,
-                socketId: "",
+                socketId: socket.id,
                 user: data.user,
                 hasLost: false,
                 room: data.room,
@@ -137,6 +147,7 @@ class Server {
             socket.emit("TOASTIFY", message);
           }
           io.sockets.in(data.room).emit("new member", Players);
+          
         }
       });
     }).on("disconnect", function (socket) {
@@ -151,6 +162,7 @@ class Server {
           tmp.push({ room: element.room, members: c });
       });
       res.send(tmp);
+      
     });
   }
   listen() {
