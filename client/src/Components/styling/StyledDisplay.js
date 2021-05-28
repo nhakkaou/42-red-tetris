@@ -1,17 +1,76 @@
 import styled from "styled-components"
 
 export const Styledisplay = styled.div`
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    margin: 0 0 20px 0;
-    padding: 20px;
-    border-radius: 20px;
-    border: 4px solid #333;
-    min-height: 30px;
-    width: 100%;
-    color: ${props => (props.gameOver ? 'red' : '#999')};
-    background: #000;
-    font-size: 0.8 rem;
-
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 20px 0;
+  padding: 10px;
+  border-radius: 20px;
+  border: 4px solid #333;
+  min-height: 30px;
+  width: 100%;
+  color: ${props => (props.gameOver ? 'red' : '#999')};
+  background: #000;
+  font-size: 0.8 rem;
+  position: relative;
 `
+
+export const StyledTitle = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-radius: 20px;
+  padding: 6px 20px;
+  margin: 0px 0px 20px 0px;
+  background: #333;
+  font-size: 0.8 rem;
+  color: white;
+  transform: translate(-50%, -50%);
+  }
+`;
+
+export const StyledData = styled.div`
+  font-family: "Orbitron", sans-serif;
+  font-size: xxx-large;
+  padding: 6px;
+  font-size: 0.8 rem;
+  color: white;
+  }
+`;
+
+// export const StyleStage = styled.div`
+//   display: grid;
+//   grid-template-rows: repeat(
+//     ${(props) => props.height},
+//     calc(10vw / ${(props) => props.width})
+//   );
+//   grid-template-columns: repeat(${(props) => props.width}, 1fr);
+//   grid-gap: 1px;
+//   width: 100%;
+//   padding-top: 10px;
+// `;
+
+export const StyleStage = styled.div`
+  /*display: grid;
+  grid-template-rows: repeat(
+    ${(props) => props.height},
+    calc(80px / ${(props) => props.width})
+  );
+  grid-template-columns: repeat(${(props) => props.width}, calc(80px / ${(props) => props.width}));
+  grid-gap: 1px;
+  width: 80px;
+  height: 80px;
+  padding-top: 10px;*/
+`;
+
+export const StyledCell = styled.div`
+  width: auto;
+  background: rgba(${(props) => props.type === 0 ? 'none' : props.color}, 0.8);
+  border: ${(props) => (props.type === 0 ? "0px solid" : "4px solid")};
+  border-bottom-color: rgba(${(props) => props.color}, 0.5);
+  border-top-color: rgba(${(props) => props.color}, 1);
+  border-right-color: rgba(${(props) => props.color}, 1);
+  border-left-color: rgba(${(props) => props.color}, 0.5);
+`;

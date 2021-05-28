@@ -9,16 +9,14 @@ import { useGameStatus } from "../hooks/useGameStatus";
 import url from "../img/tetriminos.mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
-import { faVolumeOff, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
-import styled from "styled-components";
+import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import StagePlayers from "./StagePlayers";
 import NextPiece from "./NextPiece";
 import { GAME_OVER, START_GAME, CLEAR_PIECES } from "../actions/roomAction";
 import { playerLost, PLAYER_LOST } from "../actions/playerAction";
-const Label = styled.label`
-  cursor: pointer;
-`;
+import { Container, Row, Col } from "reactstrap";
+
 const Tetris = () => {
   const dispatch = useDispatch();
 
@@ -32,7 +30,7 @@ const Tetris = () => {
     return state.players;
   });
 
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [audio] = useState(new Audio(url));
   useEffect(() => {
     audio.addEventListener("ended", () => audio.play());
@@ -97,6 +95,7 @@ const Tetris = () => {
 
   useEffect(() => {
     if (roomState.gameStarted === true) {
+      setPlaying(true)
       //audio.play();
       setStage(Createstage());
       setDropTime(1000);
@@ -186,61 +185,76 @@ const Tetris = () => {
         keyUp(event);
       }}
     >
-      <StyledTetris>
-        <Stage stage={stage} />
-        <aside>
-          <NextPiece nextPiece={roomState.next_piece} stage={stageNext} />
-          <Label>
-            {playing ? (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(false);
-                  audio.pause();
-                }}
-                icon={faVolumeUp}
-              />
-            ) : (
-              <FontAwesomeIcon
-                onClick={function () {
-                  setPlaying(true);
-                  audio.play();
-                }}
-                icon={faVolumeOff}
-              />
-            )}
-          </Label>
-          <Display text={`Score: ${score}`} />
-          {roomState.gameOver ? (
-            <GameOver player={playerState} score={score} />
-          ) : (
-            <Display text={`Level: ${level}`} />
-          )}
-          {playerState.admin &&
-            !roomState.gameStarted &&
-            !roomState.gameOver ? (
-            <StartBtn callback={startGame} room={roomState.name} />
-          ) : (
-            ""
-          )}
-          {playerState.admin && roomState.gameOver ? (
-            <StartBtn
-              callback={restartGame}
-              restart={true}
-              room={roomState.name}
-            />
-          ) : (
-            ""
-          )}
-        </aside>
+      <Container>
+        <StyledTetris>
+          <Row className="w-100">
+            <Col md={playersState.length > 1 ? 10 : 12} sm={12} className="flex justify-center red-tetris__col-stage">
+              <Stage stage={stage} />
+              <aside>
+                <NextPiece nextPiece={roomState.next_piece} stage={stageNext} />
+                <Display title={"Score"} data={score} />
+                <Display title={"Level"} data={level} />
+                {roomState.gameOver && (
+                  <GameOver player={playerState} score={score} />
+                )}
+                <div style={{ cursor: "pointer", textAlign: "center", padding: "10px 0px 20px" }} className="sound-icon">
+                  {playing ? (
+                    <FontAwesomeIcon
+                      onClick={function () {
+                        setPlaying(false);
+                        audio.pause();
+                      }}
+                      icon={faVolumeUp}
+                      size="3x"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      onClick={function () {
+                        setPlaying(true);
+                        audio.play();
+                      }}
+                      icon={faVolumeMute}
+                      size="3x"
+                    />
+                  )}
+                </div>
+                {playerState.admin &&
+                  !roomState.gameStarted &&
+                  !roomState.gameOver ? (
+                  <StartBtn callback={startGame} room={roomState.name} />
+                ) : (
+                  ""
+                )}
+                {playerState.admin && roomState.gameOver ? (
+                  <StartBtn
+                    callback={restartGame}
+                    restart={true}
+                    room={roomState.name}
+                  />
+                ) : (
+                  ""
+                )}
+              </aside>
+            </Col>
+            {
+              playersState.length > 1 ?
+                <Col md={2} sm={12}>
+                  {
+                    playersState.map((row, i) => {
+                      return row.user !== playerState.username ? (
+                        <StagePlayers key={i} stage={row.stage.length > 0 ? row.stage : Createstage()} user={row.user} />
+                      ) : (
+                        ""
+                      );
+                    })}
+                </Col>
+                :
+                ""
 
-        {playersState.map((row, i) => {
-          return row.user !== playerState.username ? (
-            <StagePlayers key={i} stage={row.stage.length > 0 ? row.stage : Createstage()} user={row.user} />
-          ) : (
-            ""
-          );
-        })}
-      </StyledTetris>
+            }
+          </Row>
+        </StyledTetris>
+      </Container>
     </StyledtetrisWrapper>
   );
 };

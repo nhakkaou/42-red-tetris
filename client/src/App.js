@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   let State = useSelector((state) => {

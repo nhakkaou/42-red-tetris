@@ -7,7 +7,7 @@ const Stage = ({ stage }) => {
     return <span>Loading...</span>;
   }
   return (
-    <StyleStage width={stage[0].length} height={stage.length}>
+    <StyleStage width={stage[0].length} height={stage.length} className="red-tetris__stage">
       {stage.map((row, i) =>
         row.map((cell, x) => <Cell key={x} type={cell[0]} />)
       )}

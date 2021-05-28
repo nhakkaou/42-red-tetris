@@ -1,8 +1,11 @@
 import React from "react"
-import {Styledisplay} from "./styling/StyledDisplay"
+import { Styledisplay, StyledTitle, StyledData } from "./styling/StyledDisplay"
 
-const Display = ({gameover, text}) => (
-<Styledisplay gameOver={gameover}>{text}</Styledisplay>
+const Display = ({ gameover, title, data }) => (
+    <Styledisplay gameOver={gameover} className="display">
+        <StyledTitle className="display-title">{title}</StyledTitle>
+        <StyledData className="display-data">{data}</StyledData>
+    </Styledisplay>
 )
 
 export default Display;
