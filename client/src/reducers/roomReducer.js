@@ -6,15 +6,16 @@ import {
   UPDATE_NAME,
   ROOM_JOINED,
   GAME_OVER,
+  UPDATE_MODE,
 } from "../actions/roomAction";
 
 const DEFAULT_STATE = {
   name: "",
   members: 0,
   gameStarted: false,
-  mode: "solo",
+  mode: "Solo",
   next_piece: [],
-  gameOver: false
+  gameOver: false,
 };
 
 export default function (state = DEFAULT_STATE, action) {
@@ -40,6 +41,9 @@ export default function (state = DEFAULT_STATE, action) {
     }
     case ROOM_JOINED: {
       return { ...state, name: action.data.room };
+    }
+    case UPDATE_MODE: {
+      return { ...state, mode: action.data };
     }
     default:
       return state;

@@ -19,9 +19,7 @@ import { playerLost, PLAYER_LOST } from "../actions/playerAction";
 const Label = styled.label`
   cursor: pointer;
 `;
-const Tetris = () => {  
-
-
+const Tetris = () => {
   const dispatch = useDispatch();
 
   let playerState = useSelector((state) => {
@@ -42,13 +40,8 @@ const Tetris = () => {
 
   const [dropTime, setDropTime] = useState(null);
 
-  const [
-    player,
-    NextPlayer,
-    updatePlayerPos,
-    resetPlayer,
-    playerRotate,
-  ] = usePlayer(dispatch, roomState, roomState);
+  const [player, NextPlayer, updatePlayerPos, resetPlayer, playerRotate] =
+    usePlayer(dispatch, roomState, roomState);
 
   const [stage, stageNext, setStage, rowsCleared] = useStage(
     player,
@@ -58,7 +51,7 @@ const Tetris = () => {
     playerState.username,
     roomState.name,
     playersState,
-    roomState.next_piece,
+    roomState.next_piece
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
@@ -216,8 +209,8 @@ const Tetris = () => {
             <Display text={`Level: ${level}`} />
           )}
           {playerState.admin &&
-            !roomState.gameStarted &&
-            !roomState.gameOver ? (
+          !roomState.gameStarted &&
+          !roomState.gameOver ? (
             <StartBtn callback={startGame} room={roomState.name} />
           ) : (
             ""
@@ -235,7 +228,7 @@ const Tetris = () => {
 
         {playersState.map((row, i) => {
           return row.user !== playerState.username ? (
-            <StagePlayers key={i} stage={row.stage} user={row.user} />
+            <StagePlayers key="{row.user}" stage={row.stage} user={row.user} />
           ) : (
             ""
           );
