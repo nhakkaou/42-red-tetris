@@ -23,7 +23,6 @@ class Server {
       },
     });
     io.on("connection", function (socket) {
-      console.log(Players);
       socket.on("disconnect", (sk) => {
         let tmp = Players.find((el) => el.socketId === socket.id);
         if (tmp) {
