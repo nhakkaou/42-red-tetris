@@ -6,8 +6,8 @@ export const StyledStartBtn = styled.button`
     color: white;
     box-sizing: border-box;
     display: flex;
-    margin: 0 auto;
-    border-radius: 20px;
+    margin: 0;
+    padding: 2px;
     border: 4px solid ;
     min-height: 30px;
     font-family: 'Hanalei', cursive;
@@ -19,5 +19,11 @@ export const StyledStartBtn = styled.button`
     :hover{
         background-color: #c79dcb;
         color: #1d0424;
-    } 
+    }
+    @media screen and (max-width: 768px) {
+        width: 100px;
+    }
+    @media screen and (max-width: 480px) {
+        width: 90px;
+    }
 `

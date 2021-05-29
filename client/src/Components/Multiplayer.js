@@ -9,7 +9,7 @@ import { useGameStatus } from "../hooks/useGameStatus";
 import url from "../img/tetriminos.mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameOver from "./GameOver";
-import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import { faVolumeMute, faVolumeUp, faRedoAlt, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import StagePlayers from "./StagePlayers";
 import NextPiece from "./NextPiece";
@@ -197,7 +197,7 @@ const Tetris = () => {
                 {roomState.gameOver && (
                   <GameOver player={playerState} score={score} />
                 )}
-                <div style={{ cursor: "pointer", textAlign: "center", padding: "10px 0px 20px" }} className="sound-icon">
+                <div style={{ cursor: "pointer", textAlign: "center", padding: "10px 0px 20px" }} className="sound-icon-wrapper">
                   {playing ? (
                     <FontAwesomeIcon
                       onClick={function () {
@@ -206,6 +206,7 @@ const Tetris = () => {
                       }}
                       icon={faVolumeUp}
                       size="3x"
+                      className="sound-icon"
                     />
                   ) : (
                     <FontAwesomeIcon
@@ -215,21 +216,28 @@ const Tetris = () => {
                       }}
                       icon={faVolumeMute}
                       size="3x"
+                      className="sound-icon"
                     />
                   )}
                 </div>
                 {playerState.admin &&
                   !roomState.gameStarted &&
                   !roomState.gameOver ? (
-                  <StartBtn callback={startGame} room={roomState.name} />
+                  <FontAwesomeIcon
+                    onClick={startGame}
+                    icon={faPlay}
+                    size="3x"
+                    className="sound-icon"
+                  />
                 ) : (
                   ""
                 )}
                 {playerState.admin && roomState.gameOver ? (
-                  <StartBtn
-                    callback={restartGame}
-                    restart={true}
-                    room={roomState.name}
+                  <FontAwesomeIcon
+                    onClick={restartGame}
+                    icon={faRedoAlt}
+                    size="3x"
+                    className="sound-icon"
                   />
                 ) : (
                   ""
