@@ -66,9 +66,13 @@ export const stethoscope = (dispatch, getState) => {
   });
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
-      case "error":
+      case "error": {
         toast.error(data.message);
+        setTimeout(() => {
+          window.location = "";
+        }, 6000);
         break;
+      }
       case "success":
         toast.success(data.message);
         break;

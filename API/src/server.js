@@ -24,8 +24,8 @@ class Server {
     });
     io.on("connection", function (socket) {
       socket.on("disconnect", (sk) => {
-        let cmptr = 0
-        let winner = {}
+        let cmptr = 0;
+        let winner = {};
         let tmp = Players.find((el) => el.socketId === socket.id);
         if (tmp) {
           socket.leave(tmp.room);
@@ -33,8 +33,8 @@ class Server {
           Players = tmp2;
           for (let i = 0; i < Players.length; i++) {
             if (Players[i].room === tmp.room && !Players[i].hasLost) {
-              winner = Players[i]
-              cmptr++
+              winner = Players[i];
+              cmptr++;
             }
           }
           if (cmptr === 1) io.sockets.in(tmp.room).emit("Winner", winner);
@@ -44,7 +44,7 @@ class Server {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
       });
-      socket.on("disconnect", reason => console.log(socket.handshake.query))
+      socket.on("disconnect", (reason) => console.log(socket.handshake.query));
       socket.on("new score", (rs) => {
         let tmp = [];
         for (let i = 0; i < Players.length; i++) {
@@ -118,6 +118,7 @@ class Server {
                 (element) =>
                   element.user === data.user && element.room === data.room
               );
+
               if (!a || a.user !== data.user) {
                 if (tmpRoom.mode === "Solo") {
                   socket.emit("TOASTIFY", {
@@ -134,11 +135,15 @@ class Server {
                   room: data.room,
                   score: 0,
                 });
-              }
-              socket.join(data.room);
-              const message = { type: "success", message: "Joined room!" };
-              socket.emit("Join_success", data);
-              socket.emit("TOASTIFY", message);
+                socket.join(data.room);
+                const message = { type: "success", message: "Joined room!" };
+                socket.emit("Join_success", data);
+                socket.emit("TOASTIFY", message);
+              } else
+                return socket.emit("TOASTIFY", {
+                  type: "error",
+                  message: "Username Already existe",
+                });
             }
           } else {
             socket.join(data.room);
@@ -161,10 +166,7 @@ class Server {
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);
           }
-          let arr = Players.filter(
-            (element) =>
-              element.room === data.room
-          );
+          let arr = Players.filter((element) => element.room === data.room);
           io.sockets.in(data.room).emit("new member", arr);
         }
       });
