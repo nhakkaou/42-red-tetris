@@ -240,12 +240,12 @@ const Tetris = () => {
               </aside>
             </Col>
             {
-              playersState.length > 1 ?
+              playersState ?
                 <Col md={2} sm={12}>
                   {
                     playersState.map((row, i) => {
                       return row.user !== playerState.username ? (
-                        <StagePlayers key={i} stage={row.stage.length > 0 ? row.stage : Createstage()} user={row.user} />
+                        <StagePlayers key={i} stage={row.stage && row.stage.length > 0 ? row.stage : Createstage()} user={row.user} />
                       ) : (
                         ""
                       );

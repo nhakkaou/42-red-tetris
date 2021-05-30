@@ -24,11 +24,20 @@ class Server {
     });
     io.on("connection", function (socket) {
       socket.on("disconnect", (sk) => {
+        let cmptr = 0
+        let winner = {}
         let tmp = Players.find((el) => el.socketId === socket.id);
         if (tmp) {
           socket.leave(tmp.room);
-          tmp = Players.filter((el) => el.socketId !== socket.id);
-          Players = tmp;
+          let tmp2 = Players.filter((el) => el.socketId !== socket.id);
+          Players = tmp2;
+          for (let i = 0; i < Players.length; i++) {
+            if (Players[i].room === tmp.room && !Players[i].hasLost) {
+              winner = Players[i]
+              cmptr++
+            }
+          }
+          if (cmptr === 1) io.sockets.in(tmp.room).emit("Winner", winner);
         }
       });
       socket.on("new_tetriminos", (room) => {
@@ -40,11 +49,12 @@ class Server {
         let tmp = [];
         for (let i = 0; i < Players.length; i++) {
           if (Players[i].user == rs.user) Players[i].score = rs.score;
-          tmp.push({
-            user: Players[i].user,
-            score: Players[i].score,
-            stage: Players[i].stage,
-          });
+          if (Players[i].room === rs.room)
+            tmp.push({
+              user: Players[i].user,
+              score: Players[i].score,
+              stage: Players[i].stage,
+            });
         }
         io.sockets.in(rs.room).emit("new score", tmp);
         socket.in(rs.room).emit("add row", tmp);
