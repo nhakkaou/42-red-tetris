@@ -7,7 +7,7 @@ export const Styledisplay = styled.div`
   flex-direction: column;
   margin: 0 0 20px 0;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 4px solid #333;
   color: ${props => (props.gameOver ? 'red' : '#999')};
   background: #000;
@@ -34,7 +34,7 @@ export const StyledNextDisplay = styled.div`
   align-items: center;
   margin: 0 0 20px 0;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 4px solid #333;
   color: ${props => (props.gameOver ? 'red' : '#999')};
   background: #000;
@@ -70,7 +70,6 @@ export const StyledTitle = styled.div`
 `;
 
 export const StyledData = styled.div`
-  font-family: "Orbitron", sans-serif;
   font-size: xxx-large;
   padding: 6px;
   font-size: 0.8 rem;

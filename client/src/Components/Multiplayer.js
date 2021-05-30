@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Stage from "./Stage";
-import StartBtn from "./StartBtn";
 import Display from "./Display";
 import { S_HEIGHT, checkcollision, Createstage, S_WIDTH } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
@@ -8,7 +7,6 @@ import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
 import url from "../img/tetriminos.mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GameOver from "./GameOver";
 import { faVolumeMute, faVolumeUp, faRedoAlt, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import StagePlayers from "./StagePlayers";
@@ -184,23 +182,41 @@ const Tetris = () => {
         <StyledTetris>
           <Row className="w-100">
             <Col md={playersState.length > 1 ? 10 : 12} sm={12} className="flex justify-center red-tetris__col-stage">
-              <Stage stage={stage} />
+              <Stage gameOver={roomState.gameOver} stage={stage} player={playerState} />
               <aside>
                 <NextPiece nextPiece={roomState.next_piece} stage={stageNext} />
                 <Display title={"Score"} data={score} />
                 <Display title={"Level"} data={level} />
-                {roomState.gameOver && (
-                  <GameOver player={playerState} score={score} />
-                )}
                 <div style={{ cursor: "pointer", textAlign: "center", padding: "10px 0px 20px" }} className="sound-icon-wrapper">
-                  {playing ? (
+                  {playerState.admin &&
+                    !roomState.gameStarted &&
+                    !roomState.gameOver ? (
+                    <FontAwesomeIcon
+                      onClick={startGame}
+                      icon={faPlay}
+                      size="2x"
+                      className="sound-icon"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {playerState.admin && roomState.gameOver ? (
+                    <FontAwesomeIcon
+                      onClick={restartGame}
+                      icon={faRedoAlt}
+                      size="2x"
+                      className="sound-icon"
+                    />
+                  ) : (
+                    ""
+                  )}{playing ? (
                     <FontAwesomeIcon
                       onClick={function () {
                         setPlaying(false);
                         audio.pause();
                       }}
                       icon={faVolumeUp}
-                      size="3x"
+                      size="2x"
                       className="sound-icon"
                     />
                   ) : (
@@ -210,33 +226,10 @@ const Tetris = () => {
                         audio.play();
                       }}
                       icon={faVolumeMute}
-                      size="3x"
+                      size="2x"
                       className="sound-icon"
                     />
-                  )}
-                </div>
-                {playerState.admin &&
-                  !roomState.gameStarted &&
-                  !roomState.gameOver ? (
-                  <FontAwesomeIcon
-                    onClick={startGame}
-                    icon={faPlay}
-                    size="3x"
-                    className="sound-icon"
-                  />
-                ) : (
-                  ""
-                )}
-                {playerState.admin && roomState.gameOver ? (
-                  <FontAwesomeIcon
-                    onClick={restartGame}
-                    icon={faRedoAlt}
-                    size="3x"
-                    className="sound-icon"
-                  />
-                ) : (
-                  ""
-                )}
+                  )}</div>
               </aside>
             </Col>
             {

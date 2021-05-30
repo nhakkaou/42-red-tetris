@@ -1,8 +1,9 @@
-        @import url("https://fonts.googleapis.com/css2?family=Hanalei&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Oxanium");
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "Oxanium";
         }
         
         body {
@@ -21,11 +22,13 @@
         
         h1 {
             color: #000000;
-            font-family: "Hanalei", cursive;
+            font-family: "Oxanium";
             font-size: xxx-large;
             text-shadow: white 1px 0 10px;
             text-align: center;
+            font-weight: bolder;
             padding: 50px 0px 50px;
+            letter-spacing: 4px;
         }
         
         table {
@@ -67,6 +70,14 @@
             display: flex !important;
             align-items: center;
             flex-direction: column;
+        }
+        
+        .sound-icon-wrapper {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100px !important;
+            height: 102px;
         }
         
         .sound-icon:hover {

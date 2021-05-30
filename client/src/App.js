@@ -4,7 +4,7 @@ import Tetris from "./Components/Multiplayer";
 import Rooms from "./Components/Rooms";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import {socket} from "./hooks/"
+import { socket } from "./hooks/"
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,9 +17,9 @@ function App() {
 
   return (
     <div>
-      <h1>Red T e t r i s</h1>
+      <h1>Red Tetris</h1>
       <ToastContainer />
-      
+
       {State.player.username === "" ? (
         <AddName />
       ) : State.room.name === "" ? (
