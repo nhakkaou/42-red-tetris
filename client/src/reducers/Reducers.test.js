@@ -11,7 +11,7 @@ describe("Room test", () => {
       members: 0,
       gameOver: false,
       gameStarted: false,
-      mode: "solo",
+      mode: "Solo",
       next_piece: [],
     });
   });
@@ -21,7 +21,7 @@ describe("Room test", () => {
       members: 0,
       gameOver: false,
       gameStarted: true,
-      mode: "solo",
+      mode: "Solo",
       next_piece: [],
     });
   });
@@ -34,7 +34,7 @@ describe("Room test", () => {
       members: 6,
       gameOver: false,
       gameStarted: false,
-      mode: "solo",
+      mode: "Solo",
       next_piece: [],
     });
   });
@@ -49,7 +49,7 @@ describe("Room test", () => {
       members: 0,
       gameOver: false,
       gameStarted: false,
-      mode: "solo",
+      mode: "Solo",
       next_piece: ["L", "T"],
     });
   });
@@ -62,7 +62,7 @@ describe("Room test", () => {
       members: 0,
       gameOver: false,
       gameStarted: false,
-      mode: "solo",
+      mode: "Solo",
       next_piece: [],
     });
   });

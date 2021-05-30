@@ -6,7 +6,7 @@ const helpers = require("./helpers");
 class Server {
   constructor() {
     let Players = [];
-    //let Rooms = [];
+    let Rooms = [];
     this.app = express();
     this.app.use(bodyParser.json());
     this.app.use(
@@ -23,6 +23,14 @@ class Server {
       },
     });
     io.on("connection", function (socket) {
+      socket.on("disconnect", (sk) => {
+        let tmp = Players.find((el) => el.socketId === socket.id);
+        if (tmp) {
+          socket.leave(tmp.room);
+          tmp = Players.filter((el) => el.socketId !== socket.id);
+          Players = tmp;
+        }
+      });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
@@ -49,13 +57,15 @@ class Server {
           players: rq.players,
         });
       });
+
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("start game", rst);
-        Players.forEach(e => {
-          e.hasLost = false
+        Players.forEach((e) => {
+          e.hasLost = false;
         });
       });
+
       socket.on("Loser", (data) => {
         let winner = {};
         let lostCount = 0;
@@ -71,20 +81,23 @@ class Server {
           }
         }
         if (lostCount === Players.length - 1) {
-          const index = Players.findIndex(e => e.hasLost === false)
+          const index = Players.findIndex((e) => e.hasLost === false);
           if (Players[index]) {
             winner = Players[index];
             io.sockets.in(data.room).emit("Winner", winner);
           }
         }
       });
+
       socket.on("joinRoom", (data) => {
+        console.log("DAta:", data);
         if (
           helpers.validateName(data.user) &&
           helpers.validateName(data.room)
         ) {
           if (io.sockets.adapter.rooms.get(data.room)) {
             const clients = io.sockets.adapter.rooms.get(data.room);
+            const tmpRoom = Rooms.find((el) => el.name === data.room);
             const numClients = clients ? clients.size : 0;
             if (numClients + 1 > 5) {
               const message = { type: "error", message: "Room is full!" };
@@ -96,9 +109,16 @@ class Server {
                   element.user === data.user && element.room === data.room
               );
               if (!a || a.user !== data.user) {
+                if (tmpRoom.mode === "Solo") {
+                  socket.emit("TOASTIFY", {
+                    type: "error",
+                    message: "Room solo!",
+                  });
+                  return "";
+                }
                 Players.push({
                   admin: false,
-                  socketId: "",
+                  socketId: socket.id,
                   user: data.user,
                   hasLost: false,
                   room: data.room,
@@ -119,16 +139,14 @@ class Server {
             if (!a || a.user !== data.user) {
               Players.push({
                 admin: true,
-                socketId: "",
+                socketId: socket.id,
                 user: data.user,
                 hasLost: false,
                 room: data.room,
                 score: 0,
               });
             }
-
-            // Rooms.push({ name: data.room, gameStarted: false, playersNbr: 1 })
-
+            Rooms.push({ name: data.room, mode: data.mode });
             const message = { type: "success", message: "Created room!" };
             socket.emit("Join_success", { ...data, is_admin: true });
             socket.emit("TOASTIFY", message);

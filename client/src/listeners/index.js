@@ -16,11 +16,7 @@ export const stethoscope = (dispatch, getState) => {
   window.onhashchange = () => {
     checkHash();
   };
-  socket.on("connection", function (socket) { });
 
-  socket.on("disconnect", (socket) => {
-    dispatch({ type: CHANGE_PIECE, data: [] });
-  });
   socket.on("new score", (result) => {
     dispatch({ type: ADD_PLAYER, data: result });
   });

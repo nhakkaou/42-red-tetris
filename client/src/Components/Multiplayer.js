@@ -38,13 +38,8 @@ const Tetris = () => {
 
   const [dropTime, setDropTime] = useState(null);
 
-  const [
-    player,
-    NextPlayer,
-    updatePlayerPos,
-    resetPlayer,
-    playerRotate,
-  ] = usePlayer(dispatch, roomState, roomState);
+  const [player, NextPlayer, updatePlayerPos, resetPlayer, playerRotate] =
+    usePlayer(dispatch, roomState, roomState);
 
   const [stage, stageNext, setStage, rowsCleared] = useStage(
     player,
@@ -54,7 +49,7 @@ const Tetris = () => {
     playerState.username,
     roomState.name,
     playersState,
-    roomState.next_piece,
+    roomState.next_piece
   );
 
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(

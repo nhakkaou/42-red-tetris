@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { socket } from "../hooks";
-
+import store from "../Store";
 export const checkHash = () => {
   const hash = window.location.hash.substring(1);
   if (!hash.trim()) return;
@@ -12,5 +12,9 @@ export const checkHash = () => {
     );
     return;
   }
-  socket.emit("joinRoom", { user: found.groups.usr, room: found.groups.room });
+  socket.emit("joinRoom", {
+    user: found.groups.usr,
+    room: found.groups.room,
+    mode: store.getState().room.mode,
+  });
 };
