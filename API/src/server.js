@@ -38,13 +38,29 @@ class Server {
             }
           }
           if (cmptr === 1) io.sockets.in(tmp.room).emit("Winner", winner);
+          if (cmptr === 0) Rooms = Rooms.filter((el) => el.name !== tmp.room);
+          if (tmp.admin === true) {
+            let i = Players.findIndex((el) => el.room === tmp.room);
+            Players[i] = {
+              ...Players[i],
+              admin: true,
+            };
+            socket.to(Players[i].socketId).emit("Update Admin", {
+              user: Players[i],
+              is_admin: Players[i].admin,
+            });
+          }
+          io.sockets.in(tmp.room).emit(
+            "new member",
+            Players.filter((e) => e.room === tmp.room)
+          );
         }
       });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
       });
-      socket.on("disconnect", (reason) => console.log(socket.handshake.query));
+
       socket.on("new score", (rs) => {
         let tmp = [];
         for (let i = 0; i < Players.length; i++) {
@@ -100,7 +116,6 @@ class Server {
       });
 
       socket.on("joinRoom", (data) => {
-        console.log("DAta:", data);
         if (
           helpers.validateName(data.user) &&
           helpers.validateName(data.room)
@@ -186,7 +201,7 @@ class Server {
   }
   listen() {
     this.http.listen(4242, () => {
-      console.log(`Listening ...`);
+      console.log(`Listening on http://localhost:4242`);
     });
   }
 }

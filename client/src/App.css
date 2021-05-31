@@ -1,105 +1,106 @@
-        @import url("https://fonts.googleapis.com/css2?family=Oxanium");
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Oxanium";
-        }
-        
-        body {
-            background-image: url("./img/background.jpg");
-            width: 100%;
-            height: 100vh;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
-            overflow: hidden;
-        }
-        
-        audio {
-            display: none;
-        }
-        
-        h1 {
-            color: #000000;
-            font-family: "Oxanium";
-            font-size: xxx-large;
-            text-shadow: white 1px 0 10px;
-            text-align: center;
-            font-weight: bolder;
-            padding: 50px 0px 50px;
-            letter-spacing: 4px;
-        }
-        
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 60%;
-            margin: 20px auto;
-        }
-        
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-            width: auto;
-        }
-        
-        .w-100 {
-            width: 100%;
-        }
-        
-        .flex {
-            display: flex;
-        }
-        
-        .justify-center {
-            justify-content: center;
-        }
-        
-        .align-center {
-            align-items: center;
-        }
-        
-        .flex-column {
-            flex-direction: column;
-        }
-        
-        .red-tetris__col-stage>aside {
-            display: flex !important;
-            align-items: center;
-            flex-direction: column;
-        }
-        
-        .sound-icon-wrapper {
-            display: inline-flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100px !important;
-            height: 102px;
-        }
-        
-        .sound-icon:hover {
-            color: white;
-        }
-        
-        @media screen and (max-width: 768px) {
-            .sound-icon-wrapper {
-                width: 100px !important;
-                height: 102px;
-            }
-            .red-tetris__col-stage>aside {
-                width: 120px !important;
-            }
-        }
-        
-        @media screen and (max-width: 480px) {
-            .sound-icon-wrapper {
-                width: 100px !important;
-                height: 60px;
-            }
-            .red-tetris__col-stage>aside {
-                width: 100px !important;
-            }
-        }
+@import url("https://fonts.googleapis.com/css2?family=Oxanium:wght@200;400;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Oxanium";
+}
+
+body {
+  background-image: url("./img/background.jpg");
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  overflow: hidden;
+}
+
+audio {
+  display: none;
+}
+
+h1 {
+  color: #000000;
+  font-family: "Oxanium";
+  font-size: xxx-large;
+  text-shadow: white 1px 0 10px;
+  text-align: center;
+  font-weight: bolder;
+  padding: 50px 0px 50px;
+  letter-spacing: 4px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 60%;
+  margin: 20px auto;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  width: auto;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.red-tetris__col-stage > aside {
+  display: flex !important;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sound-icon-wrapper {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100px !important;
+  height: 102px;
+}
+
+.sound-icon:hover {
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .sound-icon-wrapper {
+    width: 100px !important;
+    height: 102px;
+  }
+  .red-tetris__col-stage > aside {
+    width: 120px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sound-icon-wrapper {
+    width: 100px !important;
+    height: 60px;
+  }
+  .red-tetris__col-stage > aside {
+    width: 100px !important;
+  }
+}

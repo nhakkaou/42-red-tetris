@@ -64,6 +64,11 @@ export const stethoscope = (dispatch, getState) => {
     if (store.getState().player.username !== data.user)
       dispatch({ type: PLAYER_LOST });
   });
+
+  socket.on("Update Admin", (data) =>
+    dispatch({ type: UPDATE_PLAYER, data: data })
+  );
+
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {
       case "error": {

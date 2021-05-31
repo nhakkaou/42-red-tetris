@@ -8,13 +8,14 @@ describe("Server Test ", () => {
   test("should Joinroom", () => {
     socket.emit("joinRoom", { user: "test", room: "ROOM", mode: "Solo" });
     socket.on("TOASTIFY", (res) => {
-      console.log(res);
       expect(res.message).toContain("Created room!");
     });
-    socket.emit("joinRoom", { user: "test2", room: "ROOM" });
+  });
+  test("Join Room Solo", () => {
+    await socket.emit("joinRoom", { user: "test2", room: "ROOM" });
     socket.on("TOASTIFY", (res) => {
       console.log(res);
-      expect(res.message).toContain("Created room!");
+      expect(res.message).toContain("Room !");
     });
   });
 
