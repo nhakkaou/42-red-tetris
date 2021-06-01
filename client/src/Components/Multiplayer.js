@@ -7,7 +7,12 @@ import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
 import url from "../img/tetriminos.mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeMute, faVolumeUp, faRedoAlt, faPlay } from "@fortawesome/free-solid-svg-icons";
+import {
+  faVolumeMute,
+  faVolumeUp,
+  faRedoAlt,
+  faPlay,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import StagePlayers from "./StagePlayers";
 import NextPiece from "./NextPiece";
@@ -79,7 +84,7 @@ const Tetris = () => {
 
   useEffect(() => {
     if (roomState.gameOver === true) {
-      setDropTime(null)
+      setDropTime(null);
       dispatch(
         playerLost({ user: playerState.username, room: roomState.name })
       );
@@ -88,7 +93,7 @@ const Tetris = () => {
 
   useEffect(() => {
     if (roomState.gameStarted === true) {
-      setPlaying(true)
+      setPlaying(true);
       //audio.play();
       setStage(Createstage());
       setDropTime(1000);
@@ -181,16 +186,31 @@ const Tetris = () => {
       <Container>
         <StyledTetris>
           <Row className="w-100">
-            <Col md={playersState.length > 1 ? 10 : 12} sm={12} className="flex justify-center red-tetris__col-stage">
-              <Stage gameOver={roomState.gameOver} stage={stage} player={playerState} />
+            <Col
+              md={playersState.length > 1 ? 10 : 12}
+              sm={12}
+              className="flex justify-center red-tetris__col-stage"
+            >
+              <Stage
+                gameOver={roomState.gameOver}
+                stage={stage}
+                player={playerState}
+              />
               <aside>
                 <NextPiece nextPiece={roomState.next_piece} stage={stageNext} />
                 <Display title={"Score"} data={score} />
                 <Display title={"Level"} data={level} />
-                <div style={{ cursor: "pointer", textAlign: "center", padding: "10px 0px 20px" }} className="sound-icon-wrapper">
+                <div
+                  style={{
+                    cursor: "pointer",
+                    textAlign: "center",
+                    padding: "10px 0px 20px",
+                  }}
+                  className="sound-icon-wrapper"
+                >
                   {playerState.admin &&
-                    !roomState.gameStarted &&
-                    !roomState.gameOver ? (
+                  !roomState.gameStarted &&
+                  !roomState.gameOver ? (
                     <FontAwesomeIcon
                       onClick={startGame}
                       icon={faPlay}
@@ -209,7 +229,8 @@ const Tetris = () => {
                     />
                   ) : (
                     ""
-                  )}{playing ? (
+                  )}
+                  {playing ? (
                     <FontAwesomeIcon
                       onClick={function () {
                         setPlaying(false);
@@ -229,25 +250,31 @@ const Tetris = () => {
                       size="2x"
                       className="sound-icon"
                     />
-                  )}</div>
+                  )}
+                </div>
               </aside>
             </Col>
-            {
-              playersState ?
-                <Col md={2} sm={12}>
-                  {
-                    playersState.map((row, i) => {
-                      return row.user !== playerState.username ? (
-                        <StagePlayers key={i} stage={row.stage && row.stage.length > 0 ? row.stage : Createstage()} user={row.user} />
-                      ) : (
-                        ""
-                      );
-                    })}
-                </Col>
-                :
-                ""
-
-            }
+            {playersState ? (
+              <Col md={2} sm={12}>
+                {playersState.map((row, i) => {
+                  return row.user !== playerState.username ? (
+                    <StagePlayers
+                      key={i}
+                      stage={
+                        row.stage && row.stage.length > 0
+                          ? row.stage
+                          : Createstage()
+                      }
+                      user={row.user}
+                    />
+                  ) : (
+                    ""
+                  );
+                })}
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
         </StyledTetris>
       </Container>
