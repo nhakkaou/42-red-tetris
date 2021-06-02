@@ -75,7 +75,7 @@ export const stethoscope = (dispatch, getState) => {
         toast.error(data.message);
         setTimeout(() => {
           window.location = "";
-        }, 6000);
+        }, 2000);
         break;
       }
       case "success":

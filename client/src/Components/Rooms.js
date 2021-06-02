@@ -34,6 +34,7 @@ const Rooms = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/getRooms`).then((res) => {
       setRooms([...res.data]);
+      console.log(res.data);
     });
   }, []);
 
@@ -48,33 +49,36 @@ const Rooms = () => {
         <option>Multiplayer</option>
       </Select>
       <StyledButton type="submit" onClick={() => addRoom()} value="Create" />
-      <table>
+      <table style={{ borderWidth: "5px" }}>
         <thead>
           <tr>
             <th>Room Name</th>
             <th>Members</th>
+            <th>Mode</th>
           </tr>
         </thead>
         <tbody>
-          {rooms.map((item, i) =>
-            item.room.length > 0 && (
-              <tr style={{ margin: "0 auto" }} key={i}>
-                <td>
-                  <strong>
-                    <a
-                      style={{
-                        textDecoration: "none",
-                        color: "White",
-                      }}
-                      href={`http://localhost:3000/#${item.room}[${playerState.username}]`}
-                    >
-                      {item.room}
-                    </a>
-                  </strong>
-                </td>
-                <td>{item.members}/5</td>
-              </tr>
-            )
+          {rooms.map(
+            (item, i) =>
+              item.room.length > 0 && (
+                <tr style={{ margin: "0 auto", borderWidth: "5px" }} key={i}>
+                  <td style={{ borderWidth: "5px" }}>
+                    <strong>
+                      <a
+                        style={{
+                          textDecoration: "none",
+                          color: "White",
+                        }}
+                        href={`http://localhost:3000/#${item.room}[${playerState.username}]`}
+                      >
+                        {item.room}
+                      </a>
+                    </strong>
+                  </td>
+                  <td style={{ borderWidth: "5px" }}>{item.members}/5</td>
+                  <td style={{ borderWidth: "5px" }}>{item.mode}</td>
+                </tr>
+              )
           )}
         </tbody>
       </table>

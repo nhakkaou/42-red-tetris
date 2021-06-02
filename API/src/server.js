@@ -26,9 +26,10 @@ class Server {
     });
     io.on("connection", function (socket) {
       socket.on("disconnect", (sk) => {
-        const tmp = leaveRoom(socket, Players, io, Rooms);
-        Players = tmp.Players;
-        Rooms = tmp.Rooms;
+        leaveRoom(socket, Players, io, Rooms).then((res) => {
+          Players = res.Players;
+          Rooms = res.Rooms;
+        });
       });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
@@ -64,9 +65,10 @@ class Server {
           helpers.validateName(data.user) &&
           helpers.validateName(data.room)
         ) {
-          const tmp = joinRoom(socket, data, io, Rooms, Players);
-          Players = tmp.Players;
-          Rooms = tmp.Rooms;
+          joinRoom(socket, data, io, Rooms, Players).then((r) => {
+            Players = r.Players;
+            Rooms = r.Rooms;
+          });
         }
       });
     }).on("disconnect", function (socket) {
@@ -78,7 +80,11 @@ class Server {
         let c = Players.filter((el) => el.room == element.room).length;
 
         if (tmp.filter((el) => el.room === element.room).length === 0)
-          tmp.push({ room: element.room, members: c });
+          tmp.push({
+            room: element.room,
+            members: c,
+            mode: Rooms.find((el) => el.name == element.room).mode,
+          });
       });
       res.send(tmp);
     });

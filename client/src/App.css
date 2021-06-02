@@ -40,11 +40,13 @@ table {
 }
 
 td,
+tr,
 th {
-  border: 1px solid #dddddd;
-  text-align: left;
+  border: solid #dddddd;
+  text-align: center;
   padding: 8px;
   width: auto;
+  color: #dddddd;
 }
 
 .w-100 {
