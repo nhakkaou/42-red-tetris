@@ -1,18 +1,19 @@
 const Loser = (data, io, Players) => {
   let winner = {};
   let lostCount = 0;
-  for (let i = 0; i < Players.length; i++) {
-    if (Players[i].user === data.user) {
-      Players[i].hasLost = true;
+  let playersArr = Players.filter(e => e.room === data.room)
+  for (let i = 0; i < playersArr.length; i++) {
+    if (playersArr[i].user === data.user) {
+      playersArr[i].hasLost = true;
       ++lostCount;
-    } else if (Players[i].user !== data.user && Players[i].hasLost === true) {
+    } else if (playersArr[i].user !== data.user && playersArr[i].hasLost === true) {
       ++lostCount;
     }
   }
-  if (lostCount === Players.length - 1) {
-    const index = Players.findIndex((e) => e.hasLost === false);
-    if (Players[index]) {
-      winner = Players[index];
+  if (lostCount === playersArr.length - 1) {
+    const index = playersArr.findIndex((e) => e.hasLost === false);
+    if (playersArr[index]) {
+      winner = playersArr[index];
       io.sockets.in(data.room).emit("Winner", winner);
     }
   }

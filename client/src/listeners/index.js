@@ -61,8 +61,9 @@ export const stethoscope = (dispatch, getState) => {
 
   socket.on("Winner", (data) => {
     dispatch({ type: GAME_OVER });
-    if (store.getState().player.username !== data.user)
+    if (store.getState().player.username !== data.user) {
       dispatch({ type: PLAYER_LOST });
+    }
   });
 
   socket.on("Update Admin", (data) =>
@@ -74,8 +75,8 @@ export const stethoscope = (dispatch, getState) => {
       case "error": {
         toast.error(data.message);
         setTimeout(() => {
-          window.location = "";
-        }, 2000);
+          window.location.hash = "";
+        }, 500);
         break;
       }
       case "success":

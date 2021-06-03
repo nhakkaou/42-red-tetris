@@ -51,7 +51,7 @@ const joinRoom = (socket, data, io, Rooms, Players) => {
         );
 
         if (!a || a.user !== data.user) {
-          if (tmpRoom.mode === "Solo") {
+          if (tmpRoom && tmpRoom.mode === "Solo") {
             socket.emit("TOASTIFY", {
               type: "error",
               message: "Room solo!",
