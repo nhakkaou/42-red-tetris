@@ -66,9 +66,14 @@ export const stethoscope = (dispatch, getState) => {
     }
   });
 
-  socket.on("Update Admin", (data) =>
-    dispatch({ type: UPDATE_PLAYER, data: data })
-  );
+  socket.on("Update Admin", (data) => {
+    console.log(data);
+    let tmp = {
+      user: data.user.user,
+      is_admin: data.is_admin,
+    };
+    dispatch({ type: UPDATE_PLAYER, data: tmp });
+  });
 
   socket.on("TOASTIFY", (data) => {
     switch (data.type) {

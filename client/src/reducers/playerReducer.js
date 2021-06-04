@@ -22,7 +22,7 @@ export default function (state = DEFAULT_STATE, action) {
     case UPDATE_PLAYER: {
       return {
         ...state,
-        username: action.data.user.user,
+        username: action.data.user,
         connected: true,
         admin: action.data.is_admin ? true : false,
       };

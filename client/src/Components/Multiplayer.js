@@ -94,7 +94,7 @@ const Tetris = () => {
   useEffect(() => {
     if (roomState.gameStarted === true) {
       setPlaying(true);
-      //audio.play();
+      // audio.play();
       setStage(Createstage());
       setDropTime(1000);
       resetPlayer();
@@ -209,8 +209,8 @@ const Tetris = () => {
                   className="sound-icon-wrapper"
                 >
                   {playerState.admin &&
-                    !roomState.gameStarted &&
-                    !roomState.gameOver ? (
+                  !roomState.gameStarted &&
+                  !roomState.gameOver ? (
                     <FontAwesomeIcon
                       onClick={startGame}
                       icon={faPlay}
@@ -257,19 +257,22 @@ const Tetris = () => {
             {playersState ? (
               <Col md={2} sm={12}>
                 {playersState.map((row, i) => {
-                  return row.user !== playerState.username ? (
-                    <StagePlayers
-                      key={i}
-                      stage={
-                        row.stage && row.stage.length > 0
-                          ? row.stage
-                          : Createstage()
-                      }
-                      user={row.user}
-                    />
-                  ) : (
-                    ""
-                  );
+                  {
+                    if (row.user !== playerState.user)
+                      return row.user !== playerState.username ? (
+                        <StagePlayers
+                          key={i}
+                          stage={
+                            row.stage && row.stage.length > 0
+                              ? row.stage
+                              : Createstage()
+                          }
+                          user={row.user}
+                        />
+                      ) : (
+                        ""
+                      );
+                  }
                 })}
               </Col>
             ) : (

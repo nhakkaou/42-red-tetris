@@ -50,9 +50,14 @@ class Server {
 
       socket.on("start game", (room) => {
         let rst = helpers.randomTetromino();
+        let i = Rooms.findIndex((el) => el.name === room);
+        Rooms[i] = {
+          ...Rooms[i],
+          startGame: true,
+        };
         io.sockets.in(room).emit("start game", rst);
         Players.forEach((e) => {
-          e.hasLost = false;
+          if (e.room === room) e.hasLost = false;
         });
       });
 
@@ -83,7 +88,9 @@ class Server {
           tmp.push({
             room: element.room,
             members: c,
-            mode: Rooms.find((el) => el.name == element.room).mode,
+            mode: Rooms.find((el) => el.name == element.room).mode
+              ? Rooms.find((el) => el.name == element.room).mode
+              : "Solo",
           });
       });
       res.send(tmp);
