@@ -17,6 +17,7 @@ class Server {
         credentials: true,
       })
     );
+    console.log(Rooms);
     this.http = http.Server(this.app);
     var io = require("socket.io")(this.http, {
       pingInterval: 60000,
@@ -62,7 +63,7 @@ class Server {
       });
 
       socket.on("Loser", (data) => {
-        Loser(data, io, Players);
+        Loser(data, io, Players, Rooms).then((res) => (Rooms = res));
       });
 
       socket.on("joinRoom", (data) => {

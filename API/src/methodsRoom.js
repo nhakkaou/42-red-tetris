@@ -30,8 +30,10 @@ const leaveRoom = (socket, Players, io, Rooms) => {
         "new member",
         Players.filter((e) => e.room === tmp.room)
       );
-      const data = { Players: Players, Rooms: Rooms };
-      resolve(data);
+      resolve({
+        Players: Players,
+        Rooms: Rooms,
+      });
     }
   });
 };
@@ -41,6 +43,11 @@ const joinRoom = (socket, data, io, Rooms, Players) => {
       const clients = io.sockets.adapter.rooms.get(data.room);
       const tmpRoom = Rooms.find((el) => el.name === data.room);
       const numClients = clients ? clients.size : 0;
+      if (tmpRoom?.startGame)
+        return socket.emit("TOASTIFY", {
+          type: "error",
+          message: "the game is started",
+        });
       if (numClients + 1 > 5) {
         const message = { type: "error", message: "Room is full!" };
         socket.emit("TOASTIFY", message);
@@ -91,7 +98,7 @@ const joinRoom = (socket, data, io, Rooms, Players) => {
           score: 0,
         });
       }
-      Rooms.push({ name: data.room, mode: data.mode });
+      Rooms.push({ name: data.room, mode: data.mode, startGame: false });
       const message = { type: "success", message: "Created room!" };
       socket.emit("Join_success", { ...data, is_admin: true });
       socket.emit("TOASTIFY", message);

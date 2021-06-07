@@ -34,7 +34,6 @@ const Rooms = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/getRooms`).then((res) => {
       setRooms([...res.data]);
-      console.log(res.data);
     });
   }, []);
 

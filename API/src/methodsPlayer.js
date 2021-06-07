@@ -1,22 +1,30 @@
-const Loser = (data, io, Players) => {
-  let winner = {};
-  let lostCount = 0;
-  let playersArr = Players.filter(e => e.room === data.room)
-  for (let i = 0; i < playersArr.length; i++) {
-    if (playersArr[i].user === data.user) {
-      playersArr[i].hasLost = true;
-      ++lostCount;
-    } else if (playersArr[i].user !== data.user && playersArr[i].hasLost === true) {
-      ++lostCount;
+const Loser = (data, io, Players, Rooms) => {
+  return new Promise((resolve, reject) => {
+    let winner = {};
+    let lostCount = 0;
+    let playersArr = Players.filter((e) => e.room === data.room);
+    for (let i = 0; i < playersArr.length; i++) {
+      if (playersArr[i].user === data.user) {
+        playersArr[i].hasLost = true;
+        ++lostCount;
+      } else if (
+        playersArr[i].user !== data.user &&
+        playersArr[i].hasLost === true
+      ) {
+        ++lostCount;
+      }
     }
-  }
-  if (lostCount === playersArr.length - 1) {
-    const index = playersArr.findIndex((e) => e.hasLost === false);
-    if (playersArr[index]) {
-      winner = playersArr[index];
-      io.sockets.in(data.room).emit("Winner", winner);
+    if (lostCount === playersArr.length - 1) {
+      const index = playersArr.findIndex((e) => e.hasLost === false);
+      if (playersArr[index]) {
+        winner = playersArr[index];
+        let i = Rooms.findIndex((el) => el.name == data.room);
+        Rooms[i].startGame = false;
+        io.sockets.in(data.room).emit("Winner", winner);
+      }
     }
-  }
+    resolve(Rooms);
+  });
 };
 
 const new_score = (Players, io, socket, rs) => {
