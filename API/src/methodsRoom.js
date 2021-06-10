@@ -43,10 +43,10 @@ const joinRoom = (socket, data, io, Rooms, Players) => {
       const clients = io.sockets.adapter.rooms.get(data.room);
       const tmpRoom = Rooms.find((el) => el.name === data.room);
       const numClients = clients ? clients.size : 0;
-      if (tmpRoom && tmpRoom.startGame)
+      if (tmpRoom && tmpRoom.startGame === true)
         return socket.emit("TOASTIFY", {
           type: "error",
-          message: "the game is started",
+          message: "The game has already started",
         });
       if (numClients + 1 > 5) {
         const message = { type: "error", message: "Room is full!" };

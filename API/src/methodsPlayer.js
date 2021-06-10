@@ -1,6 +1,7 @@
 const Loser = (data, io, Players, Rooms) => {
   return new Promise((resolve, reject) => {
     let winner = {};
+    let indexR = Rooms.findIndex((el) => el.name == data.room);
     let lostCount = 0;
     let playersArr = Players.filter((e) => e.room === data.room);
     for (let i = 0; i < playersArr.length; i++) {
@@ -14,12 +15,13 @@ const Loser = (data, io, Players, Rooms) => {
         ++lostCount;
       }
     }
+    if (playersArr.length === 1 && playersArr[0].hasLost === true)
+      Rooms[indexR].startGame = false
     if (lostCount === playersArr.length - 1) {
       const index = playersArr.findIndex((e) => e.hasLost === false);
       if (playersArr[index]) {
         winner = playersArr[index];
-        let i = Rooms.findIndex((el) => el.name == data.room);
-        Rooms[i].startGame = false;
+        Rooms[indexR].startGame = false;
         io.sockets.in(data.room).emit("Winner", winner);
       }
     }

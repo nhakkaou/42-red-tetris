@@ -17,7 +17,6 @@ class Server {
         credentials: true,
       })
     );
-    console.log(Rooms);
     this.http = http.Server(this.app);
     var io = require("socket.io")(this.http, {
       pingInterval: 60000,
