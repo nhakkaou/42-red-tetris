@@ -11,10 +11,9 @@ describe("Server Test ", () => {
       expect(res.message).toContain("Created room!");
     });
   });
-  test("Join Room Solo", () => {
+  test("Join Room Solo", async () => {
     await socket.emit("joinRoom", { user: "test2", room: "ROOM" });
     socket.on("TOASTIFY", (res) => {
-      console.log(res);
       expect(res.message).toContain("Room !");
     });
   });
