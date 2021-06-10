@@ -43,7 +43,7 @@ const joinRoom = (socket, data, io, Rooms, Players) => {
       const clients = io.sockets.adapter.rooms.get(data.room);
       const tmpRoom = Rooms.find((el) => el.name === data.room);
       const numClients = clients ? clients.size : 0;
-      if (tmpRoom?.startGame)
+      if (tmpRoom && tmpRoom.startGame)
         return socket.emit("TOASTIFY", {
           type: "error",
           message: "the game is started",

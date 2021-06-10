@@ -209,8 +209,8 @@ const Tetris = () => {
                   className="sound-icon-wrapper"
                 >
                   {playerState.admin &&
-                  !roomState.gameStarted &&
-                  !roomState.gameOver ? (
+                    !roomState.gameStarted &&
+                    !roomState.gameOver ? (
                     <FontAwesomeIcon
                       onClick={startGame}
                       icon={faPlay}

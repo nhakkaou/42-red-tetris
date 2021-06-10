@@ -5,6 +5,7 @@ import {
   PLAYER_LOST,
   SET_ROW,
 } from "../actions/playerAction";
+import { START_GAME } from "../actions/roomAction";
 
 const DEFAULT_STATE = {
   username: "",
@@ -35,6 +36,9 @@ export default function (state = DEFAULT_STATE, action) {
     }
     case SET_ROW: {
       return { ...state, row: action.data };
+    }
+    case START_GAME: {
+      return { ...state, lost: false };
     }
     default:
       return state;
