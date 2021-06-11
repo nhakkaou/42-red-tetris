@@ -11,12 +11,13 @@ export const HashFormat = (hash) => {
     );
     return false;
   }
-  return true;
+  return found;
 };
 export const checkHash = () => {
   const hash = window.location.hash.substring(1);
   if (!hash.trim()) return;
-  if (HashFormat(hash))
+  const found = HashFormat(hash)
+  if (found)
     socket.emit("joinRoom", {
       user: found.groups.usr,
       room: found.groups.room,
