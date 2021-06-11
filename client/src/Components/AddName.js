@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { addPlayerName } from "../actions/playerAction";
 import { useDispatch } from "react-redux";
-import { StyledButton, StyledInput } from "./styling/StyledForm";
+import { StyledButton, StyledInput, StyledAddnameWrapper } from "./styling/StyledForm";
 
 const AddName = () => {
   const dispatch = useDispatch();
@@ -11,14 +11,13 @@ const AddName = () => {
     dispatch(addPlayerName(username));
   }
   return (
-    <div className="App">
+    <StyledAddnameWrapper>
       <StyledInput
         placeholder="Create Username"
         onChange={(e) => setUserName(e.target.value)}
       />
-
-      <StyledButton type="submit" onClick={() => adduser()} value="Create" />
-    </div>
+      <StyledButton onClick={() => adduser()}>Submit</StyledButton>
+    </StyledAddnameWrapper>
   );
 };
 

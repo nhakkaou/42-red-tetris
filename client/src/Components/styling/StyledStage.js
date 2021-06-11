@@ -46,6 +46,7 @@ export const StyledOverlayText = styled.div`
   flex-direction: column;
   padding: 1px;
   font-size: 25px;
+  align-items: center;
   color: white;
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);

@@ -7,12 +7,13 @@ export default function GameOver({ player }) {
   return (
     <StyledOverlay>
       <StyledOverlayText>
-        <h1>{player?.lost === true ? "You lost" : "You Won"}</h1>
+
         {player?.lost === true ? (
           <img src={url} />
         ) : (
           <img style={{ width: "50%" }} src={url1} />
         )}
+        <h1>{player?.lost === true ? "You lost" : "You Won"}</h1>
         <p>
           {player?.admin === true
             ? "Click on ⟳ to restart the game"
