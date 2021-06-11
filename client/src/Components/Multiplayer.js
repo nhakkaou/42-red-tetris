@@ -119,7 +119,7 @@ const Tetris = () => {
       if (player.pos.y < 1) {
         dispatch({ type: GAME_OVER });
         dispatch({ type: PLAYER_LOST });
-        setDropTime(null);
+        setDropTime(dropTime);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
@@ -133,12 +133,13 @@ const Tetris = () => {
   const keyUp = ({ keyCode }) => {
     if (!roomState.gameOver && keyCode === 40) {
       if (level == 0) setDropTime(1000);
-      else setDropTime(1000);
+      else setDropTime(dropTime);
     }
   };
 
   const dropPlayer = () => {
-    setDropTime(null);
+    console.log(dropTime);
+    setDropTime(dropTime);
     drop();
   };
 
@@ -209,8 +210,8 @@ const Tetris = () => {
                   className="sound-icon-wrapper"
                 >
                   {playerState.admin &&
-                    !roomState.gameStarted &&
-                    !roomState.gameOver ? (
+                  !roomState.gameStarted &&
+                  !roomState.gameOver ? (
                     <FontAwesomeIcon
                       onClick={startGame}
                       icon={faPlay}

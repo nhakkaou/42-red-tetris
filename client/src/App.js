@@ -4,13 +4,12 @@ import Tetris from "./Components/Multiplayer";
 import Rooms from "./Components/Rooms";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { socket } from "./hooks/"
+
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-
   let State = useSelector((state) => {
     return state;
   });
