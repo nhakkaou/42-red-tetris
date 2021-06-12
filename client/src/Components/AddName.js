@@ -13,7 +13,7 @@ const AddName = () => {
   return (
     <StyledAddnameWrapper>
       <StyledInput
-        placeholder="Create Username"
+        placeholder="Username"
         onChange={(e) => setUserName(e.target.value)}
       />
       <StyledButton onClick={() => adduser()}>Submit</StyledButton>

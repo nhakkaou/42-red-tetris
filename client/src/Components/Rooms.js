@@ -1,22 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { StyledButton, StyledInput } from "./styling/StyledForm";
+import { StyledButton, StyledInput, RoomWrapper, StyledSelect, InputsWrapper } from "./styling/StyledForm";
 import { UPDATE_MODE } from "../actions/roomAction";
-import styled from "styled-components";
 
-const Select = styled.select`
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  margin: auto;
-  padding: 12px;
-  border-radius: 20px;
-  border: 4px solid #333;
-  color: #ffffff;
-  background: #000;
-  font-size: 1.8 rem;
-`;
 const Rooms = () => {
   const dispatch = useDispatch();
   const [rooms, setRooms] = useState([]);
@@ -38,16 +25,18 @@ const Rooms = () => {
   }, []);
 
   return (
-    <div>
-      <StyledInput
-        placeholder="Create room"
-        onChange={(e) => setRoomname(e.target.value)}
-      />
-      <Select value={mode} onChange={(e) => setMode(e.target.value)}>
-        <option>Solo</option>
-        <option>Multiplayer</option>
-      </Select>
-      <StyledButton type="submit" onClick={() => addRoom()} value="Create" />
+    <RoomWrapper>
+      <InputsWrapper>
+        <StyledInput
+          placeholder="Room"
+          onChange={(e) => setRoomname(e.target.value)}
+        />
+        <StyledSelect value={mode} onChange={(e) => setMode(e.target.value)}>
+          <option>Solo</option>
+          <option>Multiplayer</option>
+        </StyledSelect>
+      </InputsWrapper>
+      <StyledButton type="submit" onClick={() => addRoom()}>Submit</StyledButton>
       <table style={{ borderWidth: "5px" }}>
         <thead>
           <tr>
@@ -81,7 +70,7 @@ const Rooms = () => {
           )}
         </tbody>
       </table>
-    </div>
+    </RoomWrapper>
   );
 };
 
