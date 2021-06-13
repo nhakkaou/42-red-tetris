@@ -6,7 +6,7 @@ const StagePlayers = ({ stage, user }) => {
   }
   return (
     <div style={{ margin: "20px", minWidth: "200px", textAlign: 'center' }}>
-      <h3>{user}</h3>
+      <h3 style={{ color: '#fff' }}>{user}</h3>
       <table style={{ border: "1px solid" }}>
         {stage.map((row, i) => {
           return (
@@ -21,8 +21,8 @@ const StagePlayers = ({ stage, user }) => {
                         padding: "0px",
                         margin: "0px",
                         height: "2px",
-                        backgroundColor: "#7a0099",
-                        opacity: "20%",
+                        backgroundColor: "#000",
+                        opacity: "30%",
                       }}
                       key={`col-${x}`}
                       type={cell[0]}
