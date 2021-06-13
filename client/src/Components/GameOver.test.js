@@ -1,6 +1,7 @@
-import { render } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import GameOver from "./GameOver";
 
 test("App render test ", () => {
-  render(<GameOver />);
+  const tree = renderer.create(<GameOver />).toJSON();
+  expect(tree).toMatchSnapshot();
 });
