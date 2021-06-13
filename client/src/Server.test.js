@@ -11,10 +11,10 @@ describe("Server Test ", () => {
       expect(res.message).toContain("Created room!");
     });
   });
-  test("Join Room Solo", async () => {
-    await socket.emit("joinRoom", { user: "test2", room: "ROOM" });
+  test.only("Join Room Solo", () => {
+    socket.emit("joinRoom", { user: "test2", room: "ROOM" });
     socket.on("TOASTIFY", (res) => {
-      expect(res.message).toContain("Room !");
+      expect(res.message).toContain("Created room!");
     });
   });
 
@@ -22,14 +22,14 @@ describe("Server Test ", () => {
     socket.emit("new_tetriminos");
     socket.on("new_tetriminos", (res) => expect(res.length).toBe(10));
   });
-  test("Stage", () => {
+  test("Stage", async () => {
     let tmp = {
       stage: [],
       user: "TEST7855421",
       room: "RED___ROOM",
       players: [],
     };
-    socket.emit("Stage", {
+    await socket.emit("Stage", {
       stage: [],
       user: "TEST7855421",
       room: "RED___ROOM",

@@ -1,6 +1,7 @@
-import { render } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import StartBtn from "./StartBtn";
 
 test("StartBtn render test ", () => {
-  render(<StartBtn />);
+  const tree = renderer.create(<StartBtn />).toJSON();
+  expect(tree).toMatchSnapshot();
 });

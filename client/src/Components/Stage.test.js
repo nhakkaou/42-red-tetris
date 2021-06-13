@@ -1,6 +1,7 @@
-import { render } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import Stage from "./Stage";
 
 test("Stage render test ", () => {
-  render(<Stage />);
+  const tree = renderer.create(<Stage />).toJSON();
+  expect(tree).toMatchSnapshot();
 });

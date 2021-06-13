@@ -80,4 +80,5 @@ export const checkcollision = (player, stage, { x: moveX, y: moveY }) => {
       }
     }
   }
+  return false;
 };

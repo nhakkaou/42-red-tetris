@@ -1,7 +1,7 @@
 import renderer from "react-test-renderer";
-import Cell from "./Cell";
+import StagePlayers from "./StagePlayers";
 
 test("App render test ", () => {
-  const tree = renderer.create(<Cell />).toJSON();
+  const tree = renderer.create(<StagePlayers />).toJSON();
   expect(tree).toMatchSnapshot();
 });

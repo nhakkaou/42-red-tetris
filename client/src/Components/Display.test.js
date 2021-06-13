@@ -1,6 +1,6 @@
-import { render } from "@testing-library/react";
 import Display from "./Display";
-
+import renderer from "react-test-renderer";
 test("Display render test ", () => {
-  render(<Display />);
+  const tree = renderer.create(<Display />).toJSON();
+  expect(tree).toMatchSnapshot();
 });
