@@ -70,13 +70,26 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+width: 100%;
 top: 30%;
 left: 50%;
 position: absolute;
-margin: auto;
-width: 100%;
-padding: 10px;
 transform: translate(-50%, -30%);
+@media screen and (max-width: 768px) {
+}
+@media screen and (max-width: 480px) {
+}
+`
+
+export const FormWrapper = styled.form`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+
+margin: auto;
+padding: 10px;
+
 @media screen and (max-width: 768px) {
 }
 @media screen and (max-width: 480px) {
@@ -85,7 +98,6 @@ transform: translate(-50%, -30%);
 
 export const InputsWrapper = styled.div`
 display: flex;
-width: 70%;
 align-items: center;
 @media screen and (max-width: 768px) {
   flex-direction: column;
@@ -117,3 +129,52 @@ font-size: 24px;
   min-width: 300px;
 }
 `;
+
+export const TABLE = styled.table`
+border-width: 5px;
+background: #000;
+border-collapse: collapse;
+border-spacing: 0;
+width: 50%;
+border: 1px solid #333;
+font-size: 18px;
+@media screen and (max-width: 768px) {
+  width: 80%;
+}
+@media screen and (max-width: 480px) {
+  width: 100%;
+}
+`
+
+export const THEAD = styled.thead`
+`
+
+export const TBODY = styled.tbody`
+`
+
+export const TR = styled.tr`
+border-width: 5px;
+`
+export const TH = styled.th`
+`
+
+export const TD = styled.td`
+`
+
+export const JoinButton = styled.button`
+padding: 12px;
+border-radius: 10px;
+border: 4px solid #333;
+color: #000;
+background: #fff;
+
+cursor: pointer;
+margin: 0.5em;
+
+
+:hover {
+  background: #333;
+  color: #fff;
+}
+
+`

@@ -7,16 +7,17 @@ const AddName = () => {
   const dispatch = useDispatch();
   const [username, setUserName] = useState("");
 
-  function adduser() {
+  function adduser(e) {
+    e.preventDefault();
     dispatch(addPlayerName(username));
   }
   return (
-    <StyledAddnameWrapper>
+    <StyledAddnameWrapper onSubmit={(e) => adduser(e)}>
       <StyledInput
         placeholder="Username"
         onChange={(e) => setUserName(e.target.value)}
       />
-      <StyledButton onClick={() => adduser()}>Submit</StyledButton>
+      <StyledButton>Submit</StyledButton>
     </StyledAddnameWrapper>
   );
 };
