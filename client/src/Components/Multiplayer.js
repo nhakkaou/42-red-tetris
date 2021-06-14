@@ -269,6 +269,7 @@ const Tetris = () => {
                               : Createstage()
                           }
                           user={row.user}
+                          score={row.score}
                         />
                       ) : (
                         ""

@@ -1,12 +1,13 @@
 import React from "react";
 
-const StagePlayers = ({ stage, user }) => {
+const StagePlayers = ({ stage, user, score }) => {
   if (!stage) {
     return <span>Loading...</span>;
   }
   return (
-    <div style={{ margin: "20px", minWidth: "200px", textAlign: 'center' }}>
-      <h3 style={{ color: '#fff' }}>{user}</h3>
+    <div style={{ margin: "20px", minWidth: "200px", textAlign: "center" }}>
+      <h3 style={{ color: "#fff" }}>{user}</h3>
+      <h2 style={{ color: "#fff" }}>{score}</h2>
       <table style={{ border: "1px solid" }}>
         {stage.map((row, i) => {
           return (
