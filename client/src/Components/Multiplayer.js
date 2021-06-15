@@ -138,7 +138,6 @@ const Tetris = () => {
   };
 
   const dropPlayer = () => {
-    console.log(dropTime);
     setDropTime(dropTime);
     drop();
   };
