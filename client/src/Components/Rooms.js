@@ -30,7 +30,7 @@ const Rooms = () => {
       <FormWrapper>
         <InputsWrapper>
           <StyledInput
-            placeholder="Room"
+            placeholder="Enter Room name"
             onChange={(e) => setRoomname(e.target.value)}
           />
           <StyledSelect value={mode} onChange={(e) => setMode(e.target.value)}>

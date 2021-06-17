@@ -103,6 +103,7 @@ align-items: center;
   flex-direction: column;
 }
 @media screen and (max-width: 480px) {
+  flex-direction: column;
 }
 `
 
@@ -119,7 +120,7 @@ min-width: 160px;
 font-size: 24px;
 @media screen and (max-width: 768px) {
   font-size: 18px;
-  width: 80%;
+  width: 95%;
   padding: 15px;
 }
 @media screen and (max-width: 480px) {
