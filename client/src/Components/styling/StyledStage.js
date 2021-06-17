@@ -76,3 +76,6 @@ export const StyledOverlayText = styled.div`
     }
   }
 `
+export const StyledSpecter = styled.div`
+  text-align: center;  
+`

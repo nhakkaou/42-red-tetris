@@ -1,13 +1,17 @@
 import React from "react";
+import { Col } from "reactstrap";
+import { StyledSpecter } from "./styling/StyledStage";
 
 const StagePlayers = ({ stage, user, score }) => {
   if (!stage) {
     return <span>Loading...</span>;
   }
   return (
-    <div style={{ margin: "20px", minWidth: "200px", textAlign: "center" }}>
-      <h3 style={{ color: "#fff" }}>{user}</h3>
-      <h2 style={{ color: "#fff" }}>{score}</h2>
+    <StyledSpecter>
+      <div className="flex align-center justify-sa">
+        <h3 style={{ color: "#fff" }}>{user}</h3>
+        <h2 style={{ color: "#fff" }}>{score}</h2>
+      </div>
       <table style={{ border: "1px solid" }}>
         {stage.map((row, i) => {
           return (
@@ -48,7 +52,7 @@ const StagePlayers = ({ stage, user, score }) => {
           );
         })}
       </table>
-    </div>
+    </StyledSpecter>
   );
 };
 

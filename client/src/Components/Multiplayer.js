@@ -187,8 +187,8 @@ const Tetris = () => {
         <StyledTetris>
           <Row className="w-100">
             <Col
-              md={playersState.length > 1 ? 10 : 12}
-              sm={12}
+              xl={playersState.length > 1 ? 7 : 12}
+              lg={12}
               className="flex justify-center red-tetris__col-stage"
             >
               <Stage
@@ -209,8 +209,8 @@ const Tetris = () => {
                   className="sound-icon-wrapper"
                 >
                   {playerState.admin &&
-                  !roomState.gameStarted &&
-                  !roomState.gameOver ? (
+                    !roomState.gameStarted &&
+                    !roomState.gameOver ? (
                     <FontAwesomeIcon
                       onClick={startGame}
                       icon={faPlay}
@@ -255,26 +255,33 @@ const Tetris = () => {
               </aside>
             </Col>
             {playersState ? (
-              <Col md={2} sm={12}>
-                {playersState.map((row, i) => {
-                  {
-                    if (row.user !== playerState.user)
-                      return row.user !== playerState.username ? (
-                        <StagePlayers
-                          key={i}
-                          stage={
-                            row.stage && row.stage.length > 0
-                              ? row.stage
-                              : Createstage()
-                          }
-                          user={row.user}
-                          score={row.score}
-                        />
-                      ) : (
-                        ""
-                      );
-                  }
-                })}
+              <Col className="spectersWrapper" xl={5} lg={12}>
+                <Row>
+                  {playersState.map((row, i) => {
+                    {
+                      if (row.user !== playerState.user)
+                        return row.user !== playerState.username ? (
+                          <Col xl={6} lg={12}>
+                            <StagePlayers
+                              key={i}
+                              stage={
+                                row.stage && row.stage.length > 0
+                                  ? row.stage
+                                  : Createstage()
+                              }
+                              user={row.user}
+                              score={row.score}
+                            />
+                          </Col>
+
+
+
+                        ) : (
+                          ""
+                        );
+                    }
+                  })}
+                </Row>
               </Col>
             ) : (
               ""
