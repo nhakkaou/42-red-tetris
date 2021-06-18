@@ -14,7 +14,7 @@ const leaveRoom = (socket, Players, io, Rooms) => {
         }
       }
       if (cmptr === 1) io.sockets.in(tmp.room).emit("Winner", winner);
-      if (cmptr === 0) Rooms = Rooms.filter((el) => el.name !== tmp.room);
+      if (Players.filter((el) => el.room === tmp.room).length === 0) Rooms = Rooms.filter((el) => el.name !== tmp.room);
       if (tmp.admin === true) {
         let i = Players.findIndex((el) => el.room === tmp.room);
         Players[i] = {

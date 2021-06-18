@@ -61,7 +61,7 @@ const Rooms = () => {
                   </TD>
                   <TD>{item.members}/5</TD>
                   <TD>{item.mode}</TD>
-                  <TD><JoinButton onClick={() => window.location = `http://localhost:3000/#${item.room}[${playerState.username}]`}>Join</JoinButton></TD>
+                  <TD><JoinButton onClick={() => window.location = `${process.env.REACT_APP_FRONTEND_URL}/#${item.room}[${playerState.username}]`}>Join</JoinButton></TD>
                 </TR>
               )
           )}

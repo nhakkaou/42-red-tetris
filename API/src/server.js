@@ -88,7 +88,7 @@ class Server {
           tmp.push({
             room: element.room,
             members: c,
-            mode: Rooms.find((el) => el.name == element.room).mode || "Solo",
+            mode: Rooms.find((el) => el.name == element.room) ? Rooms.find((el) => el.name == element.room).mode : "Solo",
           });
       });
       res.send(tmp);

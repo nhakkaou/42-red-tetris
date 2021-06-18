@@ -75,6 +75,19 @@ export const StyledOverlayText = styled.div`
       letter-spacing: 3px;
     }
   }
+  @media screen and (max-width: 480px) {
+    h1 {
+      color: white;
+      font-family: "Oxanium";
+      font-size: xxx-large;
+      text-shadow: none;
+      text-align: center;
+      font-weight: bolder;
+      padding: 50px 0px 50px;
+      letter-spacing: 3px;
+      font-size: large;
+    }
+  }
 `
 export const StyledSpecter = styled.div`
   text-align: center;  

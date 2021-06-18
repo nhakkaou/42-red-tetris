@@ -75,6 +75,10 @@ th {
     flex-direction: column;
 }
 
+.mb-20 {
+    margin-bottom: 20px;
+}
+
 .red-tetris__col-stage>aside {
     display: flex !important;
     align-items: center;

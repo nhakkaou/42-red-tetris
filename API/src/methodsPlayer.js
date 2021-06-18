@@ -15,8 +15,9 @@ const Loser = (data, io, Players, Rooms) => {
         ++lostCount;
       }
     }
-    if (playersArr.length === 1 && playersArr[0].hasLost === true)
+    if (playersArr.length === 1 && playersArr[0].hasLost === true) {
       Rooms[indexR].startGame = false
+    }
     if (lostCount === playersArr.length - 1) {
       const index = playersArr.findIndex((e) => e.hasLost === false);
       if (playersArr[index]) {

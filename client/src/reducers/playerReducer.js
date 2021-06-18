@@ -3,7 +3,7 @@ import {
   ADD_PLAYER_NAME,
   ADMIN_PLAYER,
   PLAYER_LOST,
-  SET_ROW,
+  SET_ROW
 } from "../actions/playerAction";
 import { START_GAME } from "../actions/roomAction";
 
@@ -17,6 +17,9 @@ const DEFAULT_STATE = {
 
 export default function (state = DEFAULT_STATE, action) {
   switch (action.type) {
+    case "RESET_STATE": {
+      return DEFAULT_STATE;
+    }
     case ADD_PLAYER_NAME: {
       return { ...state, username: action.data };
     }

@@ -43,6 +43,11 @@ export const stethoscope = (dispatch, getState) => {
   socket.on("start game", (data) => {
     dispatch({ type: CHANGE_PIECE, data: data });
     dispatch({ type: START_GAME });
+    let resetSpecters = []
+    store.getState().players.map(e => {
+      resetSpecters.push({ ...e, stage: [], score: 0 })
+    })
+    dispatch({ type: ADD_PLAYER, data: resetSpecters })
   });
 
   socket.on("new_tetriminos", (data) => {
@@ -67,7 +72,6 @@ export const stethoscope = (dispatch, getState) => {
   });
 
   socket.on("Update Admin", (data) => {
-    console.log(data);
     let tmp = {
       user: data.user.user,
       is_admin: data.is_admin,
@@ -80,6 +84,7 @@ export const stethoscope = (dispatch, getState) => {
       case "error": {
         toast.error(data.message);
         setTimeout(() => {
+          dispatch({ type: "RESET_STATE" });
           window.location.hash = "";
         }, 500);
         break;

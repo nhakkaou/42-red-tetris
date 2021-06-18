@@ -4,6 +4,9 @@ const DEFAULT_STATE = [];
 
 export default function (state = DEFAULT_STATE, action) {
   switch (action.type) {
+    case "RESET_STATE": {
+      return DEFAULT_STATE;
+    }
     case UPDATE_SCORE: {
       return { score: action.data };
     }

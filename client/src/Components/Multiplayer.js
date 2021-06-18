@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Stage from "./Stage";
 import Display from "./Display";
-import { S_HEIGHT, checkcollision, Createstage, S_WIDTH } from "../gameHelper";
+import { S_HEIGHT, checkcollision, Createstage } from "../gameHelper";
 import { StyledtetrisWrapper, StyledTetris } from "./styling/StyledTetris";
 import { useStage, usePlayer, useInterval, socket } from "../hooks";
 import { useGameStatus } from "../hooks/useGameStatus";
@@ -189,7 +189,7 @@ const Tetris = () => {
             <Col
               xl={playersState.length > 1 ? 7 : 12}
               lg={12}
-              className="flex justify-center red-tetris__col-stage"
+              className="flex justify-center red-tetris__col-stage mb-20"
             >
               <Stage
                 gameOver={roomState.gameOver}
@@ -273,9 +273,6 @@ const Tetris = () => {
                               score={row.score}
                             />
                           </Col>
-
-
-
                         ) : (
                           ""
                         );
