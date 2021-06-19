@@ -17,9 +17,6 @@ const DEFAULT_STATE = {
 
 export default function (state = DEFAULT_STATE, action) {
   switch (action.type) {
-    case "RESET_STATE": {
-      return DEFAULT_STATE;
-    }
     case ADD_PLAYER_NAME: {
       return { ...state, username: action.data };
     }

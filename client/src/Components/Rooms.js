@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { StyledButton, StyledInput, RoomWrapper, StyledSelect, InputsWrapper, FormWrapper, TABLE, THEAD, TR, TD, TBODY, TH, JoinButton } from "./styling/StyledForm";
@@ -15,8 +16,17 @@ const Rooms = () => {
 
   function addRoom(e) {
     e.preventDefault();
-    window.location.hash = `${Room}[${playerState.username}]`;
-    dispatch({ type: UPDATE_MODE, data: mode });
+    if (Room.trim() !== "") {
+      window.location.hash = `${Room.trim()}[${playerState.username}]`;
+      dispatch({ type: UPDATE_MODE, data: mode });
+    }
+    else {
+      setRoomname("")
+      toast.error(
+        "[ERROR] Player and Room names must be 1 to 12 alphanumeric characters in length"
+      );
+    }
+
   }
 
   useEffect(() => {

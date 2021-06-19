@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { socket } from "./hooks";
 
 function App() {
   let State = useSelector((state) => {
@@ -17,7 +18,16 @@ function App() {
 
   return (
     <div>
-      <h1 onClick={() => { dispatch({ type: "RESET_STATE" }); window.location.hash = "" }} style={{ cursor: "pointer" }}>Red Tetris</h1>
+      <h1
+        onClick={() => {
+          socket.emit("leaveRoom");
+          dispatch({ type: "RESET_STATE" });
+          window.location.hash = ""
+        }
+        }
+        style={{ cursor: "pointer" }}>
+        Red Tetris
+      </h1>
       <ToastContainer />
       {State.player.username === "" ? (
         <AddName />

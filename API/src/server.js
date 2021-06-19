@@ -31,6 +31,12 @@ class Server {
           Rooms = res.Rooms;
         });
       });
+      socket.on("leaveRoom", (sk) => {
+        leaveRoom(socket, Players, io, Rooms).then((res) => {
+          Players = res.Players;
+          Rooms = res.Rooms;
+        });
+      });
       socket.on("new_tetriminos", (room) => {
         let rst = helpers.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);

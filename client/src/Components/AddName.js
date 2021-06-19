@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { addPlayerName } from "../actions/playerAction";
 import { useDispatch } from "react-redux";
 import { StyledButton, StyledInput, StyledAddnameWrapper } from "./styling/StyledForm";
@@ -9,7 +10,15 @@ const AddName = () => {
 
   function adduser(e) {
     e.preventDefault();
-    dispatch(addPlayerName(username));
+    if (username.trim() !== "") {
+      dispatch(addPlayerName(username.trim()));
+    }
+    else {
+      setUserName("")
+      toast.error(
+        "[ERROR] Player and Room names must be 1 to 12 alphanumeric characters in length"
+      );
+    }
   }
   return (
     <StyledAddnameWrapper onSubmit={(e) => adduser(e)}>
