@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { addPlayerName } from "../actions/playerAction";
 import { useDispatch } from "react-redux";
@@ -20,9 +20,13 @@ const AddName = () => {
       );
     }
   }
+  useEffect(() => {
+    document.getElementById("username-i").focus();
+  });
   return (
     <StyledAddnameWrapper onSubmit={(e) => adduser(e)}>
       <StyledInput
+        id="username-i"
         placeholder="Enter Username"
         onChange={(e) => setUserName(e.target.value)}
       />

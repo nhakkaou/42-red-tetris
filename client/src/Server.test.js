@@ -10,32 +10,32 @@ describe("Server Test ", () => {
     socket.on("TOASTIFY", (res) => {
       expect(res.message).toContain("Created room!");
     });
-  });
-  test.only("Join Room Solo", () => {
     socket.emit("joinRoom", { user: "test2", room: "ROOM" });
     socket.on("TOASTIFY", (res) => {
-      expect(res.message).toContain("Created room!");
+      expect(res.message).toContain("Username Already existe");
     });
+    socket.disconnect()
   });
 
   test("New tetriminos", () => {
     socket.emit("new_tetriminos");
     socket.on("new_tetriminos", (res) => expect(res.length).toBe(10));
   });
-  test("Stage", async () => {
+  test("Stage", () => {
     let tmp = {
       stage: [],
       user: "TEST7855421",
       room: "RED___ROOM",
       players: [],
     };
-    await socket.emit("Stage", {
+    socket.emit("Stage", {
       stage: [],
       user: "TEST7855421",
       room: "RED___ROOM",
       players: [],
     });
     socket.on("Stage", (res) => expect(res).toBe(tmp));
+    socket.disconnect()
   });
   test("Validate user & room", () => {
     expect(helpers.validateName("")).toBeFalsy();

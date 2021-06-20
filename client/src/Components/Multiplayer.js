@@ -94,7 +94,7 @@ const Tetris = () => {
   useEffect(() => {
     if (roomState.gameStarted === true) {
       setPlaying(true);
-      // audio.play();
+      audio.play();
       setStage(Createstage());
       setDropTime(1000);
       resetPlayer();
@@ -256,7 +256,7 @@ const Tetris = () => {
             </Col>
             {playersState ? (
               <Col className="spectersWrapper" xl={5} lg={12}>
-                <Row>
+                <Row className="w-100">
                   {playersState.map((row, i) => {
                     {
                       if (row.user !== playerState.user)

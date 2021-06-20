@@ -243,7 +243,7 @@ let stage = [
 ];
 
 test("Test CreateStage", () => expect(Createstage()).toStrictEqual(stage));
-test.only("Test Collision", () => {
+test("Test Collision", () => {
   let player = {
     pos: { x: S_WIDTH / 2 - 1, y: 0 },
     tetromino: [

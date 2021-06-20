@@ -40,7 +40,6 @@ table {
 td,
 tr,
 th {
-    border: solid #dddddd;
     text-align: center;
     padding: 8px;
     width: auto;
@@ -105,15 +104,6 @@ th {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-@media screen and (max-width: 1200px) {
-    body {
-        background-size: cover;
-        background-repeat: repeat;
-        color: white;
-        overflow-y: scroll;
-    }
 }
 
 @media screen and (max-width: 768px) {
