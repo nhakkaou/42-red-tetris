@@ -1,6 +1,5 @@
-import combinedReducer from "./index"
-
+import store from "../Store";
 test("Combine Reducers", () => {
-    console.log(combinedReducer); 
-    expect(combinedReducer).toHaveProperty("player", "players", "room")
+    
+    expect(store.getState()).toHaveProperty("player", "players", "room")
 })
