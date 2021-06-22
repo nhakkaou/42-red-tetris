@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rooms render test  1`] = `
+<div
+  className="sc-hKgILt dEDLNW"
+  onSubmit={[Function]}
+>
+  <form
+    className="sc-eCssSg caGTec"
+  >
+    <div
+      className="sc-jSgupP gJtUNU"
+    >
+      <input
+        className="sc-bdfBwQ eNvKjX"
+        onChange={[Function]}
+        placeholder="Enter Room name"
+      />
+      <select
+        className="sc-gKsewC jdJFST"
+        onChange={[Function]}
+        value="Solo"
+      >
+        <option>
+          Solo
+        </option>
+        <option>
+          Multiplayer
+        </option>
+      </select>
+    </div>
+    <button
+      className="sc-gsTCUz fKrtQw"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+`;

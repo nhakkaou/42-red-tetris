@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display render test  1`] = `
+<div
+  className="sc-bdfBwQ hVNBCf"
+>
+  <div
+    className="sc-dlfnbm eTjct"
+  />
+  <div
+    className="sc-hKgILt bOsRbQ"
+  />
+</div>
+`;

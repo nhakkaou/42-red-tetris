@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App render test  1`] = `
+<form
+  className="sc-dlfnbm dOZfKl"
+  onSubmit={[Function]}
+>
+  <input
+    className="sc-bdfBwQ eNvKjX"
+    id="username-i"
+    onChange={[Function]}
+    placeholder="Enter Username"
+  />
+  <button
+    className="sc-gsTCUz fKrtQw"
+  >
+    Submit
+  </button>
+</form>
+`;

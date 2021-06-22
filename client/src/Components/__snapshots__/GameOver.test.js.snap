@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App render test  1`] = `
+<div
+  className="sc-gsTCUz kMFVFf"
+>
+  <div
+    className="sc-dlfnbm gfmIzg"
+  >
+    <img
+      src="README.gif"
+      style={
+        Object {
+          "width": "200px",
+        }
+      }
+    />
+    <h1>
+      You Won
+    </h1>
+    <p>
+      Wait for host player to restart the game
+    </p>
+  </div>
+</div>
+`;
