@@ -36,7 +36,7 @@ export const StyledNextDisplay = styled.div`
   padding: 10px;
   border-radius: 10px;
   border: 4px solid #333;
-  color: ${props => (props.gameOver ? 'red' : '#999')};
+  color:  '#999';
   background: #000;
   font-size: 0.8 rem;
   position: relative;

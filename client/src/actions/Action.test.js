@@ -4,8 +4,8 @@ import {
   startgame,
   updatemember,
 } from "./roomAction";
-
-describe("actions", () => {
+import {ADD_PLAYER_NAME, updateplayer, UPDATE_PLAYER, addPlayerName} from "./playerAction"
+describe("actions Rooms", () => {
   it("Add New Member", () => {
     const text = { user: "test", score: 0 };
     const expectedAction = {
@@ -21,5 +21,24 @@ describe("actions", () => {
       data: text,
     };
     expect(startgame(text)).toEqual(expectedAction);
+  });
+});
+
+describe("actions Player", () => {
+  it("Add Player Name", () => {
+    const text = { user: "test", score: 0 };
+    const expectedAction = {
+      type: ADD_PLAYER_NAME,
+      data: text,
+    };
+    expect(addPlayerName(text)).toEqual(expectedAction);
+  });
+  it("Update Player Name", () => {
+    const text = { user: "test", score: 0 };
+    const expectedAction = {
+      type: UPDATE_PLAYER,
+      data: text,
+    };
+    expect(updateplayer(text)).toEqual(expectedAction);
   });
 });

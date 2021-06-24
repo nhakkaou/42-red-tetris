@@ -2,7 +2,7 @@
 
 exports[`NextPiece render T  1`] = `
 <div
-  className="sc-gsTCUz fRGtiv"
+  className="sc-gsTCUz isidzI"
 >
   <div
     className="sc-dlfnbm eTjct"
@@ -98,7 +98,7 @@ exports[`NextPiece render T  1`] = `
 
 exports[`NextPiece render test  1`] = `
 <div
-  className="sc-gsTCUz fRGtiv"
+  className="sc-gsTCUz isidzI"
 >
   <div
     className="sc-dlfnbm eTjct"

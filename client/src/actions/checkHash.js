@@ -13,14 +13,16 @@ export const HashFormat = (hash) => {
   }
   return found;
 };
-export const checkHash = () => {
-  const hash = window.location.hash.substring(1);
-  if (!hash.trim()) return;
+export const checkHash = (hash) => {
+  // const hash = window.location.hash.substring(1);
+  if (!hash.trim()) return false;
   const found = HashFormat(hash)
-  if (found)
+  if (found){
     socket.emit("joinRoom", {
       user: found.groups.usr,
       room: found.groups.room,
       mode: store.getState().room.mode,
     });
+    return true
+  }
 };

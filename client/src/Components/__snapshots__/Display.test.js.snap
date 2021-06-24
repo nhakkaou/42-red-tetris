@@ -12,3 +12,35 @@ exports[`Display render test  1`] = `
   />
 </div>
 `;
+
+exports[`Display render test title  1`] = `
+<div
+  className="sc-bdfBwQ bNUETO"
+>
+  <div
+    className="sc-dlfnbm eTjct"
+  >
+    test
+  </div>
+  <div
+    className="sc-hKgILt bOsRbQ"
+  />
+</div>
+`;
+
+exports[`Display render title and data  1`] = `
+<div
+  className="sc-bdfBwQ hVNBCf"
+>
+  <div
+    className="sc-dlfnbm eTjct"
+  >
+    test
+  </div>
+  <div
+    className="sc-hKgILt bOsRbQ"
+  >
+    0
+  </div>
+</div>
+`;

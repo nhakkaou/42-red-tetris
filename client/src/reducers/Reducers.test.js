@@ -15,6 +15,16 @@ describe("Room test", () => {
       next_piece: [],
     });
   });
+  it("Reset state", () => {
+    expect(reducerRoom(undefined, {type: "RESET_STATE"})).toEqual({
+      name: "",
+      members: 0,
+      gameStarted: false,
+      mode: "Solo",
+      next_piece: [],
+      gameOver: false,
+    });
+  });
   it("should return the new state", () => {
     expect(reducerRoom(undefined, { type: actionRoom.START_GAME })).toEqual({
       name: "",
@@ -26,6 +36,48 @@ describe("Room test", () => {
     });
   });
 
+  it("GameOver ", () => {
+    expect(reducerRoom(undefined, {type: actionRoom.GAME_OVER})).toEqual({
+      name: "",
+      members: 0,
+      gameStarted: false,
+      mode: "Solo",
+      next_piece: [],
+      gameOver: true,
+    });
+  });
+  it("Clear pieces ", () => {
+    expect(reducerRoom(undefined, {type: actionRoom.CLEAR_PIECES})).toEqual({
+      name: "",
+      members: 0,
+      gameStarted: false,
+      mode: "Solo",
+      next_piece: [],
+      gameOver: false,
+    });
+  });
+  
+  it("Join Room name", () => {
+    expect(reducerRoom(undefined, {type: actionRoom.ROOM_JOINED, data: {room: "Room101"}})).toEqual({
+      name: "Room101",
+      members: 0,
+      gameStarted: false,
+      mode: "Solo",
+      next_piece: [],
+      gameOver: false,
+    });
+  });
+  
+  it("Change Room Mode", () => {
+    expect(reducerRoom(undefined, {type: actionRoom.UPDATE_MODE, data: "Multiplayer"})).toEqual({
+      name: "",
+      members: 0,
+      gameStarted: false,
+      mode: "Multiplayer",
+      next_piece: [],
+      gameOver: false,
+    });
+  });
   it("should return the new state new member", () => {
     expect(
       reducerRoom(undefined, { type: actionRoom.UPDATE_MEMBER, data: 6 })
@@ -78,7 +130,26 @@ describe("Player test", () => {
       row: 0,
     });
   });
+  
+  it("Add Player Name ", () => {
+    expect(reducerPlayer(undefined, { type: actionPlayer.ADD_PLAYER_NAME, data: "TEST" })).toEqual({
+      username: "TEST",
+      connected: false,
+      lost: false,
+      admin: false,
+      row: 0,
+    });
+  });
 
+  it("Start Game switch lost to False ", () => {
+    expect(reducerPlayer(undefined, { type: actionPlayer.START_GAME})).toEqual({
+      username: "",
+      connected: false,
+      lost: false,
+      admin: false,
+      row: 0,
+    });
+  });
   it("Switch to true Admin", () => {
     expect(
       reducerPlayer(undefined, { type: actionPlayer.ADMIN_PLAYER })
@@ -133,7 +204,7 @@ describe("Player test", () => {
   });
 });
 
-describe("Player test", () => {
+describe("Players test", () => {
   it("Update Score", () => {
     expect(
       reducerPlayers([], {
@@ -143,6 +214,14 @@ describe("Player test", () => {
     ).toEqual({
       score: 1600,
     });
+  });
+
+  it("Reset State", () => {
+    expect(
+      reducerPlayers([], {
+        type: "RESET_STATE",
+      })
+    ).toEqual([]);
   });
 
   it("Update Players", () => {

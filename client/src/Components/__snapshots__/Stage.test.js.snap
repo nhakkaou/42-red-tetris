@@ -1,6 +1,1237 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Stage render test  1`] = `
+exports[`Stage render test GameOver  1`] = `
+<div
+  className="sc-gsTCUz geGtPg"
+  height={12}
+  width={20}
+>
+  <div
+    className="sc-dlfnbm cnNOmY"
+  >
+    <div
+      className="sc-hKgILt eUdMtK"
+    >
+      <img
+        src="README.gif"
+        style={
+          Object {
+            "width": "200px",
+          }
+        }
+      />
+      <h1>
+        You Won
+      </h1>
+      <p>
+        Wait for host player to restart the game
+      </p>
+    </div>
+  </div>
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+  <div
+    className="sc-bdfBwQ jDnFae"
+    color="0, 0, 0"
+    type={0}
+  />
+</div>
+`;
+
+exports[`Stage render test Stage 1`] = `
 <span>
   Loading...
 </span>

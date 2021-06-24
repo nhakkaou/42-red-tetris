@@ -14,7 +14,7 @@ import { UPDATE_MEMBER } from "../actions/roomAction";
 import { SET_ROW } from "../actions/playerAction";
 export const stethoscope = (dispatch, getState) => {
   window.onhashchange = () => {
-    checkHash();
+    checkHash(window.location.hash.substring(1));
   };
 
   socket.on("new score", (result) => {
