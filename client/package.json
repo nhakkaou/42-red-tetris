@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
-    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@material-ui/core": "^4.11.3",
     "@testing-library/react": "^11.2.7",
@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --verbose=false --detectOpenHandles",
     "eject": "react-scripts eject",
-    "coverage": "react-scripts  test  -- --coverage --watchAll=false" 
+    "coverage": "react-scripts  test  -- --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": [

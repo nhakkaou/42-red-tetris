@@ -65,7 +65,7 @@ const Tetris = () => {
     if (!checkcollision(player, stage, { x: dir, y: 0 }))
       updatePlayerPos({ x: dir, y: 0 });
   };
-
+  
   useEffect(() => {
     let f = roomState.gameStarted ? 1 : 0;
     let tmp = new Array(10).fill(["P", "merged"]);

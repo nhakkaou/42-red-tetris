@@ -2,7 +2,7 @@
 
 exports[`Multiplayer render test  1`] = `
 <div
-  className="sc-kEjbxe eTMQXu"
+  className="sc-jrAGrp kYmakh"
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   role="button"
@@ -12,7 +12,7 @@ exports[`Multiplayer render test  1`] = `
     className="container"
   >
     <div
-      className="sc-iqHYGH gpiYXV"
+      className="sc-kEjbxe HoHGU"
     >
       <div
         className="w-100 row"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Tetrominos } from "../tetrominos";
-import { StyledNextDisplay, StyledTitle, StyleStage, StyledCell } from "./styling/StyledDisplay";
-
+import { StyledNextDisplay, StyledTitle, StyleStage } from "./styling/StyledDisplay";
+import {StyledCell} from "./styling/StyledCell"
 const NextPiece = ({ stage, nextPiece }) => (
   <StyledNextDisplay>
     <StyledTitle>Next</StyledTitle>
