@@ -16,7 +16,7 @@ describe("Room test", () => {
     });
   });
   it("Reset state", () => {
-    expect(reducerRoom(undefined, {type: "RESET_STATE"})).toEqual({
+    expect(reducerRoom(undefined, { type: "RESET_STATE" })).toEqual({
       name: "",
       members: 0,
       gameStarted: false,
@@ -37,7 +37,7 @@ describe("Room test", () => {
   });
 
   it("GameOver ", () => {
-    expect(reducerRoom(undefined, {type: actionRoom.GAME_OVER})).toEqual({
+    expect(reducerRoom(undefined, { type: actionRoom.GAME_OVER })).toEqual({
       name: "",
       members: 0,
       gameStarted: false,
@@ -47,7 +47,7 @@ describe("Room test", () => {
     });
   });
   it("Clear pieces ", () => {
-    expect(reducerRoom(undefined, {type: actionRoom.CLEAR_PIECES})).toEqual({
+    expect(reducerRoom(undefined, { type: actionRoom.CLEAR_PIECES })).toEqual({
       name: "",
       members: 0,
       gameStarted: false,
@@ -56,9 +56,14 @@ describe("Room test", () => {
       gameOver: false,
     });
   });
-  
+
   it("Join Room name", () => {
-    expect(reducerRoom(undefined, {type: actionRoom.ROOM_JOINED, data: {room: "Room101"}})).toEqual({
+    expect(
+      reducerRoom(undefined, {
+        type: actionRoom.ROOM_JOINED,
+        data: { room: "Room101" },
+      })
+    ).toEqual({
       name: "Room101",
       members: 0,
       gameStarted: false,
@@ -67,9 +72,14 @@ describe("Room test", () => {
       gameOver: false,
     });
   });
-  
+
   it("Change Room Mode", () => {
-    expect(reducerRoom(undefined, {type: actionRoom.UPDATE_MODE, data: "Multiplayer"})).toEqual({
+    expect(
+      reducerRoom(undefined, {
+        type: actionRoom.UPDATE_MODE,
+        data: "Multiplayer",
+      })
+    ).toEqual({
       name: "",
       members: 0,
       gameStarted: false,
@@ -130,9 +140,14 @@ describe("Player test", () => {
       row: 0,
     });
   });
-  
+
   it("Add Player Name ", () => {
-    expect(reducerPlayer(undefined, { type: actionPlayer.ADD_PLAYER_NAME, data: "TEST" })).toEqual({
+    expect(
+      reducerPlayer(undefined, {
+        type: actionPlayer.ADD_PLAYER_NAME,
+        data: "TEST",
+      })
+    ).toEqual({
       username: "TEST",
       connected: false,
       lost: false,
@@ -140,9 +155,11 @@ describe("Player test", () => {
       row: 0,
     });
   });
-
-  it("Start Game switch lost to False ", () => {
-    expect(reducerPlayer(undefined, { type: actionPlayer.START_GAME})).toEqual({
+  
+  it("Test  Start the Game", () => {
+    expect(
+      reducerPlayer(undefined, { type: actionRoom.START_GAME })
+    ).toEqual({
       username: "",
       connected: false,
       lost: false,
@@ -150,6 +167,8 @@ describe("Player test", () => {
       row: 0,
     });
   });
+
+
   it("Switch to true Admin", () => {
     expect(
       reducerPlayer(undefined, { type: actionPlayer.ADMIN_PLAYER })
