@@ -3,8 +3,10 @@ const http = require("http");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const helpers = require("./helpers");
-const { leaveRoom, joinRoom } = require("./methodsRoom");
-const { new_score, Loser } = require("./methodsPlayer");
+const Game = require("./Game");
+const Player = require("./Player");
+const Pieces = require("./Pieces");
+
 class Server {
   constructor() {
     let Players = [];
@@ -18,6 +20,9 @@ class Server {
       })
     );
     this.http = http.Server(this.app);
+    var gameInst = new Game();
+    var playerInst = new Player();
+    var piecesInst = new Pieces();
     var io = require("socket.io")(this.http, {
       pingInterval: 60000,
       cors: {
@@ -26,24 +31,24 @@ class Server {
     });
     io.on("connection", function (socket) {
       socket.on("disconnect", (sk) => {
-        leaveRoom(socket, Players, io, Rooms).then((res) => {
+        gameInst.leaveRoom(socket, Players, io, Rooms).then((res) => {
           Players = res.Players;
           Rooms = res.Rooms;
         });
       });
       socket.on("leaveRoom", (sk) => {
-        leaveRoom(socket, Players, io, Rooms).then((res) => {
+        gameInst.leaveRoom(socket, Players, io, Rooms).then((res) => {
           Players = res.Players;
           Rooms = res.Rooms;
         });
       });
       socket.on("new_tetriminos", (room) => {
-        let rst = helpers.randomTetromino();
+        let rst = piecesInst.randomTetromino();
         io.sockets.in(room).emit("new_tetriminos", rst);
       });
 
       socket.on("new score", (rs) => {
-        new_score(Players, io, socket, rs);
+        playerInst.new_score(Players, io, socket, rs);
       });
 
       socket.on("Stage", (rq) => {
@@ -55,7 +60,7 @@ class Server {
       });
 
       socket.on("start game", (room) => {
-        let rst = helpers.randomTetromino();
+        let rst = piecesInst.randomTetromino();
         let i = Rooms.findIndex((el) => el.name === room);
         Rooms[i] = {
           ...Rooms[i],
@@ -68,7 +73,7 @@ class Server {
       });
 
       socket.on("Loser", (data) => {
-        Loser(data, io, Players, Rooms).then((res) => (Rooms = res));
+        playerInst.Loser(data, io, Players, Rooms).then((res) => (Rooms = res));
       });
 
       socket.on("joinRoom", (data) => {
@@ -76,7 +81,7 @@ class Server {
           helpers.validateName(data.user) &&
           helpers.validateName(data.room)
         ) {
-          joinRoom(socket, data, io, Rooms, Players).then((r) => {
+          gameInst.joinRoom(socket, data, io, Rooms, Players).then((r) => {
             Players = r.Players;
             Rooms = r.Rooms;
           });
@@ -94,7 +99,9 @@ class Server {
           tmp.push({
             room: element.room,
             members: c,
-            mode: Rooms.find((el) => el.name == element.room) ? Rooms.find((el) => el.name == element.room).mode : "Solo",
+            mode: Rooms.find((el) => el.name == element.room)
+              ? Rooms.find((el) => el.name == element.room).mode
+              : "Solo",
           });
       });
       res.send(tmp);
