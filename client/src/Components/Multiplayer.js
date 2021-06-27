@@ -175,6 +175,7 @@ const Tetris = () => {
 
   return (
     <StyledtetrisWrapper
+      data-testid="styled-tet-wra"
       role="button"
       tabIndex="0"
       onKeyDown={move}

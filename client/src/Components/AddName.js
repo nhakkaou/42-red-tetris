@@ -21,10 +21,10 @@ const AddName = () => {
     }
   }
   useEffect(() => {
-    document.getElementById("username-i").focus();
+    document.getElementById("username-i") && document.getElementById("username-i").focus();
   });
   return (
-    <StyledAddnameWrapper onSubmit={(e) => adduser(e)}>
+    <StyledAddnameWrapper  onSubmit={(e) => adduser(e)}>
       <StyledInput
         id="username-i"
         placeholder="Enter Username"

@@ -2,7 +2,21 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { StyledButton, StyledInput, RoomWrapper, StyledSelect, InputsWrapper, FormWrapper, TABLE, THEAD, TR, TD, TBODY, TH, JoinButton } from "./styling/StyledForm";
+import {
+  StyledButton,
+  StyledInput,
+  RoomWrapper,
+  StyledSelect,
+  InputsWrapper,
+  FormWrapper,
+  TABLE,
+  THEAD,
+  TR,
+  TD,
+  TBODY,
+  TH,
+  JoinButton,
+} from "./styling/StyledForm";
 import { UPDATE_MODE } from "../actions/roomAction";
 
 const Rooms = () => {
@@ -19,20 +33,23 @@ const Rooms = () => {
     if (Room.trim() !== "") {
       window.location.hash = `${Room.trim()}[${playerState.username}]`;
       dispatch({ type: UPDATE_MODE, data: mode });
-    }
-    else {
-      setRoomname("")
+    } else {
+      setRoomname("");
       toast.error(
         "[ERROR] Player and Room names must be 1 to 12 alphanumeric characters in length"
       );
     }
-
   }
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/getRooms`).then((res) => {
-      setRooms([...res.data]);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/getRooms`)
+      .then((res) => {
+        setRooms([...res.data]);
+      })
+    return () => {
+      setRooms([]);
+    };
   }, []);
 
   return (
@@ -50,33 +67,41 @@ const Rooms = () => {
         </InputsWrapper>
         <StyledButton type="submit">Submit</StyledButton>
       </FormWrapper>
-      {rooms.length > 0 && <TABLE>
-        <THEAD>
-          <TR>
-            <TH>Room Name</TH>
-            <TH>Members</TH>
-            <TH>Mode</TH>
-            <TH></TH>
-          </TR>
-        </THEAD>
-        <TBODY>
-          {rooms.map(
-            (item, i) =>
-              item.room.length > 0 && (
-                <TR key={i}>
-                  <TD>
-                    <strong>
-                      {item.room}
-                    </strong>
-                  </TD>
-                  <TD>{item.members}/5</TD>
-                  <TD>{item.mode}</TD>
-                  <TD><JoinButton onClick={() => window.location = `${process.env.REACT_APP_FRONTEND_URL}/#${item.room}[${playerState.username}]`}>Join</JoinButton></TD>
-                </TR>
-              )
-          )}
-        </TBODY>
-      </TABLE>}
+      {rooms.length > 0 && (
+        <TABLE>
+          <THEAD>
+            <TR>
+              <TH>Room Name</TH>
+              <TH>Members</TH>
+              <TH>Mode</TH>
+              <TH></TH>
+            </TR>
+          </THEAD>
+          <TBODY>
+            {rooms.map(
+              (item, i) =>
+                item.room.length > 0 && (
+                  <TR key={i}>
+                    <TD>
+                      <strong>{item.room}</strong>
+                    </TD>
+                    <TD>{item.members}/5</TD>
+                    <TD>{item.mode}</TD>
+                    <TD>
+                      <JoinButton
+                        onClick={() =>
+                          (window.location = `${process.env.REACT_APP_FRONTEND_URL}/#${item.room}[${playerState.username}]`)
+                        }
+                      >
+                        Join
+                      </JoinButton>
+                    </TD>
+                  </TR>
+                )
+            )}
+          </TBODY>
+        </TABLE>
+      )}
     </RoomWrapper>
   );
 };

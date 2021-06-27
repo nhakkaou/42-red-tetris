@@ -47,7 +47,9 @@ min-width: 160px;
 
 }
 `;
-export const StyledAddnameWrapper = styled.form`
+export const StyledAddnameWrapper = styled.form.attrs({
+  "data-testid": "addName-form"
+})`
   display: flex;
   flex-direction: column;
   align-items: center;
