@@ -1,5 +1,4 @@
 import React from "react";
-import { Col } from "reactstrap";
 import { StyledSpecter } from "./styling/StyledStage";
 
 const StagePlayers = ({ stage, user, score }) => {
@@ -20,6 +19,7 @@ const StagePlayers = ({ stage, user, score }) => {
                 {row.map((cell, x) =>
                   cell[0] === 0 ? (
                     <td
+                      data-testid={`stagePColE-${i}`} 
                       style={{
                         border: 0,
                         width: "15px",
@@ -34,6 +34,7 @@ const StagePlayers = ({ stage, user, score }) => {
                     ></td>
                   ) : (
                     <td
+                      data-testid={`stagePColF-${i}`}
                       style={{
                         border: 0,
                         width: "27px",
