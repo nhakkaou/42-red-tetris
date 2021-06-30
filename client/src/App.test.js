@@ -1,38 +1,3 @@
-// import App from "./App";
-// import { render, fireEvent } from "@testing-library/react";
-// import store from "./Store";
-// import { Provider } from "react-redux";
-// import * as reactRedux from "react-redux";
-// import AddName from "./Components/AddName";
-
-// describe("test suite", () => {
-//   const useSelectorMock = jest.spyOn(reactRedux, "useSelector");
-//   const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
-
-//   beforeEach(() => {
-//     useSelectorMock.mockClear();
-//     useDispatchMock.mockClear();
-//   });
-
-//   test("App render test addname", () => {
-//     let StateA = useSelectorMock.mockReturnValue({
-//       State: {
-//         player: { username: "" },
-//         room: { name: "" },
-//       },
-//     });
-//     let MockState = StateA();
-//     const { getByText } = render(
-//       <Provider store={MockState}>
-//         <App />
-//       </Provider>
-//     );
-//     const button = getByText("Red Tetris");
-//     const AddName = getByText("AddName");
-//     fireEvent.click(button);
-//   });
-// });
-
 import React from "react";
 import { Provider } from "react-redux";
 import { render, fireEvent, screen } from "@testing-library/react";

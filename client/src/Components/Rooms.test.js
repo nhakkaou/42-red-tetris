@@ -6,8 +6,6 @@ import * as reactRedux from "react-redux";
 import { render, fireEvent, screen } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-jest.mock("axios"); // This overwrites axios methods with jest Mock
-import axios from "axios";
 
 const mockStore = configureMockStore([thunk]);
 
@@ -26,7 +24,6 @@ describe("Rooms", () => {
 
   beforeEach(() => {
     useDispatchMock.mockClear();
-    axios.get.mockResolvedValue(res);
   });
 
   test("Rooms render test ", () => {
